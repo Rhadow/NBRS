@@ -86,7 +86,7 @@ gulp.task('html', ['base', 'scripts'], function() {
 });
 
 gulp.task('compress', ['html'], function() {
-    gulp.src(['dist/scripts/app.js', 'dist/scripts/vendor.js'])
+    return gulp.src(['dist/scripts/app.js', 'dist/scripts/vendor.js'])
         .pipe($.uglify())
         .pipe(gulp.dest('dist/scripts/'));
 });
