@@ -5,9 +5,7 @@ var React         = require('react'),
     //Main Page
     Main          = require('../app/pages/main'),
     // Content Page
-    ProjectList   = require('../app/pages/project-list'),
-    BugDetail     = require('../app/pages/bug-detail'),
-    BugList       = require('../app/pages/bug-list'),
+    MainContent   = require('../app/pages/main-content'),
     NotFound      = require('../app/pages/not-found'),
     // Router Methods
     Route         = Router.Route,
@@ -16,17 +14,11 @@ var React         = require('react'),
     NotFoundRoute = Router.NotFoundRoute,
     Routes;
 
-
-
 /* jshint ignore:start */
 Routes = (
     <Route path="/" handler={Main}>
-        <Route name="project" handler={ProjectList} >
-            <Route name="name" path=":projectName" handler={BugList}/>
-            <DefaultRoute handler={BugDetail}/>
-        </Route>
-        <Route name="test" handler={BugDetail} />
-        <DefaultRoute handler={ProjectList} />
+        <Route name="project" handler={MainContent} />
+        <DefaultRoute handler={MainContent} />
         <NotFoundRoute handler={NotFound} />
     </Route>
 );

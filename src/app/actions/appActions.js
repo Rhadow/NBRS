@@ -4,15 +4,15 @@ var appDispatcher = require('../dispatcher/appDispatcher.js');
 var constants = require('../constants/constants.js');
 
 var appActions = {
-	addUser: function(user){
+	addProject: function(project){
 		appDispatcher.handleViewAction({
-			actionType: constants.ADD_USER,
-			data: user
+			actionType: constants.ADD_PROJECT,
+			data: project
 		});
 	},
-	deleteUser: function(index){
+	deleteProject: function(index){
 		appDispatcher.handleViewAction({
-			actionType: constants.DELETE_USER,
+			actionType: constants.DELETE_PROJECT,
 			data: index
 		});
 	}

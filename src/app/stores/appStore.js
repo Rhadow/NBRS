@@ -1,30 +1,56 @@
 'use strict';
 
-var appDispatcher = require('../dispatcher/appDispatcher.js');
-var eventEmitter = require('events').EventEmitter;
-var constants = require('../constants/constants.js');
-var _ = require('underscore');
+var appDispatcher = require('../dispatcher/appDispatcher.js'),
+    eventEmitter  = require('events').EventEmitter,
+    constants     = require('../constants/constants.js'),
+    _             = require('underscore'),
+    appStore,
+    _projects;
 
-var _userList = [{
-    name: 'Howard',
-    age: 27
-}, {
-    name: 'Shaun',
-    age: 22
-}, {
-    name: 'Amy',
-    age: 26
-}, ];
 
-var appStore = _.extend({}, eventEmitter.prototype, {
-    getUserList: function() {
-        return _userList;
+//Creating Fake Data
+
+_projects = [
+    {
+        name: 'IFA3610',
+        bugs:[
+            {
+                name: 'Can not turn on device',
+                assignee: 'Simon',
+                startDate: '2015-02-28',
+                description: 'Cannot turn on device, after several hours of debugging, we found out that the input was short circuited'
+            }
+        ]
     },
-    addUser: function(user) {
-        _userList.push(user);
+    {
+        name: 'GTR6574',
+        bugs:[]
     },
-    deleteUser: function(index) {
-        _userList.splice(index, 1);
+    {
+        name: 'SVG1337'
+    }
+
+];
+
+appStore = _.extend({}, eventEmitter.prototype, {
+    getProjectList: function() {
+        return _projects;
+    },
+    addProject: function(newProject) {
+        var isProjectIdentical = false;
+        _projects.forEach(function(project){
+            if(project.name === newProject.name){
+                isProjectIdentical = true;
+            }
+        });
+        if(!isProjectIdentical){
+            _projects.push(newProject);
+        }else{
+            alert('Same project name already exists!');
+        }
+    },
+    deleteProject: function(index) {
+        _projects.splice(index, 1);
     },
     emitChange: function() {
         this.emit('change');
@@ -40,11 +66,11 @@ var appStore = _.extend({}, eventEmitter.prototype, {
 appDispatcher.register(function(payload) {
     var action = payload.action;
     switch (action.actionType) {
-        case constants.ADD_USER:
-            appStore.addUser(action.data);
+        case constants.ADD_PROJECT:
+            appStore.addProject(action.data);
             break;
-        case constants.DELETE_USER:
-            appStore.deleteUser(action.data);
+        case constants.DELETE_PROJECT:
+            appStore.deleteProject(action.data);
             break;
         default:
             return true;

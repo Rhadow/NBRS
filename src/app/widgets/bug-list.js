@@ -1,24 +1,16 @@
 'use strict';
 
-var React = require('react'),
-    Router = require('react-router'),
+var React    = require('react'),
+    // Store
+    appStore = require('../stores/appStore.js'),
     BugList;
 
-BugList = React.createClass({    
-    mixins: [Router.State],
-    //propTypes: {},
-    //getDefaultProps: function() {},
-    //getInitialState: function() {},
-    //componentWillMount: function() {},
-    //componentDidMount: function() {},
-    //componentWillReceiveProps: function() {},
-    
-
+BugList = React.createClass({
     render: function() {
         /* jshint ignore:start */
         return (
             <div>
-                {this.getParams().projectName} Bug List
+                <h2>Bug List</h2>
                 <ul>
                     <li><a href="#/detail/A/1">A</a></li>
                     <li><a href="#/detail/B/2">B</a></li>

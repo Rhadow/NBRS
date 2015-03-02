@@ -1,8 +1,8 @@
 'use strict';
 
 var constants = {
-	ADD_USER: 'ADD_USER',
-	DELETE_USER: 'DELETE_USER'
+	ADD_PROJECT: 'ADD_PROJECT',
+	DELETE_PROJECT: 'DELETE_PROJECT'
 };
 
 module.exports = constants;
