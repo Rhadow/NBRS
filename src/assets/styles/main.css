@@ -26,9 +26,29 @@ body{
 /* Main Content CSS Start */
 .main-content-wrapper{
 	height: 100%;
+	margin: 0;
 }
-.project-list-wrapper{
+.project-list-wrapper, .bug-list-wrapper{
 	border-right: 1px solid black;
 	height: 100%;
 }
+.bug-detail-wrapper{
+	height: 100%;
+}
+.cancel-icon{
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	background: url('../images/cancel-icon.png') 0 0 no-repeat;
+	cursor: pointer;
+}
 /* Main Content CSS End */
+/* Project List Start */
+.project-list .projects{
+	padding: 0;
+}
+.project-list .projects li{
+	list-style: none;
+	border: 1px solid #000;
+}
+/* Project List End */
