@@ -11,6 +11,7 @@ var appDispatcher = require('../dispatcher/appDispatcher.js'),
 
 appStore = _.extend({}, eventEmitter.prototype, {
     _firebaseRef: new Firebase('https://nbrs.firebaseio.com/projects'),
+    selectedProject : '',
 
     addProject: function(newProject) {
         var isProjectIdentical = false;
@@ -25,7 +26,7 @@ appStore = _.extend({}, eventEmitter.prototype, {
         if(!isProjectIdentical){
             this._firebaseRef.push(newProject);
         }else{
-            alert('Same project name already exists!');
+            window.alert('Same project name already exists!');
         }
     },
     deleteProject: function(name) {
@@ -38,6 +39,9 @@ appStore = _.extend({}, eventEmitter.prototype, {
             });
         });
         new Firebase(firebaseURLToDelete).remove();
+    },
+    selectProject: function(projectName){
+        this.selectedProject = projectName;
     },
     emitChange: function() {
         this.emit('change');
@@ -58,6 +62,9 @@ appDispatcher.register(function(payload) {
             break;
         case constants.DELETE_PROJECT:
             appStore.deleteProject(action.data);
+            break;
+        case constants.SELECT_PROJECT:
+            appStore.selectProject(action.data);
             break;
         default:
             return true;

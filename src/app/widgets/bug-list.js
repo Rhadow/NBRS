@@ -10,7 +10,7 @@ BugList = React.createClass({
         /* jshint ignore:start */
         return (
             <div>
-                <h2>Bug List</h2>
+                <h2>Bug List {this.props.selectedProject}</h2>
                 <ul>
                     <li><a href="#/detail/A/1">A</a></li>
                     <li><a href="#/detail/B/2">B</a></li>

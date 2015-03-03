@@ -16,7 +16,8 @@ MainContent = React.createClass({
     mixins: [ReactFireMixin],
     getInitialState: function() {
         return {
-            projects: []
+            projects: [],
+            selectedProject: ''
         };
     },
     componentWillMount: function(){
@@ -28,7 +29,9 @@ MainContent = React.createClass({
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
-        console.log(this.state.projects);
+        this.setState({
+            selectedProject: appStore.selectedProject
+        });
     },
     render: function() {
         return (
@@ -39,7 +42,8 @@ MainContent = React.createClass({
                         projects={this.state.projects}/>
                 </div>
                 <div className="col-xs-3 bug-list-wrapper">
-                    <BugList />
+                    <BugList 
+                        selectedProject={this.state.selectedProject}/>
                 </div>
                 <div className="col-xs-6 bug-detail-wrapper">
                     <BugDetail />

@@ -19,7 +19,7 @@ ProjectList = React.createClass({
             });
             return (
                 /*jshint ignore:start */
-                <li key={i}>
+                <li key={i} id={project.name} onClick={this._onProjectSelect}>
                     {project.name}
                     <i className='cancel-icon' data-name={project.name} onClick={this._deleteProjectByName}></i>
                     <i className={projectClosedClass}>Project Closed</i>
@@ -33,13 +33,14 @@ ProjectList = React.createClass({
         var name = e.target.getAttribute('data-name');
         e.preventDefault();
         AppActions.deleteProject(name);
+        AppActions.selectProjectByName('');
     },
     _addProject: function(e){
         var newProjectObj = {},
             newProjectName = this.refs.newProjectName.getDOMNode().value;
         e.preventDefault();
         if(!newProjectName){
-            alert('Invalid Project Name');
+            window.alert('Invalid Project Name');
             return;
         }        
         newProjectObj.name = newProjectName;
@@ -47,6 +48,13 @@ ProjectList = React.createClass({
         this.refs.newProjectName.getDOMNode().value = '';
         AppActions.addProject(newProjectObj);
         
+    },
+    _onProjectSelect: function(e){
+        var selectedProjectName = $(e.target).closest('li')[0].id;
+        e.preventDefault();
+        if(!$(e.target).hasClass('cancel-icon')){
+            AppActions.selectProjectByName(selectedProjectName);
+        }   
     },
     render: function() {
         return (

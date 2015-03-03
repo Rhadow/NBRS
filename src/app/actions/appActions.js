@@ -15,6 +15,12 @@ var appActions = {
 			actionType: constants.DELETE_PROJECT,
 			data: index
 		});
+	},
+	selectProjectByName: function(projectName){
+		appDispatcher.handleViewAction({
+			actionType: constants.SELECT_PROJECT,
+			data: projectName
+		});
 	}
 };
 
