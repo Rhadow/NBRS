@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {},
   "devDependencies": {
+    "firebase": "^2.2.1",
     "flux": "^2.0.1",
     "gulp": "~3.8.8",
     "gulp-autoprefixer": "~1.0.0",
@@ -19,6 +20,7 @@
     "jshint-stylish": "0.4.0",
     "react": "^0.12.0",
     "react-router": "~0.11.6",
+    "reactfire": "^0.4.0",
     "reactify": "~0.15.2",
     "reflux": "~0.1.13",
     "underscore": "^1.8.2",

@@ -7,24 +7,27 @@ var React = require('react'),
     ProjectList = require('../widgets/project-list'),
     BugList = require('../widgets/bug-list'),
     BugDetail = require('../widgets/bug-detail'),
+    // Firebase
+    Firebase = require('firebase'),
+    ReactFireMixin = require('reactfire'),
     MainContent;
 
 MainContent = React.createClass({
+    mixins: [ReactFireMixin],
     getInitialState: function() {
         return {
-            projects: appStore.getProjectList()
+            projects: []
         };
     },
     componentWillMount: function(){
+        this.bindAsArray(new Firebase('https://nbrs.firebaseio.com/projects'), 'projects');
         appStore.addChangeListener(this._onDataUpdate);
     },
     componentWillUnmount: function(){
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
-        this.setState({
-            projects: appStore.getProjectList()
-        });
+        console.log(this.state.projects);
     },
     render: function() {
         return (

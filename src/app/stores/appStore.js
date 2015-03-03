@@ -3,54 +3,41 @@
 var appDispatcher = require('../dispatcher/appDispatcher.js'),
     eventEmitter  = require('events').EventEmitter,
     constants     = require('../constants/constants.js'),
+    // Underscore
     _             = require('underscore'),
-    appStore,
-    _projects;
-
-
-//Creating Fake Data
-
-_projects = [
-    {
-        name: 'IFA3610',
-        bugs:[
-            {
-                name: 'Can not turn on device',
-                assignee: 'Simon',
-                startDate: '2015-02-28',
-                description: 'Cannot turn on device, after several hours of debugging, we found out that the input was short circuited'
-            }
-        ]
-    },
-    {
-        name: 'GTR6574',
-        bugs:[]
-    },
-    {
-        name: 'SVG1337'
-    }
-
-];
+    // Firebase
+    Firebase      = require('firebase'),   
+    appStore;
 
 appStore = _.extend({}, eventEmitter.prototype, {
-    getProjectList: function() {
-        return _projects;
-    },
+    _firebaseRef: new Firebase('https://nbrs.firebaseio.com/projects'),
+
     addProject: function(newProject) {
         var isProjectIdentical = false;
-        _projects.forEach(function(project){
-            if(project.name === newProject.name){
-                isProjectIdentical = true;
-            }
+        this._firebaseRef.on('value', function(snapshot){
+            snapshot.forEach(function(project){
+                if(project.val().name === newProject.name){
+                    isProjectIdentical = true;
+                }
+            });
         });
+
         if(!isProjectIdentical){
-            _projects.push(newProject);
+            this._firebaseRef.push(newProject);
         }else{
             alert('Same project name already exists!');
         }
     },
-    deleteProject: function(index) {
-        _projects.splice(index, 1);
+    deleteProject: function(name) {
+        var firebaseURLToDelete = this._firebaseRef;
+        this._firebaseRef.on('value', function(snapshot){
+            snapshot.forEach(function(project){
+                if(project.val().name === name){
+                    firebaseURLToDelete += '/' + project.key();
+                }
+            });
+        });
+        new Firebase(firebaseURLToDelete).remove();
     },
     emitChange: function() {
         this.emit('change');
