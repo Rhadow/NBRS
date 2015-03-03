@@ -42,12 +42,13 @@ ProjectList = React.createClass({
         if(!newProjectName){
             window.alert('Invalid Project Name');
             return;
-        }        
-        newProjectObj.name = newProjectName;
-        newProjectObj.isClosed = false;
+        }
+        newProjectObj = {
+            name     : newProjectName,
+            isClosed : false
+        };
         this.refs.newProjectName.getDOMNode().value = '';
-        AppActions.addProject(newProjectObj);
-        
+        AppActions.addProject(newProjectObj);        
     },
     _onProjectSelect: function(e){
         var selectedProjectName = $(e.target).closest('li')[0].id;

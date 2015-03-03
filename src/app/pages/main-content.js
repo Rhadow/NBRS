@@ -17,7 +17,8 @@ MainContent = React.createClass({
     getInitialState: function() {
         return {
             projects: [],
-            selectedProject: ''
+            selectedProject: '',
+            selectedProjectBugs: []
         };
     },
     componentWillMount: function(){
@@ -29,6 +30,8 @@ MainContent = React.createClass({
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
+        var bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject + '/bugs';
+        this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');        
         this.setState({
             selectedProject: appStore.selectedProject
         });
@@ -43,7 +46,8 @@ MainContent = React.createClass({
                 </div>
                 <div className="col-xs-3 bug-list-wrapper">
                     <BugList 
-                        selectedProject={this.state.selectedProject}/>
+                        selectedProject={this.state.selectedProject}
+                        selectedProjectBugs={this.state.selectedProjectBugs}/>
                 </div>
                 <div className="col-xs-6 bug-detail-wrapper">
                     <BugDetail />

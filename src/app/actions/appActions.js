@@ -21,6 +21,12 @@ var appActions = {
 			actionType: constants.SELECT_PROJECT,
 			data: projectName
 		});
+	},
+	addBug: function(bug){
+		appDispatcher.handleViewAction({
+			actionType: constants.ADD_BUG,
+			data: bug
+		});
 	}
 };
 

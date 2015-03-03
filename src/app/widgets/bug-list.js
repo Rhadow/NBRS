@@ -1,20 +1,64 @@
 'use strict';
 
-var React    = require('react'),
-    // Store
-    appStore = require('../stores/appStore.js'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
+    // Actions
+    AppActions = require('../actions/appActions'),
     BugList;
 
 BugList = React.createClass({
+    propTypes: {
+        selectedProject: React.PropTypes.string
+    },
+    getDefaultProps: function() {
+        return {
+            selectedProject: '',
+            selectedProjectBugs: []
+        };
+    },
+    _renderBugs: function(){
+        var bugsHTML = this.props.selectedProjectBugs.map(function(bug, i){
+            if(bug.name !== '_init'){
+                return (
+                    /* jshint ignore:start */
+                    <li key={i}>{bug.name}</li>
+                    /* jshint ignore:end */
+                );
+            }            
+        }, this);
+        return bugsHTML;
+    },
+    _addBug: function(e){
+        var newBugObj = {},
+            newBugName = this.refs.newBugName.getDOMNode().value;
+        e.preventDefault();
+        if(!newBugName){
+            window.alert('Invalid Bug Name');
+            return;
+        }
+        newBugObj = {
+            name     : newBugName,
+            isClosed : false
+        };
+        this.refs.newBugName.getDOMNode().value = '';
+        AppActions.addBug(newBugObj);
+    },
     render: function() {
+        var addBugClasses = CX({
+            'add-bug-wrapper': true,
+            'hide': !this.props.selectedProject
+        });
         /* jshint ignore:start */
         return (
             <div>
-                <h2>Bug List {this.props.selectedProject}</h2>
+                <h2>{this.props.selectedProject} Bug List</h2>
+                <div className={addBugClasses}>
+                    <span>Add New Bug: </span>
+                    <input type="text" ref="newBugName"/>
+                    <input type="button" value="Add" onClick={this._addBug} />
+                </div>
                 <ul>
-                    <li><a href="#/detail/A/1">A</a></li>
-                    <li><a href="#/detail/B/2">B</a></li>
-                    <li><a href="#/detail/C/3">C</a></li>
+                    {this._renderBugs()}
                 </ul>
             </div>
         );

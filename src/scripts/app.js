@@ -25892,6 +25892,12 @@ var appActions = {
 			actionType: constants.SELECT_PROJECT,
 			data: projectName
 		});
+	},
+	addBug: function(bug){
+		appDispatcher.handleViewAction({
+			actionType: constants.ADD_BUG,
+			data: bug
+		});
 	}
 };
 
@@ -25902,7 +25908,8 @@ module.exports = appActions;
 var constants = {
 	ADD_PROJECT: 'ADD_PROJECT',
 	DELETE_PROJECT: 'DELETE_PROJECT',
-	SELECT_PROJECT: 'SELECT_PROJECT'
+	SELECT_PROJECT: 'SELECT_PROJECT',
+	ADD_BUG: 'ADD_BUG'
 };
 
 module.exports = constants;
@@ -25971,7 +25978,8 @@ MainContent = React.createClass({displayName: "MainContent",
     getInitialState: function() {
         return {
             projects: [],
-            selectedProject: ''
+            selectedProject: '',
+            selectedProjectBugs: []
         };
     },
     componentWillMount: function(){
@@ -25983,6 +25991,8 @@ MainContent = React.createClass({displayName: "MainContent",
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
+        var bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject + '/bugs';
+        this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');        
         this.setState({
             selectedProject: appStore.selectedProject
         });
@@ -25997,7 +26007,8 @@ MainContent = React.createClass({displayName: "MainContent",
                 ), 
                 React.createElement("div", {className: "col-xs-3 bug-list-wrapper"}, 
                     React.createElement(BugList, {
-                        selectedProject: this.state.selectedProject})
+                        selectedProject: this.state.selectedProject, 
+                        selectedProjectBugs: this.state.selectedProjectBugs})
                 ), 
                 React.createElement("div", {className: "col-xs-6 bug-detail-wrapper"}, 
                     React.createElement(BugDetail, null)
@@ -26077,7 +26088,9 @@ var appDispatcher = require('../dispatcher/appDispatcher.js'),
 
 appStore = _.extend({}, eventEmitter.prototype, {
     _firebaseRef: new Firebase('https://nbrs.firebaseio.com/projects'),
+    
     selectedProject : '',
+    selectedProjectBugs: [],
 
     addProject: function(newProject) {
         var isProjectIdentical = false;
@@ -26088,26 +26101,34 @@ appStore = _.extend({}, eventEmitter.prototype, {
                 }
             });
         });
-
         if(!isProjectIdentical){
-            this._firebaseRef.push(newProject);
+            this._firebaseRef.child(newProject.name).set(newProject);
+            this._firebaseRef.child(newProject.name).child('bugs').child('_init').child('name').set('init');
+            this._firebaseRef.child(newProject.name).child('bugs').child('_init').child('comments').set('none');
         }else{
             window.alert('Same project name already exists!');
         }
     },
     deleteProject: function(name) {
-        var firebaseURLToDelete = this._firebaseRef;
-        this._firebaseRef.on('value', function(snapshot){
+        this._firebaseRef.child(name).remove();
+    },
+    selectProject: function(projectName){   
+        this.selectedProject = projectName;
+    },
+    addBug: function(newBug){
+        var isBugIdentical = false;
+        this._firebaseRef.child(this.selectedProject).child('bugs').on('value', function(snapshot){
             snapshot.forEach(function(project){
-                if(project.val().name === name){
-                    firebaseURLToDelete += '/' + project.key();
+                if(project.val().name === newBug.name){
+                    isBugIdentical = true;
                 }
             });
         });
-        new Firebase(firebaseURLToDelete).remove();
-    },
-    selectProject: function(projectName){
-        this.selectedProject = projectName;
+        if(!isBugIdentical){
+            this._firebaseRef.child(this.selectedProject).child('bugs').child(newBug.name).set(newBug);
+        }else{
+            window.alert('Same project name already exists!');
+        }
     },
     emitChange: function() {
         this.emit('change');
@@ -26131,6 +26152,9 @@ appDispatcher.register(function(payload) {
             break;
         case constants.SELECT_PROJECT:
             appStore.selectProject(action.data);
+            break;
+        case constants.ADD_BUG:
+            appStore.addBug(action.data);
             break;
         default:
             return true;
@@ -26168,21 +26192,65 @@ module.exports = BugDetail;
 },{"../stores/appStore.js":210,"react":"nakDgH"}],212:[function(require,module,exports){
 'use strict';
 
-var React    = require('react'),
-    // Store
-    appStore = require('../stores/appStore.js'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
+    // Actions
+    AppActions = require('../actions/appActions'),
     BugList;
 
 BugList = React.createClass({displayName: "BugList",
+    propTypes: {
+        selectedProject: React.PropTypes.string
+    },
+    getDefaultProps: function() {
+        return {
+            selectedProject: '',
+            selectedProjectBugs: []
+        };
+    },
+    _renderBugs: function(){
+        var bugsHTML = this.props.selectedProjectBugs.map(function(bug, i){
+            if(bug.name !== '_init'){
+                return (
+                    /* jshint ignore:start */
+                    React.createElement("li", {key: i}, bug.name)
+                    /* jshint ignore:end */
+                );
+            }            
+        }, this);
+        return bugsHTML;
+    },
+    _addBug: function(e){
+        var newBugObj = {},
+            newBugName = this.refs.newBugName.getDOMNode().value;
+        e.preventDefault();
+        if(!newBugName){
+            window.alert('Invalid Bug Name');
+            return;
+        }
+        newBugObj = {
+            name     : newBugName,
+            isClosed : false
+        };
+        this.refs.newBugName.getDOMNode().value = '';
+        AppActions.addBug(newBugObj);
+    },
     render: function() {
+        var addBugClasses = CX({
+            'add-bug-wrapper': true,
+            'hide': !this.props.selectedProject
+        });
         /* jshint ignore:start */
         return (
             React.createElement("div", null, 
-                React.createElement("h2", null, "Bug List ", this.props.selectedProject), 
+                React.createElement("h2", null, this.props.selectedProject, " Bug List"), 
+                React.createElement("div", {className: addBugClasses}, 
+                    React.createElement("span", null, "Add New Bug: "), 
+                    React.createElement("input", {type: "text", ref: "newBugName"}), 
+                    React.createElement("input", {type: "button", value: "Add", onClick: this._addBug})
+                ), 
                 React.createElement("ul", null, 
-                    React.createElement("li", null, React.createElement("a", {href: "#/detail/A/1"}, "A")), 
-                    React.createElement("li", null, React.createElement("a", {href: "#/detail/B/2"}, "B")), 
-                    React.createElement("li", null, React.createElement("a", {href: "#/detail/C/3"}, "C"))
+                    this._renderBugs()
                 )
             )
         );
@@ -26192,7 +26260,7 @@ BugList = React.createClass({displayName: "BugList",
 });
 
 module.exports = BugList;
-},{"../stores/appStore.js":210,"react":"nakDgH"}],213:[function(require,module,exports){
+},{"../actions/appActions":203,"react":"nakDgH","react/lib/cx":157}],213:[function(require,module,exports){
 'use strict';
 
 var React      = require('react'),
@@ -26237,12 +26305,13 @@ ProjectList = React.createClass({displayName: "ProjectList",
         if(!newProjectName){
             window.alert('Invalid Project Name');
             return;
-        }        
-        newProjectObj.name = newProjectName;
-        newProjectObj.isClosed = false;
+        }
+        newProjectObj = {
+            name     : newProjectName,
+            isClosed : false
+        };
         this.refs.newProjectName.getDOMNode().value = '';
-        AppActions.addProject(newProjectObj);
-        
+        AppActions.addProject(newProjectObj);        
     },
     _onProjectSelect: function(e){
         var selectedProjectName = $(e.target).closest('li')[0].id;
