@@ -16,7 +16,9 @@ MainContent = React.createClass({
     mixins: [ReactFireMixin],
     getInitialState: function() {
         return {
-            projects: []
+            projects: [],
+            selectedProject: '',
+            selectedProjectBugs: []
         };
     },
     componentWillMount: function(){
@@ -28,7 +30,11 @@ MainContent = React.createClass({
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
-        console.log(this.state.projects);
+        var bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject + '/bugs';
+        this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');        
+        this.setState({
+            selectedProject: appStore.selectedProject
+        });
     },
     render: function() {
         return (
@@ -39,7 +45,9 @@ MainContent = React.createClass({
                         projects={this.state.projects}/>
                 </div>
                 <div className="col-xs-3 bug-list-wrapper">
-                    <BugList />
+                    <BugList 
+                        selectedProject={this.state.selectedProject}
+                        selectedProjectBugs={this.state.selectedProjectBugs}/>
                 </div>
                 <div className="col-xs-6 bug-detail-wrapper">
                     <BugDetail />

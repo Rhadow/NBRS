@@ -53,5 +53,6 @@ body{
 .project-list .projects li{
 	list-style: none;
 	border: 1px solid #000;
+	cursor: pointer;
 }
 /* Project List End */
