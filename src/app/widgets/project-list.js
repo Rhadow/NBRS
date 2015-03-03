@@ -1,6 +1,7 @@
 'use strict';
 
-var React    = require('react'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
     // Actions
     AppActions = require('../actions/appActions'),
     ProjectList;
@@ -11,21 +12,27 @@ ProjectList = React.createClass({
     },
     _renderProjects: function(){
         var resultHTML = this.props.projects.map(function(project, i){
+            var projectClosedClass = CX({
+                'label': true,
+                'label-danger': true,
+                'hide': !project.isClosed
+            });
             return (
                 /*jshint ignore:start */
                 <li key={i}>
                     {project.name}
-                    <i className='cancel-icon' data-index={i} onClick={this._deleteProjectByIndex}></i>
+                    <i className='cancel-icon' data-name={project.name} onClick={this._deleteProjectByName}></i>
+                    <i className={projectClosedClass}>Project Closed</i>
                 </li>
                 /*jshint ignore:end */
             );
         }, this);
         return resultHTML;
     },
-    _deleteProjectByIndex: function(e){
-        var index = e.target.getAttribute('data-index');
+    _deleteProjectByName: function(e){
+        var name = e.target.getAttribute('data-name');
         e.preventDefault();
-        AppActions.deleteProject(index);
+        AppActions.deleteProject(name);
     },
     _addProject: function(e){
         var newProjectObj = {},
@@ -36,6 +43,7 @@ ProjectList = React.createClass({
             return;
         }        
         newProjectObj.name = newProjectName;
+        newProjectObj.isClosed = false;
         this.refs.newProjectName.getDOMNode().value = '';
         AppActions.addProject(newProjectObj);
         

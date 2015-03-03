@@ -6,6 +6,9 @@ body{
 	height: 100%;
 	padding-top: 51px;
 }
+.hide{
+	display: none;
+}
 /* Navigation CSS Start */
 .navbar-brand{
 	display: inline-block;
