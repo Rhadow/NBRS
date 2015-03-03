@@ -24,6 +24,7 @@ MainContent = React.createClass({
         appStore.addChangeListener(this._onDataUpdate);
     },
     componentWillUnmount: function(){
+        this.unbind('projects');
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
