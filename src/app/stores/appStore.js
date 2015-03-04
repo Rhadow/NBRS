@@ -2,7 +2,7 @@
 
 var appDispatcher = require('../dispatcher/appDispatcher.js'),
     eventEmitter  = require('events').EventEmitter,
-    constants     = require('../constants/constants.js'),
+    constants     = require('../constants/constants'),
     // Underscore
     _             = require('underscore'),
     // Firebase
@@ -12,8 +12,7 @@ var appDispatcher = require('../dispatcher/appDispatcher.js'),
 appStore = _.extend({}, eventEmitter.prototype, {
     _firebaseRef: new Firebase('https://nbrs.firebaseio.com/projects'),
     
-    selectedProject : '',
-    selectedProjectBugs: [],
+    selectedProject: {},
 
     addProject: function(newProject) {
         var isProjectIdentical = false;
@@ -26,8 +25,6 @@ appStore = _.extend({}, eventEmitter.prototype, {
         });
         if(!isProjectIdentical){
             this._firebaseRef.child(newProject.name).set(newProject);
-            this._firebaseRef.child(newProject.name).child('bugs').child('_init').child('name').set('init');
-            this._firebaseRef.child(newProject.name).child('bugs').child('_init').child('comments').set('none');
         }else{
             window.alert('Same project name already exists!');
         }
@@ -35,12 +32,22 @@ appStore = _.extend({}, eventEmitter.prototype, {
     deleteProject: function(name) {
         this._firebaseRef.child(name).remove();
     },
-    selectProject: function(projectName){   
-        this.selectedProject = projectName;
+    closeProject: function(name){
+        this._firebaseRef.child(name).child('isClosed').set(true);
+    },
+    selectProject: function(projectName){
+        var thisModule = this;     
+        this._firebaseRef.on('value', function(snapshot){
+            snapshot.forEach(function(project){
+                if(project.val().name === projectName){
+                    thisModule.selectedProject = project.val();
+                }
+            });
+        });
     },
     addBug: function(newBug){
         var isBugIdentical = false;
-        this._firebaseRef.child(this.selectedProject).child('bugs').on('value', function(snapshot){
+        this._firebaseRef.child(this.selectedProject.name).child('bugs').on('value', function(snapshot){
             snapshot.forEach(function(project){
                 if(project.val().name === newBug.name){
                     isBugIdentical = true;
@@ -48,10 +55,13 @@ appStore = _.extend({}, eventEmitter.prototype, {
             });
         });
         if(!isBugIdentical){
-            this._firebaseRef.child(this.selectedProject).child('bugs').child(newBug.name).set(newBug);
+            this._firebaseRef.child(this.selectedProject.name).child('bugs').child(newBug.name).set(newBug);
         }else{
             window.alert('Same project name already exists!');
         }
+    },
+    deleteBug: function(bugName){
+        this._firebaseRef.child(this.selectedProject.name).child('bugs').child(bugName).remove();
     },
     emitChange: function() {
         this.emit('change');
@@ -73,11 +83,17 @@ appDispatcher.register(function(payload) {
         case constants.DELETE_PROJECT:
             appStore.deleteProject(action.data);
             break;
+        case constants.CLOSE_PROJECT:
+            appStore.closeProject(action.data);
+            break;
         case constants.SELECT_PROJECT:
             appStore.selectProject(action.data);
             break;
         case constants.ADD_BUG:
             appStore.addBug(action.data);
+            break;
+        case constants.DELETE_BUG:
+            appStore.deleteBug(action.data);
             break;
         default:
             return true;
