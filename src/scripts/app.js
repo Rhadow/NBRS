@@ -26138,7 +26138,8 @@ appStore = _.extend({}, eventEmitter.prototype, {
         this._firebaseRef.child(name).child('isClosed').set(true);
     },
     selectProject: function(projectName){
-        var thisModule = this;     
+        var thisModule = this;
+        thisModule.selectedProject = {};
         this._firebaseRef.on('value', function(snapshot){
             snapshot.forEach(function(project){
                 if(project.val().name === projectName){
@@ -26294,18 +26295,23 @@ BugList = React.createClass({displayName: "BugList",
                 'cancel-icon': true,
                 'hide': this.props.isSelectedProjectClosed
             });
-            if(bug.name !== '_init'){
-                return (
-                    /* jshint ignore:start */
-                    React.createElement("li", {key: i, id: bug.name}, 
-                        bug.name, 
-                        React.createElement("i", {className: bugStatusTagClass}, bug.priority), 
-                        React.createElement("i", {className: cancelClass, "data-name": bug.name, onClick: this._deleteBugByName})
-                    )
-                    /* jshint ignore:end */
-                );
-            }            
+            return (
+                /* jshint ignore:start */
+                React.createElement("li", {key: i, id: bug.name}, 
+                    bug.name, 
+                    React.createElement("i", {className: bugStatusTagClass}, bug.priority), 
+                    React.createElement("i", {className: cancelClass, "data-name": bug.name, onClick: this._deleteBugByName})
+                )
+                /* jshint ignore:end */
+            );
         }, this);
+        if(this.props.selectedProjectBugs.length === 0){
+            bugsHTML = (
+                /* jshint ignore:start */
+                React.createElement("div", null, "There are no bugs in ", this.props.selectedProjectName)
+                /* jshint ignore:end */
+            );
+        }
         return bugsHTML;
     },
     _addBug: function(e){
@@ -26342,6 +26348,13 @@ BugList = React.createClass({displayName: "BugList",
         }
     },
     render: function() {
+        if(!this.props.selectedProjectName){
+            /* jshint ignore:start */
+            return (
+                React.createElement("div", null, "Please select a Project")
+            );
+            /* jshint ignore:end */
+        }
         /* jshint ignore:start */
         return (
             React.createElement("div", null, 

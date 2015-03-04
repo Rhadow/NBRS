@@ -36,7 +36,8 @@ appStore = _.extend({}, eventEmitter.prototype, {
         this._firebaseRef.child(name).child('isClosed').set(true);
     },
     selectProject: function(projectName){
-        var thisModule = this;     
+        var thisModule = this;
+        thisModule.selectedProject = {};
         this._firebaseRef.on('value', function(snapshot){
             snapshot.forEach(function(project){
                 if(project.val().name === projectName){

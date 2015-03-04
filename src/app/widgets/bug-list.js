@@ -61,18 +61,23 @@ BugList = React.createClass({
                 'cancel-icon': true,
                 'hide': this.props.isSelectedProjectClosed
             });
-            if(bug.name !== '_init'){
-                return (
-                    /* jshint ignore:start */
-                    <li key={i} id={bug.name}>
-                        {bug.name}
-                        <i className={bugStatusTagClass}>{bug.priority}</i>
-                        <i className={cancelClass} data-name={bug.name} onClick={this._deleteBugByName}></i>
-                    </li>
-                    /* jshint ignore:end */
-                );
-            }            
+            return (
+                /* jshint ignore:start */
+                <li key={i} id={bug.name}>
+                    {bug.name}
+                    <i className={bugStatusTagClass}>{bug.priority}</i>
+                    <i className={cancelClass} data-name={bug.name} onClick={this._deleteBugByName}></i>
+                </li>
+                /* jshint ignore:end */
+            );
         }, this);
+        if(this.props.selectedProjectBugs.length === 0){
+            bugsHTML = (
+                /* jshint ignore:start */
+                <div>There are no bugs in {this.props.selectedProjectName}</div>
+                /* jshint ignore:end */
+            );
+        }
         return bugsHTML;
     },
     _addBug: function(e){
@@ -109,6 +114,13 @@ BugList = React.createClass({
         }
     },
     render: function() {
+        if(!this.props.selectedProjectName){
+            /* jshint ignore:start */
+            return (
+                <div>Please select a Project</div>
+            );
+            /* jshint ignore:end */
+        }
         /* jshint ignore:start */
         return (
             <div>
