@@ -10,6 +10,18 @@ ProjectList = React.createClass({
     propTypes: {
         projects: React.PropTypes.array.isRequired
     },
+    _renderProjectInputs: function(){
+        var resultHTML = (
+            /*jshint ignore:start */
+            <div className="add-project-wrapper">
+                <span>Add New Project: </span>
+                <input type="text" ref="newProjectName"/>
+                <input type="button" value="Add" onClick={this._addProject} />
+            </div>
+            /*jshint ignore:end */
+        );
+        return resultHTML;
+    },
     _renderProjects: function(){
         var resultHTML = this.props.projects.map(function(project, i){
             var projectClosedClass = CX({
@@ -39,7 +51,8 @@ ProjectList = React.createClass({
         var newProjectObj = {},
             newProjectName = this.refs.newProjectName.getDOMNode().value;
         e.preventDefault();
-        if(!newProjectName){
+        this.refs.newProjectName.getDOMNode().value = '';
+        if(!newProjectName || /[\.\#\$\[\]\/\\]/gi.test(newProjectName)){
             window.alert('Invalid Project Name');
             return;
         }
@@ -47,7 +60,6 @@ ProjectList = React.createClass({
             name     : newProjectName,
             isClosed : false
         };
-        this.refs.newProjectName.getDOMNode().value = '';
         AppActions.addProject(newProjectObj);        
     },
     _onProjectSelect: function(e){
@@ -62,11 +74,7 @@ ProjectList = React.createClass({
             /*jshint ignore:start */
             <div className="project-list">
                 <h2>Project List</h2>
-                <div className="add-project-wrapper">
-                    <span>Add New Project: </span>
-                    <input type="text" ref="newProjectName"/>
-                    <input type="button" value="Add" onClick={this._addProject} />
-                </div>
+                {this._renderProjectInputs()}
                 <ul className='projects'>
                     {this._renderProjects()}
                 </ul>

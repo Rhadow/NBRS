@@ -10,10 +10,16 @@ var appActions = {
 			data: project
 		});
 	},
-	deleteProject: function(index){
+	deleteProject: function(projectName){
 		appDispatcher.handleViewAction({
 			actionType: constants.DELETE_PROJECT,
-			data: index
+			data: projectName
+		});
+	},
+	closeProject: function(projectName){
+		appDispatcher.handleViewAction({
+			actionType: constants.CLOSE_PROJECT,
+			data: projectName
 		});
 	},
 	selectProjectByName: function(projectName){
@@ -26,6 +32,12 @@ var appActions = {
 		appDispatcher.handleViewAction({
 			actionType: constants.ADD_BUG,
 			data: bug
+		});
+	},
+	deleteBug: function(bugName){
+		appDispatcher.handleViewAction({
+			actionType: constants.DELETE_BUG,
+			data: bugName
 		});
 	}
 };

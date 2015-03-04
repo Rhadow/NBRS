@@ -17,8 +17,10 @@ MainContent = React.createClass({
     getInitialState: function() {
         return {
             projects: [],
-            selectedProject: '',
-            selectedProjectBugs: []
+            selectedProject: {},
+            selectedProjectName: '',
+            selectedProjectBugs: [],
+            isSelectedProjectClosed: false
         };
     },
     componentWillMount: function(){
@@ -30,10 +32,12 @@ MainContent = React.createClass({
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
-        var bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject + '/bugs';
-        this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');        
+        var bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs';
+        this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');
         this.setState({
-            selectedProject: appStore.selectedProject
+            selectedProject: appStore.selectedProject,
+            selectedProjectName: appStore.selectedProject.name,
+            isSelectedProjectClosed: appStore.selectedProject.isClosed
         });
     },
     render: function() {
@@ -46,8 +50,9 @@ MainContent = React.createClass({
                 </div>
                 <div className="col-xs-3 bug-list-wrapper">
                     <BugList 
-                        selectedProject={this.state.selectedProject}
-                        selectedProjectBugs={this.state.selectedProjectBugs}/>
+                        selectedProjectName={this.state.selectedProjectName}
+                        selectedProjectBugs={this.state.selectedProjectBugs}
+                        isSelectedProjectClosed={this.state.isSelectedProjectClosed}/>
                 </div>
                 <div className="col-xs-6 bug-detail-wrapper">
                     <BugDetail />
