@@ -20,6 +20,9 @@ MainContent = React.createClass({
             selectedProject: {},
             selectedProjectName: '',
             selectedProjectBugs: [],
+            selectedProjectBugComments: [],
+            selectedBug: {},
+            selectedBugName: '',
             isSelectedProjectClosed: false
         };
     },
@@ -32,12 +35,21 @@ MainContent = React.createClass({
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
-        var bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs';
-        this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');
+        var bugsURL, commentsURL;
+        if(appStore.selectedProject.name){
+            bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs';
+            this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');
+        }
+        if(appStore.selectedBug.name){
+            commentsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs/' + appStore.selectedBug.name + '/comments';
+            this.bindAsArray(new Firebase(commentsURL), 'selectedProjectBugComments');
+        }
         this.setState({
             selectedProject: appStore.selectedProject,
             selectedProjectName: appStore.selectedProject.name,
-            isSelectedProjectClosed: appStore.selectedProject.isClosed
+            isSelectedProjectClosed: appStore.selectedProject.isClosed,
+            selectedBug: appStore.selectedBug,
+            selectedBugName: appStore.selectedBug.name
         });
     },
     render: function() {
@@ -46,16 +58,20 @@ MainContent = React.createClass({
             <div className="main-content-wrapper row">
                 <div className="col-xs-3 project-list-wrapper">
                     <ProjectList 
-                        projects={this.state.projects}/>
+                        projects={this.state.projects}
+                        selectedProjectName={this.state.selectedProjectName}/>
                 </div>
                 <div className="col-xs-3 bug-list-wrapper">
                     <BugList 
                         selectedProjectName={this.state.selectedProjectName}
                         selectedProjectBugs={this.state.selectedProjectBugs}
+                        selectedBugName={this.state.selectedBugName}
                         isSelectedProjectClosed={this.state.isSelectedProjectClosed}/>
                 </div>
                 <div className="col-xs-6 bug-detail-wrapper">
-                    <BugDetail />
+                    <BugDetail 
+                        selectedBugName={this.state.selectedBugName}
+                        selectedProjectBugComments={this.state.selectedProjectBugComments}/>
                 </div>
             </div>
             /*jshint ignore:end */

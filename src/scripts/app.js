@@ -25910,7 +25910,13 @@ var appActions = {
 			actionType: constants.DELETE_BUG,
 			data: bugName
 		});
-	}
+	},
+	selectBugByName: function(bugName){
+		appDispatcher.handleViewAction({
+			actionType: constants.SELECT_BUG,
+			data: bugName
+		});
+	},
 };
 
 module.exports = appActions;
@@ -25923,6 +25929,7 @@ var constants = {
 	SELECT_PROJECT: 'SELECT_PROJECT',
 	ADD_BUG: 'ADD_BUG',
 	DELETE_BUG: 'DELETE_BUG',
+	SELECT_BUG: 'SELECT_BUG',
 	CLOSE_PROJECT: 'CLOSE_PROJECT',
 	PRIORITY: {
 		LOW: 'Low',
@@ -26001,6 +26008,9 @@ MainContent = React.createClass({displayName: "MainContent",
             selectedProject: {},
             selectedProjectName: '',
             selectedProjectBugs: [],
+            selectedProjectBugComments: [],
+            selectedBug: {},
+            selectedBugName: '',
             isSelectedProjectClosed: false
         };
     },
@@ -26013,12 +26023,21 @@ MainContent = React.createClass({displayName: "MainContent",
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
-        var bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs';
-        this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');
+        var bugsURL, commentsURL;
+        if(appStore.selectedProject.name){
+            bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs';
+            this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');
+        }
+        if(appStore.selectedBug.name){
+            commentsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs/' + appStore.selectedBug.name + '/comments';
+            this.bindAsArray(new Firebase(commentsURL), 'selectedProjectBugComments');
+        }
         this.setState({
             selectedProject: appStore.selectedProject,
             selectedProjectName: appStore.selectedProject.name,
-            isSelectedProjectClosed: appStore.selectedProject.isClosed
+            isSelectedProjectClosed: appStore.selectedProject.isClosed,
+            selectedBug: appStore.selectedBug,
+            selectedBugName: appStore.selectedBug.name
         });
     },
     render: function() {
@@ -26027,16 +26046,20 @@ MainContent = React.createClass({displayName: "MainContent",
             React.createElement("div", {className: "main-content-wrapper row"}, 
                 React.createElement("div", {className: "col-xs-3 project-list-wrapper"}, 
                     React.createElement(ProjectList, {
-                        projects: this.state.projects})
+                        projects: this.state.projects, 
+                        selectedProjectName: this.state.selectedProjectName})
                 ), 
                 React.createElement("div", {className: "col-xs-3 bug-list-wrapper"}, 
                     React.createElement(BugList, {
                         selectedProjectName: this.state.selectedProjectName, 
                         selectedProjectBugs: this.state.selectedProjectBugs, 
+                        selectedBugName: this.state.selectedBugName, 
                         isSelectedProjectClosed: this.state.isSelectedProjectClosed})
                 ), 
                 React.createElement("div", {className: "col-xs-6 bug-detail-wrapper"}, 
-                    React.createElement(BugDetail, null)
+                    React.createElement(BugDetail, {
+                        selectedBugName: this.state.selectedBugName, 
+                        selectedProjectBugComments: this.state.selectedProjectBugComments})
                 )
             )
             /*jshint ignore:end */
@@ -26115,6 +26138,7 @@ appStore = _.extend({}, eventEmitter.prototype, {
     _firebaseRef: new Firebase('https://nbrs.firebaseio.com/projects'),
     
     selectedProject: {},
+    selectedBug: {},
 
     addProject: function(newProject) {
         var isProjectIdentical = false;
@@ -26131,7 +26155,7 @@ appStore = _.extend({}, eventEmitter.prototype, {
             window.alert('Same project name already exists!');
         }
     },
-    deleteProject: function(name) {
+    deleteProject: function(name) { 
         this._firebaseRef.child(name).remove();
     },
     closeProject: function(name){
@@ -26139,14 +26163,17 @@ appStore = _.extend({}, eventEmitter.prototype, {
     },
     selectProject: function(projectName){
         var thisModule = this;
-        thisModule.selectedProject = {};
-        this._firebaseRef.on('value', function(snapshot){
-            snapshot.forEach(function(project){
-                if(project.val().name === projectName){
-                    thisModule.selectedProject = project.val();
-                }
+        if(projectName !== thisModule.selectedProject.name){
+            thisModule.selectedProject = {};
+            thisModule.selectedBug = {};
+            this._firebaseRef.on('value', function(snapshot){
+                snapshot.forEach(function(project){
+                    if(project.val().name === projectName){
+                        thisModule.selectedProject = project.val();
+                    }
+                });
             });
-        });
+        }        
     },
     addBug: function(newBug){
         var isBugIdentical = false;
@@ -26165,6 +26192,19 @@ appStore = _.extend({}, eventEmitter.prototype, {
     },
     deleteBug: function(bugName){
         this._firebaseRef.child(this.selectedProject.name).child('bugs').child(bugName).remove();
+    },
+    selectBug: function(bugName){
+        var thisModule = this;
+        thisModule.selectedBug = {};
+        if(this.selectedProject.name){
+            this._firebaseRef.child(this.selectedProject.name).child('bugs').on('value', function(snapshot){
+                snapshot.forEach(function(bug){
+                    if(bug.val().name === bugName){
+                        thisModule.selectedBug = bug.val();
+                    }
+                });
+            });
+        }        
     },
     emitChange: function() {
         this.emit('change');
@@ -26198,6 +26238,9 @@ appDispatcher.register(function(payload) {
         case constants.DELETE_BUG:
             appStore.deleteBug(action.data);
             break;
+        case constants.SELECT_BUG:
+            appStore.selectBug(action.data);
+            break;
         default:
             return true;
     }
@@ -26215,11 +26258,28 @@ var React    = require('react'),
     BugDetail;
 
 BugDetail = React.createClass({displayName: "BugDetail",
+    propTypes: {
+        selectedBugName: React.PropTypes.string,
+        selectedProjectBugComments: React.PropTypes.array,
+    },
+    getDefaultProps: function() {
+        return {
+            selectedBugName: '',
+            selectedProjectBugComments: [],
+        };
+    },
     render: function() {
+        if(!this.props.selectedBugName){
+            /* jshint ignore:start */
+            return (
+                React.createElement("div", null, "Please select a Bug")
+            );
+            /* jshint ignore:end */
+        }
         /* jshint ignore:start */
         return (
             React.createElement("div", null, 
-                React.createElement("h2", null, "Details"), 
+                React.createElement("h2", null, this.props.selectedBugName, " Details"), 
                 React.createElement("div", null, 
                     "Some Bug Details"
                 )
@@ -26246,14 +26306,22 @@ BugList = React.createClass({displayName: "BugList",
     propTypes: {
         selectedProjectName: React.PropTypes.string,
         selectedProjectBugs: React.PropTypes.array,
+        selectedBugName: React.PropTypes.string,
         isSelectedProjectClosed: React.PropTypes.bool
     },
     getDefaultProps: function() {
         return {
             selectedProjectName: '',
             selectedProjectBugs: [],
+            selectedBugName: '',
             isSelectedProjectClosed: false
         };
+    },
+    componentDidUpdate: function(prevProps, prevState) {
+        if((prevProps.selectedProjectName !== this.props.selectedProjectName) && this.refs.newBugName){
+            this.refs.newBugName.getDOMNode().value = '';
+            this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
+        }        
     },
     _renderBugInputs:function(){
         var resultHTML, addBugClasses;       
@@ -26297,7 +26365,7 @@ BugList = React.createClass({displayName: "BugList",
             });
             return (
                 /* jshint ignore:start */
-                React.createElement("li", {key: i, id: bug.name}, 
+                React.createElement("li", {key: i, id: bug.name, onClick: this._onBugSelect}, 
                     bug.name, 
                     React.createElement("i", {className: bugStatusTagClass}, bug.priority), 
                     React.createElement("i", {className: cancelClass, "data-name": bug.name, onClick: this._deleteBugByName})
@@ -26330,22 +26398,34 @@ BugList = React.createClass({displayName: "BugList",
             priority : priority
         };
         AppActions.addBug(newBugObj);
+        AppActions.selectBugByName(newBugName);
     },
     _deleteBugByName: function(e){
         var bugName     = e.target.getAttribute('data-name'),
             projectName = this.props.selectedProjectName;
         e.preventDefault();
+        e.stopPropagation();
         if(this.props.isSelectedProjectClosed){
             window.alert('Project is closed!');
             return;
         }
-        AppActions.deleteBug(bugName);
+        AppActions.deleteBug(bugName);        
+        if(bugName === this.props.selectedBugName){
+            AppActions.selectBugByName('');
+        } 
     },
     _closeProject: function(e){
         var confirmClose = window.confirm('Close this project?');
         if(confirmClose){
             AppActions.closeProject(this.props.selectedProjectName);
         }
+    },
+    _onBugSelect: function(e){
+        var selectedBugName = $(e.target).closest('li')[0].id;
+        e.preventDefault();
+        if(!$(e.target).hasClass('cancel-icon')){
+            AppActions.selectBugByName(selectedBugName);
+        } 
     },
     render: function() {
         if(!this.props.selectedProjectName){
@@ -26354,20 +26434,19 @@ BugList = React.createClass({displayName: "BugList",
                 React.createElement("div", null, "Please select a Project")
             );
             /* jshint ignore:end */
-        }
-        /* jshint ignore:start */
+        }        
         return (
-            React.createElement("div", null, 
+            /* jshint ignore:start */
+            React.createElement("div", {className: "bug-list"}, 
                 React.createElement("h2", null, this.props.selectedProjectName, " Bug List"), 
                 this._renderBugInputs(), 
-                React.createElement("ul", null, 
+                React.createElement("ul", {className: "bugs"}, 
                     this._renderBugs()
                 )
             )
-        );
-        /* jshint ignore:end */
+            /* jshint ignore:end */
+        );        
     }
-
 });
 
 module.exports = BugList;
@@ -26382,7 +26461,13 @@ var React      = require('react'),
 
 ProjectList = React.createClass({displayName: "ProjectList",
     propTypes: {
-        projects: React.PropTypes.array.isRequired
+        projects: React.PropTypes.array.isRequired,
+        selectedProjectName: React.PropTypes.string
+    },
+    getDefaultProps: function() {
+        return {
+            selectedProjectName: ''
+        };
     },
     _renderProjectInputs: function(){
         var resultHTML = (
@@ -26407,8 +26492,8 @@ ProjectList = React.createClass({displayName: "ProjectList",
                 /*jshint ignore:start */
                 React.createElement("li", {key: i, id: project.name, onClick: this._onProjectSelect}, 
                     project.name, 
-                    React.createElement("i", {className: "cancel-icon", "data-name": project.name, onClick: this._deleteProjectByName}), 
-                    React.createElement("i", {className: projectClosedClass}, "Project Closed")
+                    React.createElement("i", {className: projectClosedClass}, "Project Closed"), 
+                    React.createElement("i", {className: "cancel-icon", "data-name": project.name, onClick: this._deleteProjectByName})
                 )
                 /*jshint ignore:end */
             );
@@ -26418,8 +26503,12 @@ ProjectList = React.createClass({displayName: "ProjectList",
     _deleteProjectByName: function(e){
         var name = e.target.getAttribute('data-name');
         e.preventDefault();
+        e.stopPropagation();
         AppActions.deleteProject(name);
-        AppActions.selectProjectByName('');
+        if(name === this.props.selectedProjectName){
+            AppActions.selectProjectByName('');
+            AppActions.selectBugByName('');
+        }        
     },
     _addProject: function(e){
         var newProjectObj = {},
@@ -26434,7 +26523,8 @@ ProjectList = React.createClass({displayName: "ProjectList",
             name     : newProjectName,
             isClosed : false
         };
-        AppActions.addProject(newProjectObj);        
+        AppActions.addProject(newProjectObj);
+        AppActions.selectProjectByName(newProjectName);
     },
     _onProjectSelect: function(e){
         var selectedProjectName = $(e.target).closest('li')[0].id;

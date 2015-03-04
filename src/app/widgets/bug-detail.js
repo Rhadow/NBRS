@@ -6,11 +6,28 @@ var React    = require('react'),
     BugDetail;
 
 BugDetail = React.createClass({
+    propTypes: {
+        selectedBugName: React.PropTypes.string,
+        selectedProjectBugComments: React.PropTypes.array,
+    },
+    getDefaultProps: function() {
+        return {
+            selectedBugName: '',
+            selectedProjectBugComments: [],
+        };
+    },
     render: function() {
+        if(!this.props.selectedBugName){
+            /* jshint ignore:start */
+            return (
+                <div>Please select a Bug</div>
+            );
+            /* jshint ignore:end */
+        }
         /* jshint ignore:start */
         return (
             <div>
-                <h2>Details</h2>
+                <h2>{this.props.selectedBugName} Details</h2>
                 <div>
                     Some Bug Details
                 </div>
