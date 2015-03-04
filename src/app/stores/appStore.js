@@ -13,6 +13,7 @@ appStore = _.extend({}, eventEmitter.prototype, {
     _firebaseRef: new Firebase('https://nbrs.firebaseio.com/projects'),
     
     selectedProject: {},
+    selectedBug: {},
 
     addProject: function(newProject) {
         var isProjectIdentical = false;
@@ -29,7 +30,7 @@ appStore = _.extend({}, eventEmitter.prototype, {
             window.alert('Same project name already exists!');
         }
     },
-    deleteProject: function(name) {
+    deleteProject: function(name) { 
         this._firebaseRef.child(name).remove();
     },
     closeProject: function(name){
@@ -37,14 +38,17 @@ appStore = _.extend({}, eventEmitter.prototype, {
     },
     selectProject: function(projectName){
         var thisModule = this;
-        thisModule.selectedProject = {};
-        this._firebaseRef.on('value', function(snapshot){
-            snapshot.forEach(function(project){
-                if(project.val().name === projectName){
-                    thisModule.selectedProject = project.val();
-                }
+        if(projectName !== thisModule.selectedProject.name){
+            thisModule.selectedProject = {};
+            thisModule.selectedBug = {};
+            this._firebaseRef.on('value', function(snapshot){
+                snapshot.forEach(function(project){
+                    if(project.val().name === projectName){
+                        thisModule.selectedProject = project.val();
+                    }
+                });
             });
-        });
+        }        
     },
     addBug: function(newBug){
         var isBugIdentical = false;
@@ -63,6 +67,19 @@ appStore = _.extend({}, eventEmitter.prototype, {
     },
     deleteBug: function(bugName){
         this._firebaseRef.child(this.selectedProject.name).child('bugs').child(bugName).remove();
+    },
+    selectBug: function(bugName){
+        var thisModule = this;
+        thisModule.selectedBug = {};
+        if(this.selectedProject.name){
+            this._firebaseRef.child(this.selectedProject.name).child('bugs').on('value', function(snapshot){
+                snapshot.forEach(function(bug){
+                    if(bug.val().name === bugName){
+                        thisModule.selectedBug = bug.val();
+                    }
+                });
+            });
+        }        
     },
     emitChange: function() {
         this.emit('change');
@@ -95,6 +112,9 @@ appDispatcher.register(function(payload) {
             break;
         case constants.DELETE_BUG:
             appStore.deleteBug(action.data);
+            break;
+        case constants.SELECT_BUG:
+            appStore.selectBug(action.data);
             break;
         default:
             return true;

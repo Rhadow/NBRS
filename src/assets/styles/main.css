@@ -56,3 +56,13 @@ body{
 	cursor: pointer;
 }
 /* Project List End */
+/* Bug List Start */
+.bug-list .bugs{
+	padding: 0;
+}
+.bug-list .bugs li{
+	list-style: none;
+	border: 1px solid #000;
+	cursor: pointer;
+}
+/* Bug List End */

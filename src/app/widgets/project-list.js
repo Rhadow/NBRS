@@ -8,7 +8,13 @@ var React      = require('react'),
 
 ProjectList = React.createClass({
     propTypes: {
-        projects: React.PropTypes.array.isRequired
+        projects: React.PropTypes.array.isRequired,
+        selectedProjectName: React.PropTypes.string
+    },
+    getDefaultProps: function() {
+        return {
+            selectedProjectName: ''
+        };
     },
     _renderProjectInputs: function(){
         var resultHTML = (
@@ -33,8 +39,8 @@ ProjectList = React.createClass({
                 /*jshint ignore:start */
                 <li key={i} id={project.name} onClick={this._onProjectSelect}>
                     {project.name}
-                    <i className='cancel-icon' data-name={project.name} onClick={this._deleteProjectByName}></i>
                     <i className={projectClosedClass}>Project Closed</i>
+                    <i className='cancel-icon' data-name={project.name} onClick={this._deleteProjectByName}></i>
                 </li>
                 /*jshint ignore:end */
             );
@@ -44,8 +50,12 @@ ProjectList = React.createClass({
     _deleteProjectByName: function(e){
         var name = e.target.getAttribute('data-name');
         e.preventDefault();
+        e.stopPropagation();
         AppActions.deleteProject(name);
-        AppActions.selectProjectByName('');
+        if(name === this.props.selectedProjectName){
+            AppActions.selectProjectByName('');
+            AppActions.selectBugByName('');
+        }        
     },
     _addProject: function(e){
         var newProjectObj = {},
@@ -60,7 +70,8 @@ ProjectList = React.createClass({
             name     : newProjectName,
             isClosed : false
         };
-        AppActions.addProject(newProjectObj);        
+        AppActions.addProject(newProjectObj);
+        AppActions.selectProjectByName(newProjectName);
     },
     _onProjectSelect: function(e){
         var selectedProjectName = $(e.target).closest('li')[0].id;

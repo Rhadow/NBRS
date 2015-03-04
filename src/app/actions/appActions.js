@@ -39,7 +39,13 @@ var appActions = {
 			actionType: constants.DELETE_BUG,
 			data: bugName
 		});
-	}
+	},
+	selectBugByName: function(bugName){
+		appDispatcher.handleViewAction({
+			actionType: constants.SELECT_BUG,
+			data: bugName
+		});
+	},
 };
 
 module.exports = appActions;
