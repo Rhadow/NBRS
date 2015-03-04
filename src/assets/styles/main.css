@@ -55,6 +55,10 @@ body{
 	border: 1px solid #000;
 	cursor: pointer;
 }
+.project-list .add-project-form-wrapper{
+	margin-bottom: 5px;
+	border: 1px solid #01cafe;
+}
 /* Project List End */
 /* Bug List Start */
 .bug-list .bugs{
@@ -65,4 +69,14 @@ body{
 	border: 1px solid #000;
 	cursor: pointer;
 }
+.bug-list .add-bug-form-wrapper{
+	margin-bottom: 5px;
+	border: 1px solid #01cafe;
+}
 /* Bug List End */
+/* Bug Detail Start */
+.bug-detail .update-bug-form-wrapper{
+	margin-bottom: 5px;
+	border: 1px solid #01cafe;
+}
+/* Bug Detail End */

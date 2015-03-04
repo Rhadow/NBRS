@@ -32,7 +32,7 @@ BugList = React.createClass({
     _renderBugInputs:function(){
         var resultHTML, addBugClasses;       
         addBugClasses = CX({
-            'add-bug-wrapper': true,
+            'add-bug-form-wrapper': true,
             'hide': !this.props.selectedProjectName
         });
         if(!this.props.isSelectedProjectClosed){
@@ -137,7 +137,7 @@ BugList = React.createClass({
         if(!this.props.selectedProjectName){
             /* jshint ignore:start */
             return (
-                <div>Please select a Project</div>
+                <div className="bug-list">Please select a Project</div>
             );
             /* jshint ignore:end */
         }        

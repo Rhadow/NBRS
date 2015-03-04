@@ -49,7 +49,8 @@ MainContent = React.createClass({
             selectedProjectName: appStore.selectedProject.name,
             isSelectedProjectClosed: appStore.selectedProject.isClosed,
             selectedBug: appStore.selectedBug,
-            selectedBugName: appStore.selectedBug.name
+            selectedBugName: appStore.selectedBug.name,
+            selectedBugPriority: appStore.selectedBug.priority
         });
     },
     render: function() {
@@ -71,7 +72,9 @@ MainContent = React.createClass({
                 <div className="col-xs-6 bug-detail-wrapper">
                     <BugDetail 
                         selectedBugName={this.state.selectedBugName}
-                        selectedProjectBugComments={this.state.selectedProjectBugComments}/>
+                        selectedProjectBugComments={this.state.selectedProjectBugComments}
+                        selectedBugPriority={this.state.selectedBugPriority}
+                        isSelectedProjectClosed={this.state.isSelectedProjectClosed}/>
                 </div>
             </div>
             /*jshint ignore:end */
