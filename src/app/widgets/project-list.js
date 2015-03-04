@@ -19,7 +19,7 @@ ProjectList = React.createClass({
     _renderProjectInputs: function(){
         var resultHTML = (
             /*jshint ignore:start */
-            <div className="add-project-wrapper">
+            <div className="add-project-form-wrapper">
                 <span>Add New Project: </span>
                 <input type="text" ref="newProjectName"/>
                 <input type="button" value="Add" onClick={this._addProject} />
