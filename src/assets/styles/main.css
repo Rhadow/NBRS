@@ -88,5 +88,16 @@ body{
 /* Bug Detail End */
 
 
+/* Float-Input Start */
+.float-input{
+	position: absolute;
+	border: 1px solid green;
+	border-radius: 5px;
+	z-index: 500;
+}
+/* Float-Input End */
+
+
+
 /* Animation Start */
 /* Animation End */

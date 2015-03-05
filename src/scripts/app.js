@@ -26938,14 +26938,14 @@ module.exports = BugDetail;
 },{"../constants/constants":211,"../stores/appStore.js":217,"react":"nakDgH","react/lib/cx":164}],219:[function(require,module,exports){
 'use strict';
 
-var React      = require('react'),
-    CX         = require('react/lib/cx'),
+var React        = require('react'),
+    CX           = require('react/lib/cx'),
     // Actions
-    AppActions = require('../actions/appActions'),    
+    AppActions   = require('../actions/appActions'),    
     // Hash
     passwordHash = require('password-hash'),
     // Constants
-    constants  = require('../constants/constants'),
+    constants    = require('../constants/constants'),
     BugList;
 
 BugList = React.createClass({displayName: "BugList",
@@ -27061,14 +27061,12 @@ BugList = React.createClass({displayName: "BugList",
             projectName    = this.props.selectedProjectName,
             passwordInput,
             hashedPassword = passwordHash.generate(this.props.combo);
-
         e.preventDefault();
         e.stopPropagation();
-
         passwordInput = window.prompt('Please enter password to delete:');
         if(passwordHash.verify(passwordInput, hashedPassword)){
             if(this.props.isSelectedProjectClosed){
-                window.alert('Project is closed!');
+                swal('Oops...', 'project is closed!', 'error');
                 return;
             }
             AppActions.deleteBug(bugName);        
@@ -27076,14 +27074,14 @@ BugList = React.createClass({displayName: "BugList",
                 AppActions.selectBugByName('');
             }
         }else{
-            window.alert('wrong password');
+            swal('Oops...', 'wrong password!', 'error');
         }        
     },
     _closeProject: function(e){
         var thisModule = this;
         swal({
                 title: 'Close this project?',   
-                text: 'You will not be able to add new bugs into this project!',   
+                text: 'You will not be able to edit this project anymore!',   
                 type: 'warning',   
                 showCancelButton: true,   
                 confirmButtonColor: '#DD6B55',   
@@ -27108,7 +27106,7 @@ BugList = React.createClass({displayName: "BugList",
                 React.createElement("div", {className: "bug-list"}, "Please select a Project")
             );
             /* jshint ignore:end */
-        }        
+        }
         return (
             /* jshint ignore:start */
             React.createElement("div", {className: "bug-list"}, 
