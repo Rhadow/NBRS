@@ -82,11 +82,11 @@ ProjectList = React.createClass({
         var newProjectObj = {},
             newProjectName = this.refs.newProjectName.getDOMNode().value;
         e.preventDefault();
-        this.refs.newProjectName.getDOMNode().value = '';
         if(!newProjectName || /[\.\#\$\[\]\/\\]/gi.test(newProjectName)){
-            ($(this.refs.newProjectName.getDOMNode())).effect('shake');
+            $('.add-project-form-wrapper').effect('shake');
             return;
-        }
+        }        
+        this.refs.newProjectName.getDOMNode().value = '';
         newProjectObj = {
             name     : newProjectName,
             isClosed : false
