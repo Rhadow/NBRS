@@ -6,6 +6,7 @@
   ],
   "dependencies": {
   	"jquery": "~2.1.0",
+    "jqueryui": "",
   	"bootstrap": "~3.2.0",
   	"Cookies": "",
   	"moment": "",

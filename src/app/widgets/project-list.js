@@ -20,12 +20,22 @@ ProjectList = React.createClass({
             combo: ''
         };
     },
+    componentDidMount: function() {
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+    },
     _renderProjectInputs: function(){
         var resultHTML = (
             /*jshint ignore:start */
             <div className="add-project-form-wrapper">
                 <span>Add New Project: </span>
-                <input type="text" ref="newProjectName"/>
+                <input
+                    type="text" 
+                    ref="newProjectName" 
+                    data-toggle="tooltip" 
+                    data-placement="top" 
+                    title="Must not be empty or contain the following characters: '. # $ [ ] / \'"/>
                 <input type="button" value="Add" onClick={this._addProject} />
             </div>
             /*jshint ignore:end */
@@ -74,7 +84,7 @@ ProjectList = React.createClass({
         e.preventDefault();
         this.refs.newProjectName.getDOMNode().value = '';
         if(!newProjectName || /[\.\#\$\[\]\/\\]/gi.test(newProjectName)){
-            window.alert('Invalid Project Name');
+            ($(this.refs.newProjectName.getDOMNode())).effect('shake');
             return;
         }
         newProjectObj = {

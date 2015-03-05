@@ -27129,12 +27129,22 @@ ProjectList = React.createClass({displayName: "ProjectList",
             combo: ''
         };
     },
+    componentDidMount: function() {
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+    },
     _renderProjectInputs: function(){
         var resultHTML = (
             /*jshint ignore:start */
             React.createElement("div", {className: "add-project-form-wrapper"}, 
                 React.createElement("span", null, "Add New Project: "), 
-                React.createElement("input", {type: "text", ref: "newProjectName"}), 
+                React.createElement("input", {
+                    type: "text", 
+                    ref: "newProjectName", 
+                    "data-toggle": "tooltip", 
+                    "data-placement": "top", 
+                    title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'"}), 
                 React.createElement("input", {type: "button", value: "Add", onClick: this._addProject})
             )
             /*jshint ignore:end */
@@ -27183,7 +27193,7 @@ ProjectList = React.createClass({displayName: "ProjectList",
         e.preventDefault();
         this.refs.newProjectName.getDOMNode().value = '';
         if(!newProjectName || /[\.\#\$\[\]\/\\]/gi.test(newProjectName)){
-            window.alert('Invalid Project Name');
+            ($(this.refs.newProjectName.getDOMNode())).effect('shake');
             return;
         }
         newProjectObj = {
