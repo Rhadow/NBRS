@@ -6,15 +6,13 @@ var appDispatcher = require('../dispatcher/appDispatcher.js'),
     // Underscore
     _             = require('underscore'),
     // Firebase
-    Firebase      = require('firebase'),   
+    Firebase      = require('firebase'),
     appStore;
 
 appStore = _.extend({}, eventEmitter.prototype, {
     _firebaseRef: new Firebase('https://nbrs.firebaseio.com/projects'),
-    
     selectedProject: {},
     selectedBug: {},
-
     addProject: function(newProject) {
         var isProjectIdentical = false;
         this._firebaseRef.on('value', function(snapshot){
@@ -91,6 +89,8 @@ appStore = _.extend({}, eventEmitter.prototype, {
         this.removeListener('change', callback);
     },
 });
+
+
 
 appDispatcher.register(function(payload) {
     var action = payload.action;

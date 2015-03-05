@@ -1,19 +1,23 @@
 'use strict';
 
-var React      = require('react'),
-    CX         = require('react/lib/cx'),
+var React        = require('react'),
+    CX           = require('react/lib/cx'),
     // Actions
-    AppActions = require('../actions/appActions'),
+    AppActions   = require('../actions/appActions'),
+    // Hash
+    passwordHash = require('password-hash'),
     ProjectList;
 
 ProjectList = React.createClass({
     propTypes: {
         projects: React.PropTypes.array.isRequired,
-        selectedProjectName: React.PropTypes.string
+        selectedProjectName: React.PropTypes.string,
+        combo: React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
-            selectedProjectName: ''
+            selectedProjectName: '',
+            combo: ''
         };
     },
     _renderProjectInputs: function(){
@@ -48,14 +52,21 @@ ProjectList = React.createClass({
         return resultHTML;
     },
     _deleteProjectByName: function(e){
-        var name = e.target.getAttribute('data-name');
+        var passwordInput,
+            hashedPassword = passwordHash.generate(this.props.combo),
+            name = e.target.getAttribute('data-name');
         e.preventDefault();
         e.stopPropagation();
-        AppActions.deleteProject(name);
-        if(name === this.props.selectedProjectName){
-            AppActions.selectProjectByName('');
-            AppActions.selectBugByName('');
-        }        
+        passwordInput = window.prompt('Please enter password to delete:');
+        if(passwordHash.verify(passwordInput, hashedPassword)){
+            AppActions.deleteProject(name);
+            if(name === this.props.selectedProjectName){
+                AppActions.selectProjectByName('');
+                AppActions.selectBugByName('');
+            } 
+        }else{
+            window.alert('wrong password');
+        }
     },
     _addProject: function(e){
         var newProjectObj = {},
