@@ -28,6 +28,10 @@ BugList = React.createClass({
         };
     },
     componentDidUpdate: function(prevProps, prevState) {
+        var thisModule = this;
+        $(function () {
+            $(thisModule.getDOMNode()).find('[data-toggle="tooltip"]').tooltip();
+        });
         if((prevProps.selectedProjectName !== this.props.selectedProjectName) && this.refs.newBugName){
             this.refs.newBugName.getDOMNode().value = '';
             this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
@@ -44,7 +48,12 @@ BugList = React.createClass({
                 /*jshint ignore:start */
                 <div className={addBugClasses}>
                     <span>Add New Bug: </span>
-                    <input type="text" ref="newBugName"/>
+                    <input 
+                        type="text" 
+                        ref="newBugName"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Must not be empty or contain the following characters: '. # $ [ ] / \'"/>
                     <select ref="priority">
                         <option>{constants.PRIORITY.LOW}</option>
                         <option>{constants.PRIORITY.MEDIUM}</option>
@@ -96,16 +105,16 @@ BugList = React.createClass({
             newBugName = this.refs.newBugName.getDOMNode().value,
             priority = this.refs.priority.getDOMNode().value;
         e.preventDefault();
-        this.refs.newBugName.getDOMNode().value = '';
         this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
         if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){
-            window.alert('Invalid Bug Name');
+            $('.add-bug-form-wrapper').effect('shake', {distance: 10});
             return;
         }
         newBugObj = {
             name     : newBugName,
             priority : priority
-        };
+        };        
+        this.refs.newBugName.getDOMNode().value = '';
         AppActions.addBug(newBugObj);
         AppActions.selectBugByName(newBugName);
     },
@@ -133,10 +142,19 @@ BugList = React.createClass({
         }        
     },
     _closeProject: function(e){
-        var confirmClose = window.confirm('Close this project?');
-        if(confirmClose){
-            AppActions.closeProject(this.props.selectedProjectName);
-        }
+        var thisModule = this;
+        swal({
+                title: 'Close this project?',   
+                text: 'You will not be able to add new bugs into this project!',   
+                type: 'warning',   
+                showCancelButton: true,   
+                confirmButtonColor: '#DD6B55',   
+                confirmButtonText: 'Yes, close it!',   
+                closeOnConfirm: false
+            }, function(){
+                AppActions.closeProject(thisModule.props.selectedProjectName);
+                swal('Closed!', thisModule.props.selectedProjectName + ' has been closed.', 'success'); 
+        });
     },
     _onBugSelect: function(e){
         var selectedBugName = $(e.target).closest('li')[0].id;

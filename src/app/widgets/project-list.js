@@ -20,10 +20,11 @@ ProjectList = React.createClass({
             combo: ''
         };
     },
-    componentDidMount: function() {
+    componentDidUpdate: function(prevProps, prevState) {
+        var thisModule = this;
         $(function () {
-          $('[data-toggle="tooltip"]').tooltip();
-        });
+            $(thisModule.getDOMNode()).find('[data-toggle="tooltip"]').tooltip();
+        });        
     },
     _renderProjectInputs: function(){
         var resultHTML = (
@@ -83,7 +84,7 @@ ProjectList = React.createClass({
             newProjectName = this.refs.newProjectName.getDOMNode().value;
         e.preventDefault();
         if(!newProjectName || /[\.\#\$\[\]\/\\]/gi.test(newProjectName)){
-            $('.add-project-form-wrapper').effect('shake');
+            $('.add-project-form-wrapper').effect('shake', {distance: 10});
             return;
         }        
         this.refs.newProjectName.getDOMNode().value = '';
