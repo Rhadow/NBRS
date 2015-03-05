@@ -3,7 +3,9 @@
 var React      = require('react'),
     CX         = require('react/lib/cx'),
     // Actions
-    AppActions = require('../actions/appActions'),
+    AppActions = require('../actions/appActions'),    
+    // Hash
+    passwordHash = require('password-hash'),
     // Constants
     constants  = require('../constants/constants'),
     BugList;
@@ -13,14 +15,16 @@ BugList = React.createClass({
         selectedProjectName: React.PropTypes.string,
         selectedProjectBugs: React.PropTypes.array,
         selectedBugName: React.PropTypes.string,
-        isSelectedProjectClosed: React.PropTypes.bool
+        isSelectedProjectClosed: React.PropTypes.bool,
+        combo: React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
             selectedProjectName: '',
             selectedProjectBugs: [],
             selectedBugName: '',
-            isSelectedProjectClosed: false
+            isSelectedProjectClosed: false,
+            combo: ''
         };
     },
     componentDidUpdate: function(prevProps, prevState) {
@@ -45,7 +49,6 @@ BugList = React.createClass({
                         <option>{constants.PRIORITY.LOW}</option>
                         <option>{constants.PRIORITY.MEDIUM}</option>
                         <option>{constants.PRIORITY.HIGH}</option>
-                        <option>{constants.PRIORITY.SOLVED}</option>
                     </select>
                     <input type="button" value="Add" onClick={this._addBug} />
                     <input className="btn btn-danger" type="button" value="Close Project" onClick={this._closeProject} />
@@ -107,18 +110,27 @@ BugList = React.createClass({
         AppActions.selectBugByName(newBugName);
     },
     _deleteBugByName: function(e){
-        var bugName     = e.target.getAttribute('data-name'),
-            projectName = this.props.selectedProjectName;
+        var bugName        = e.target.getAttribute('data-name'),
+            projectName    = this.props.selectedProjectName,
+            passwordInput,
+            hashedPassword = passwordHash.generate(this.props.combo);
+
         e.preventDefault();
         e.stopPropagation();
-        if(this.props.isSelectedProjectClosed){
-            window.alert('Project is closed!');
-            return;
-        }
-        AppActions.deleteBug(bugName);        
-        if(bugName === this.props.selectedBugName){
-            AppActions.selectBugByName('');
-        } 
+
+        passwordInput = window.prompt('Please enter password to delete:');
+        if(passwordHash.verify(passwordInput, hashedPassword)){
+            if(this.props.isSelectedProjectClosed){
+                window.alert('Project is closed!');
+                return;
+            }
+            AppActions.deleteBug(bugName);        
+            if(bugName === this.props.selectedBugName){
+                AppActions.selectBugByName('');
+            }
+        }else{
+            window.alert('wrong password');
+        }        
     },
     _closeProject: function(e){
         var confirmClose = window.confirm('Close this project?');

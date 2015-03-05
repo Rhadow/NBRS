@@ -14,8 +14,10 @@ var React = require('react'),
 
 MainContent = React.createClass({
     mixins: [ReactFireMixin],
+    _hashedPassword: appStore.hashedPassword,
     getInitialState: function() {
         return {
+            combo: '',
             projects: [],
             selectedProject: {},
             selectedProjectName: '',
@@ -28,10 +30,12 @@ MainContent = React.createClass({
     },
     componentWillMount: function(){
         this.bindAsArray(new Firebase('https://nbrs.firebaseio.com/projects'), 'projects');
+        this.bindAsObject(new Firebase('https://nbrs.firebaseio.com/password'), 'combo');
         appStore.addChangeListener(this._onDataUpdate);
     },
     componentWillUnmount: function(){
         this.unbind('projects');
+        this.unbind('combo');
         appStore.removeChangeListener(this._onDataUpdate);
     },
     _onDataUpdate: function(){
@@ -60,14 +64,16 @@ MainContent = React.createClass({
                 <div className="col-xs-3 project-list-wrapper">
                     <ProjectList 
                         projects={this.state.projects}
-                        selectedProjectName={this.state.selectedProjectName}/>
+                        selectedProjectName={this.state.selectedProjectName}
+                        combo={this.state.combo}/>
                 </div>
                 <div className="col-xs-3 bug-list-wrapper">
                     <BugList 
                         selectedProjectName={this.state.selectedProjectName}
                         selectedProjectBugs={this.state.selectedProjectBugs}
                         selectedBugName={this.state.selectedBugName}
-                        isSelectedProjectClosed={this.state.isSelectedProjectClosed}/>
+                        isSelectedProjectClosed={this.state.isSelectedProjectClosed}
+                        combo={this.state.combo}/>
                 </div>
                 <div className="col-xs-6 bug-detail-wrapper">
                     <BugDetail 
