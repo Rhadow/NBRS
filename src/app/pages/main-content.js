@@ -26,6 +26,9 @@ MainContent = React.createClass({
             selectedBug: {},
             selectedBugName: '',
             selectedBugDescription: '',
+            selectedBugStartDate: '',
+            selectedBugEndDate: '',
+            selectedBugAuthor: '',
             isSelectedProjectClosed: false
         };
     },
@@ -56,7 +59,10 @@ MainContent = React.createClass({
             selectedBug: appStore.selectedBug,
             selectedBugName: appStore.selectedBug.name,
             selectedBugPriority: appStore.selectedBug.priority,
-            selectedBugDescription: appStore.selectedBug.description
+            selectedBugDescription: appStore.selectedBug.description,
+            selectedBugStartDate: appStore.selectedBug.startDate,
+            selectedBugEndDate: appStore.selectedBug.endDate,
+            selectedBugAuthor: appStore.selectedBug.author,
         });
     },
     render: function() {
@@ -83,7 +89,10 @@ MainContent = React.createClass({
                         selectedProjectBugComments={this.state.selectedProjectBugComments}
                         selectedBugPriority={this.state.selectedBugPriority}
                         selectedBugDescription={this.state.selectedBugDescription}
-                        isSelectedProjectClosed={this.state.isSelectedProjectClosed}/>
+                        isSelectedProjectClosed={this.state.isSelectedProjectClosed}
+                        selectedBugStartDate={this.state.selectedBugStartDate}
+                        selectedBugEndDate={this.state.selectedBugEndDate}
+                        selectedBugAuthor={this.state.selectedBugAuthor}/>
                 </div>
             </div>
             /*jshint ignore:end */

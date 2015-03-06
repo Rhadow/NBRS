@@ -21,6 +21,7 @@ AddBugForm = React.createClass({
     _addBug: function(e){
         var newBugObj = {},
             newBugName = this.refs.newBugName.getDOMNode().value,
+            newAuthorName = this.refs.newBugAuthor.getDOMNode().value,
             newDescription = this.refs.newBugDescription.getDOMNode().value,
             startDate = this.refs.startDate.getDOMNode().value,
             endDate = this.refs.endDate.getDOMNode().value,
@@ -32,39 +33,32 @@ AddBugForm = React.createClass({
             $('.bug-name-input').effect('shake', {distance: 10});
             return;
         }
+        if(!newAuthorName){
+            $('.bug-author-input').effect('shake', {distance: 10});
+            this.refs.newBugAuthor.getDOMNode().value = '';
+            return;
+        }
         if(!newDescription){
             $('.bug-description-input').effect('shake', {distance: 10});
             this.refs.newBugDescription.getDOMNode().value = '';
             return;
         }
-        console.log(typeof startDate, endDate);
         this._clearInput();
         newBugObj = {
             name     : newBugName,
+            author   : newAuthorName,
             priority : priority,
-            description: newDescription
+            description: newDescription,
+            startDate: startDate,
+            endDate: endDate
         };
         AppActions.addBug(newBugObj);
         AppActions.selectBugByName(newBugName);
     },
-    _closeProject: function(e){
-        var thisModule = this;
-        swal({
-                title: 'Close this project?',   
-                text: 'You will not be able to edit this project anymore!',   
-                type: 'warning',   
-                showCancelButton: true,   
-                confirmButtonColor: '#DD6B55',   
-                confirmButtonText: 'Yes, close it!',   
-                closeOnConfirm: false
-            }, function(){
-                AppActions.closeProject(thisModule.props.selectedProjectName);
-                swal('Closed!', thisModule.props.selectedProjectName + ' has been closed.', 'success'); 
-        });
-    },
     _clearInput: function(e){
         this.refs.newBugName.getDOMNode().value = '';
         this.refs.newBugDescription.getDOMNode().value = '';
+        this.refs.newBugAuthor.getDOMNode().value = '';
         this.refs.startDate.getDOMNode().value = '';
         this.refs.endDate.getDOMNode().value = '';
     },
@@ -83,7 +77,15 @@ AddBugForm = React.createClass({
                     ref="newBugName"
                     data-toggle="tooltip"
                     data-placement="top"
-                    title="Must not be empty or contain the following characters: '. # $ [ ] / \'"/>
+                    title="Must not be empty or contain the following characters: '. # $ [ ] / \'"/>                
+                <span>Author: </span>
+                <input
+                    className="bug-author-input"
+                    type="text" 
+                    ref="newBugAuthor"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Must not be empty"/>
                 <div className="form-group">
                     <label>Description:</label>
                     <textarea 
@@ -118,7 +120,6 @@ AddBugForm = React.createClass({
                 </select>
                 <input type="button" value="Add" onClick={this._addBug} />
                 <input type="button" value="Clear" onClick={this._clearInput} />
-                <input className="btn btn-danger" type="button" value="Close Project" onClick={this._closeProject} />
             </div>
             /*jshint ignore:end */
 		);

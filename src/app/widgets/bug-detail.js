@@ -15,6 +15,9 @@ BugDetail = React.createClass({
         selectedBugPriority: React.PropTypes.string,
         isSelectedProjectClosed: React.PropTypes.bool,
         selectedBugDescription: React.PropTypes.string,
+        selectedBugStartDate: React.PropTypes.string,
+        selectedBugEndDate: React.PropTypes.string,
+        selectedBugAuthor: React.PropTypes.string,
     },
     getDefaultProps: function() {
         return {
@@ -22,6 +25,9 @@ BugDetail = React.createClass({
             selectedProjectBugComments: [],
             selectedBugPriority: '',
             selectedBugDescription: '',
+            selectedBugStartDate: '',
+            selectedBugEndDate: '',
+            selectedBugAuthor: '',
             isSelectedProjectClosed: false
         };
     },
@@ -83,6 +89,9 @@ BugDetail = React.createClass({
                     <div className="form-group">
                         <label htmlFor="comment">Bug Description:</label>
                         <textarea className="form-control allow-cursor" disabled rows="5" id="comment" value={this.props.selectedBugDescription}></textarea>
+                        <div>Start Date: {this.props.selectedBugStartDate}</div>
+                        <div>End Date: {this.props.selectedBugEndDate}</div>
+                        <div>Author: {this.props.selectedBugAuthor}</div>
                     </div>
                 </div>
             </div>

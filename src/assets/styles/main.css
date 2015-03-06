@@ -93,6 +93,9 @@ html body .allow-cursor{
 .bug-list .ui-effects-wrapper .bug-description-input{
 	border-color: #d9534f;
 }
+.bug-list .ui-effects-wrapper .bug-author-input{
+	border-color: #d9534f;
+}
 .bug-list input[type="text"]{
 	display: block;
 }

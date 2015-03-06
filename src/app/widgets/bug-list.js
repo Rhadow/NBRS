@@ -10,6 +10,7 @@ var React        = require('react'),
     constants    = require('../constants/constants'),
     // Components
     AddBugForm   = require('../components/add-bug-form'),
+    CloseProjectBtn  = require('../components/close-project-btn'),
     BugList;
 
 BugList = React.createClass({
@@ -108,12 +109,15 @@ BugList = React.createClass({
             AppActions.selectBugByName(selectedBugName);
         }
     },
-    _renderForm: function(){
+    _renderInputs: function(){
         var resultHTML;
         if(!this.props.isSelectedProjectClosed){
             resultHTML = (
                 /* jshint ignore:start */
-                <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
+                <div>
+                    <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
+                    <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
+                </div>                
                 /* jshint ignore:end */
             );
         }
@@ -131,7 +135,7 @@ BugList = React.createClass({
             /* jshint ignore:start */
             <div className="bug-list">
                 <h2>{this.props.selectedProjectName} Bug List</h2>
-                {this._renderForm()}
+                {this._renderInputs()}
                 <ul className="bugs">
                     {this._renderBugs()}
                 </ul>
