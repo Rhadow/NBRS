@@ -5,11 +5,13 @@ ToggleInputBtn;
 
 ToggleInputBtn = React.createClass({
     propTypes: {
-    	target: React.PropTypes.string
+    	target: React.PropTypes.string,
+        displayText: React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
-    		target: ''
+    		target: '',
+            displayText: 'Open/Close Form'
     	};
     },
     _toggleInputs: function(e){        
@@ -19,7 +21,7 @@ ToggleInputBtn = React.createClass({
 		return (
 			/*jshint ignore:start */
 			<div className="toggle-btn">
-                <input type="button" value="Open/Close Form" onClick={this._toggleInputs} />
+                <input type="button" value={this.props.displayText} onClick={this._toggleInputs} />
             </div>
             /*jshint ignore:end */
 		);

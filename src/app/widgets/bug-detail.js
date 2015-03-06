@@ -6,6 +6,9 @@ var React     = require('react'),
     constants = require('../constants/constants'),
     // Store
     appStore  = require('../stores/appStore.js'),
+    // Components
+    AddCommentForm   = require('../components/add-comment-form'),
+    ToggleInputBtn = require('../components/toggle-input-btn'),
     BugDetail;
 
 BugDetail = React.createClass({
@@ -42,25 +45,15 @@ BugDetail = React.createClass({
         });
     },
     _renderCommentInputs: function(){
-        var resultHTML, updateBugFormClasses;       
-        updateBugFormClasses = CX({
-            'update-bug-form-wrapper': true,
-            'hide': !this.props.selectedBugName
-        });
+        var resultHTML;
         if(this.props.selectedBugPriority !== constants.PRIORITY.SOLVED && !this.props.isSelectedProjectClosed){
             resultHTML = (
                 /*jshint ignore:start */
-                <div className={updateBugFormClasses}>
-                    <h5>Update Bug Form</h5>
-                    <div>
-                        <select ref="updatePriority" value={this.state.selectedBugPriority} onChange={this._updatePriority}>
-                            <option>{constants.PRIORITY.LOW}</option>
-                            <option>{constants.PRIORITY.MEDIUM}</option>
-                            <option>{constants.PRIORITY.HIGH}</option>
-                            <option>{constants.PRIORITY.SOLVED}</option>
-                        </select>
-                        <input type="button" value="Add" />
-                    </div>                    
+                <div>
+                    <ToggleInputBtn 
+                        target=".add-comment-form-wrapper"
+                        displayText="New Comment" />
+                    <AddCommentForm />
                 </div>
                 /*jshint ignore:end */
             );
@@ -85,14 +78,12 @@ BugDetail = React.createClass({
             <div className="bug-detail">
                 <h2>{this.props.selectedBugName} Details</h2>
                 {this._renderCommentInputs()}
-                <div>
-                    <div className="form-group">
-                        <label htmlFor="comment">Bug Description:</label>
-                        <textarea className="form-control allow-cursor" disabled rows="5" id="comment" value={this.props.selectedBugDescription}></textarea>
-                        <div>Start Date: {this.props.selectedBugStartDate}</div>
-                        <div>End Date: {this.props.selectedBugEndDate}</div>
-                        <div>Author: {this.props.selectedBugAuthor}</div>
-                    </div>
+                <div className="form-group">
+                    <label htmlFor="comment">Bug Description:</label>
+                    <textarea className="form-control allow-cursor" disabled rows="5" id="comment" value={this.props.selectedBugDescription}></textarea>
+                    <div>Start Date: {this.props.selectedBugStartDate}</div>
+                    <div>End Date: {this.props.selectedBugEndDate}</div>
+                    <div>Author: {this.props.selectedBugAuthor}</div>
                 </div>
             </div>
         );

@@ -119,7 +119,9 @@ BugList = React.createClass({
             resultHTML = (
                 /* jshint ignore:start */
                 <div>
-                    <ToggleInputBtn target=".add-bug-form-wrapper" />
+                    <ToggleInputBtn 
+                        target=".add-bug-form-wrapper"
+                        displayText="New Bug" />
                     <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
                     <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
                 </div>                

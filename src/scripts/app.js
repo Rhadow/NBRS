@@ -26506,7 +26506,7 @@ var appActions = {
 };
 
 module.exports = appActions;
-},{"../constants/constants.js":215,"../dispatcher/appDispatcher.js":216}],211:[function(require,module,exports){
+},{"../constants/constants.js":216,"../dispatcher/appDispatcher.js":217}],211:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26534,8 +26534,7 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
         if(nextProps.selectedProjectName !== this.props.selectedProjectName){
             $('.add-bug-form-wrapper').slideUp();
             this._clearInput();
-        }
-        
+        }        
     },
     _addBug: function(e){
         var newBugObj = {},
@@ -26590,22 +26589,28 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
 		return (
 			/*jshint ignore:start */
             React.createElement("div", {className: addBugClasses}, 
-                React.createElement("span", null, "Add New Bug: "), 
-                React.createElement("input", {
-                    className: "bug-name-input", 
-                    type: "text", 
-                    ref: "newBugName", 
-                    "data-toggle": "tooltip", 
-                    "data-placement": "top", 
-                    title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'"}), 
-                React.createElement("span", null, "Author: "), 
-                React.createElement("input", {
-                    className: "bug-author-input", 
-                    type: "text", 
-                    ref: "newBugAuthor", 
-                    "data-toggle": "tooltip", 
-                    "data-placement": "top", 
-                    title: "Must not be empty"}), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "New Bug Name: "), 
+                    React.createElement("input", {
+                        className: "bug-name-input form-control", 
+                        type: "text", 
+                        ref: "newBugName", 
+                        "data-toggle": "tooltip", 
+                        "data-placement": "top", 
+                        title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'", 
+                        placeholder: "Enter bug name"})
+                ), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "Author Name: "), 
+                    React.createElement("input", {
+                        className: "bug-author-input form-control", 
+                        type: "text", 
+                        ref: "newBugAuthor", 
+                        "data-toggle": "tooltip", 
+                        "data-placement": "top", 
+                        title: "Must not be empty", 
+                        placeholder: "Enter your name"})
+                ), 
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", null, "Description:"), 
                     React.createElement("textarea", {
@@ -26647,7 +26652,63 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
 });
 
 module.exports = AddBugForm;
-},{"../actions/appActions":210,"../constants/constants":215,"react":"b6Dds6","react/lib/cx":164}],212:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":216,"react":"b6Dds6","react/lib/cx":164}],212:[function(require,module,exports){
+'use strict';
+
+var React = require('react'),
+    CX           = require('react/lib/cx'),
+    // Constants
+    constants    = require('../constants/constants'),
+    // Actions
+    AppActions   = require('../actions/appActions'),
+    AddCommentForm;
+
+AddCommentForm = React.createClass({displayName: "AddCommentForm",
+    propTypes: {},
+    getDefaultProps: function() {},
+    _addComment: function(){},
+    _clearInput: function(){},
+	render: function() {
+		var addCommentClasses = CX({
+            'add-comment-form-wrapper': true
+        });
+		/* jshint ignore:start */
+		return (
+			React.createElement("div", {className: addCommentClasses}, 
+                React.createElement("div", {className: "form-group"}, 
+			        React.createElement("label", null, "Author"), 
+			        React.createElement("input", {
+			            className: "form-control comment-author-input", 
+	                    type: "text", 
+	                    ref: "newCommentAuthor", 
+	                    "data-toggle": "tooltip", 
+	                    "data-placement": "top", 
+	                    title: "Must not be empty", 
+			            placeholder: "Enter author name"})
+			    ), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "Description:"), 
+                    React.createElement("textarea", {
+                        className: "form-control comment-description-input", 
+                        ref: "newCommentDescription", 
+                        rows: "5", 
+                        "data-toggle": "tooltip", 
+                        "data-placement": "top", 
+                        title: "Must not be empty", 
+                        placeholder: "Enter description"}
+                    )
+                ), 
+                React.createElement("input", {type: "button", value: "Add", onClick: this._addComment}), 
+                React.createElement("input", {type: "button", value: "Clear", onClick: this._clearInput})
+			)
+		);
+		/* jshint ignore:end */
+	}
+
+});
+
+module.exports = AddCommentForm;
+},{"../actions/appActions":210,"../constants/constants":216,"react":"b6Dds6","react/lib/cx":164}],213:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26691,14 +26752,17 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 			/*jshint ignore:start */
 			React.createElement("div", null, 
 	            React.createElement("div", {className: "add-project-form-wrapper"}, 
-	                React.createElement("span", null, "Add New Project: "), 
-	                React.createElement("input", {
-	                    className: "project-name-input", 
-	                    type: "text", 
-	                    ref: "newProjectName", 
-	                    "data-toggle": "tooltip", 
-	                    "data-placement": "top", 
-	                    title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'"}), 
+                    React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", null, "New Project Name: "), 
+                        React.createElement("input", {
+                            className: "form-control project-name-input", 
+                            type: "text", 
+                            ref: "newProjectName", 
+                            "data-toggle": "tooltip", 
+                            "data-placement": "top", 
+                            title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'", 
+                            placeholder: "Enter project name"})
+                    ), 
 	                React.createElement("input", {type: "button", value: "Confirm", onClick: this._addProject}), 
 	                React.createElement("input", {type: "button", value: "Clear", onClick: this._clearInput})
 	            )
@@ -26709,7 +26773,7 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 });
 
 module.exports = AddProjectForm;
-},{"../actions/appActions":210,"../constants/constants":215,"react":"b6Dds6","react/lib/cx":164}],213:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":216,"react":"b6Dds6","react/lib/cx":164}],214:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26755,7 +26819,7 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
 	}
 });
 module.exports = CloseProjectBtn;
-},{"../actions/appActions":210,"../constants/constants":215,"react":"b6Dds6","react/lib/cx":164}],214:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":216,"react":"b6Dds6","react/lib/cx":164}],215:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26763,11 +26827,13 @@ ToggleInputBtn;
 
 ToggleInputBtn = React.createClass({displayName: "ToggleInputBtn",
     propTypes: {
-    	target: React.PropTypes.string
+    	target: React.PropTypes.string,
+        displayText: React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
-    		target: ''
+    		target: '',
+            displayText: 'Open/Close Form'
     	};
     },
     _toggleInputs: function(e){        
@@ -26777,7 +26843,7 @@ ToggleInputBtn = React.createClass({displayName: "ToggleInputBtn",
 		return (
 			/*jshint ignore:start */
 			React.createElement("div", {className: "toggle-btn"}, 
-                React.createElement("input", {type: "button", value: "Open/Close Form", onClick: this._toggleInputs})
+                React.createElement("input", {type: "button", value: this.props.displayText, onClick: this._toggleInputs})
             )
             /*jshint ignore:end */
 		);
@@ -26785,7 +26851,7 @@ ToggleInputBtn = React.createClass({displayName: "ToggleInputBtn",
 });
 
 module.exports = ToggleInputBtn;
-},{"react":"b6Dds6"}],215:[function(require,module,exports){
+},{"react":"b6Dds6"}],216:[function(require,module,exports){
 'use strict';
 
 var constants = {
@@ -26805,7 +26871,7 @@ var constants = {
 };
 
 module.exports = constants;
-},{}],216:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 'use strict';
 
 var Dispatcher    = require('flux').Dispatcher,
@@ -26819,7 +26885,7 @@ AppDispatcher.handleViewAction = function(action) {
 };
 
 module.exports = AppDispatcher;
-},{"flux":2}],217:[function(require,module,exports){
+},{"flux":2}],218:[function(require,module,exports){
 'use strict';
 
 var React         = require('react'),
@@ -26850,7 +26916,7 @@ Router.run(Routes, function(Handler) {
 });
 /* jshint ignore:end */
 
-},{"../app/pages/main":219,"../app/pages/main-content":218,"../app/pages/not-found":220,"react":"b6Dds6","react-router":26}],218:[function(require,module,exports){
+},{"../app/pages/main":220,"../app/pages/main-content":219,"../app/pages/not-found":221,"react":"b6Dds6","react-router":26}],219:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26954,7 +27020,7 @@ MainContent = React.createClass({displayName: "MainContent",
 });
 
 module.exports = MainContent;
-},{"../stores/appStore":221,"../widgets/bug-detail":222,"../widgets/bug-list":223,"../widgets/project-list":224,"firebase":1,"react":"b6Dds6","reactfire":208}],219:[function(require,module,exports){
+},{"../stores/appStore":222,"../widgets/bug-detail":223,"../widgets/bug-list":224,"../widgets/project-list":225,"firebase":1,"react":"b6Dds6","reactfire":208}],220:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -26983,7 +27049,7 @@ Main = React.createClass({displayName: "Main",
 });
 
 module.exports = Main;
-},{"react":"b6Dds6","react-router":26}],220:[function(require,module,exports){
+},{"react":"b6Dds6","react-router":26}],221:[function(require,module,exports){
 var React = require('react');
 
 var Help = React.createClass({displayName: "Help",
@@ -27008,7 +27074,7 @@ var Help = React.createClass({displayName: "Help",
 });
 
 module.exports = Help;
-},{"react":"b6Dds6"}],221:[function(require,module,exports){
+},{"react":"b6Dds6"}],222:[function(require,module,exports){
 'use strict';
 
 var appDispatcher = require('../dispatcher/appDispatcher.js'),
@@ -27132,7 +27198,7 @@ appDispatcher.register(function(payload) {
 });
 
 module.exports = appStore;
-},{"../constants/constants":215,"../dispatcher/appDispatcher.js":216,"events":14,"firebase":1,"underscore":209}],222:[function(require,module,exports){
+},{"../constants/constants":216,"../dispatcher/appDispatcher.js":217,"events":14,"firebase":1,"underscore":209}],223:[function(require,module,exports){
 'use strict';
 
 var React     = require('react'),
@@ -27141,6 +27207,9 @@ var React     = require('react'),
     constants = require('../constants/constants'),
     // Store
     appStore  = require('../stores/appStore.js'),
+    // Components
+    AddCommentForm   = require('../components/add-comment-form'),
+    ToggleInputBtn = require('../components/toggle-input-btn'),
     BugDetail;
 
 BugDetail = React.createClass({displayName: "BugDetail",
@@ -27177,25 +27246,15 @@ BugDetail = React.createClass({displayName: "BugDetail",
         });
     },
     _renderCommentInputs: function(){
-        var resultHTML, updateBugFormClasses;       
-        updateBugFormClasses = CX({
-            'update-bug-form-wrapper': true,
-            'hide': !this.props.selectedBugName
-        });
+        var resultHTML;
         if(this.props.selectedBugPriority !== constants.PRIORITY.SOLVED && !this.props.isSelectedProjectClosed){
             resultHTML = (
                 /*jshint ignore:start */
-                React.createElement("div", {className: updateBugFormClasses}, 
-                    React.createElement("h5", null, "Update Bug Form"), 
-                    React.createElement("div", null, 
-                        React.createElement("select", {ref: "updatePriority", value: this.state.selectedBugPriority, onChange: this._updatePriority}, 
-                            React.createElement("option", null, constants.PRIORITY.LOW), 
-                            React.createElement("option", null, constants.PRIORITY.MEDIUM), 
-                            React.createElement("option", null, constants.PRIORITY.HIGH), 
-                            React.createElement("option", null, constants.PRIORITY.SOLVED)
-                        ), 
-                        React.createElement("input", {type: "button", value: "Add"})
-                    )
+                React.createElement("div", null, 
+                    React.createElement(ToggleInputBtn, {
+                        target: ".add-comment-form-wrapper", 
+                        displayText: "New Comment"}), 
+                    React.createElement(AddCommentForm, null)
                 )
                 /*jshint ignore:end */
             );
@@ -27220,14 +27279,12 @@ BugDetail = React.createClass({displayName: "BugDetail",
             React.createElement("div", {className: "bug-detail"}, 
                 React.createElement("h2", null, this.props.selectedBugName, " Details"), 
                 this._renderCommentInputs(), 
-                React.createElement("div", null, 
-                    React.createElement("div", {className: "form-group"}, 
-                        React.createElement("label", {htmlFor: "comment"}, "Bug Description:"), 
-                        React.createElement("textarea", {className: "form-control allow-cursor", disabled: true, rows: "5", id: "comment", value: this.props.selectedBugDescription}), 
-                        React.createElement("div", null, "Start Date: ", this.props.selectedBugStartDate), 
-                        React.createElement("div", null, "End Date: ", this.props.selectedBugEndDate), 
-                        React.createElement("div", null, "Author: ", this.props.selectedBugAuthor)
-                    )
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", {htmlFor: "comment"}, "Bug Description:"), 
+                    React.createElement("textarea", {className: "form-control allow-cursor", disabled: true, rows: "5", id: "comment", value: this.props.selectedBugDescription}), 
+                    React.createElement("div", null, "Start Date: ", this.props.selectedBugStartDate), 
+                    React.createElement("div", null, "End Date: ", this.props.selectedBugEndDate), 
+                    React.createElement("div", null, "Author: ", this.props.selectedBugAuthor)
                 )
             )
         );
@@ -27237,7 +27294,7 @@ BugDetail = React.createClass({displayName: "BugDetail",
 });
 
 module.exports = BugDetail;
-},{"../constants/constants":215,"../stores/appStore.js":221,"react":"b6Dds6","react/lib/cx":164}],223:[function(require,module,exports){
+},{"../components/add-comment-form":212,"../components/toggle-input-btn":215,"../constants/constants":216,"../stores/appStore.js":222,"react":"b6Dds6","react/lib/cx":164}],224:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -27359,7 +27416,9 @@ BugList = React.createClass({displayName: "BugList",
             resultHTML = (
                 /* jshint ignore:start */
                 React.createElement("div", null, 
-                    React.createElement(ToggleInputBtn, {target: ".add-bug-form-wrapper"}), 
+                    React.createElement(ToggleInputBtn, {
+                        target: ".add-bug-form-wrapper", 
+                        displayText: "New Bug"}), 
                     React.createElement(AddBugForm, {selectedProjectName: this.props.selectedProjectName}), 
                     React.createElement(CloseProjectBtn, {selectedProjectName: this.props.selectedProjectName})
                 )                
@@ -27391,7 +27450,7 @@ BugList = React.createClass({displayName: "BugList",
 });
 
 module.exports = BugList;
-},{"../actions/appActions":210,"../components/add-bug-form":211,"../components/close-project-btn":213,"../components/toggle-input-btn":214,"../constants/constants":215,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}],224:[function(require,module,exports){
+},{"../actions/appActions":210,"../components/add-bug-form":211,"../components/close-project-btn":214,"../components/toggle-input-btn":215,"../constants/constants":216,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}],225:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -27474,7 +27533,9 @@ ProjectList = React.createClass({displayName: "ProjectList",
             /*jshint ignore:start */
             React.createElement("div", {className: "project-list"}, 
                 React.createElement("h2", null, "Project List"), 
-                React.createElement(ToggleInputBtn, {target: ".add-project-form-wrapper"}), 
+                React.createElement(ToggleInputBtn, {
+                    target: ".add-project-form-wrapper", 
+                    displayText: "New Project"}), 
                 React.createElement(AddProjectForm, null), 
                 React.createElement("ul", {className: "projects"}, 
                     this._renderProjects()
@@ -27487,4 +27548,4 @@ ProjectList = React.createClass({displayName: "ProjectList",
 });
 
 module.exports = ProjectList;
-},{"../actions/appActions":210,"../components/add-project-form":212,"../components/toggle-input-btn":214,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}]},{},[217])
+},{"../actions/appActions":210,"../components/add-project-form":213,"../components/toggle-input-btn":215,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}]},{},[218])

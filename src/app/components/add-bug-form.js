@@ -25,8 +25,7 @@ AddBugForm = React.createClass({
         if(nextProps.selectedProjectName !== this.props.selectedProjectName){
             $('.add-bug-form-wrapper').slideUp();
             this._clearInput();
-        }
-        
+        }        
     },
     _addBug: function(e){
         var newBugObj = {},
@@ -81,22 +80,28 @@ AddBugForm = React.createClass({
 		return (
 			/*jshint ignore:start */
             <div className={addBugClasses}>
-                <span>Add New Bug: </span>
-                <input
-                    className="bug-name-input"
-                    type="text" 
-                    ref="newBugName"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Must not be empty or contain the following characters: '. # $ [ ] / \'"/>                
-                <span>Author: </span>
-                <input
-                    className="bug-author-input"
-                    type="text" 
-                    ref="newBugAuthor"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Must not be empty"/>
+                <div className="form-group">
+                    <label>New Bug Name: </label>
+                    <input
+                        className="bug-name-input form-control"
+                        type="text" 
+                        ref="newBugName"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Must not be empty or contain the following characters: '. # $ [ ] / \'"
+                        placeholder="Enter bug name"/> 
+                </div>
+                <div className="form-group">
+                    <label>Author Name: </label>
+                    <input
+                        className="bug-author-input form-control"
+                        type="text" 
+                        ref="newBugAuthor"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Must not be empty"
+                        placeholder="Enter your name"/> 
+                </div>
                 <div className="form-group">
                     <label>Description:</label>
                     <textarea 

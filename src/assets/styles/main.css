@@ -104,7 +104,7 @@ html body .allow-cursor{
 
 /* Bug List End */
 /* Bug Detail Start */
-.bug-detail .update-bug-form-wrapper{
+.bug-detail .add-comment-form-wrapper{
 	margin-bottom: 5px;
 	border: 1px solid #01cafe;
 }
