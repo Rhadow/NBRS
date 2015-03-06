@@ -25,7 +25,7 @@ appStore = _.extend({}, eventEmitter.prototype, {
         if(!isProjectIdentical){
             this._firebaseRef.child(newProject.name).set(newProject);
         }else{
-            window.alert('Same project name already exists!');
+            swal('Oops...', 'Same project name already exists!', 'error');
         }
     },
     deleteProject: function(name) { 

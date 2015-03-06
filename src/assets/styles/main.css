@@ -6,8 +6,14 @@ body{
 	height: 100%;
 	padding-top: 51px;
 }
+textarea{
+	resize: none;
+}
 .hide{
 	display: none;
+}
+html body .allow-cursor{
+	cursor: default;
 }
 /* Navigation CSS Start */
 .navbar-brand{
@@ -59,9 +65,14 @@ body{
 	margin-bottom: 5px;
 	border: 1px solid #01cafe;
 }
-.project-list .ui-effects-wrapper div{
+.project-list .ui-effects-wrapper input{
 	border-color: #d9534f;
 }
+
+.project-list input[type="text"]{
+	display: block;
+}
+
 /* Project List End */
 /* Bug List Start */
 .bug-list .bugs{
@@ -76,9 +87,16 @@ body{
 	margin-bottom: 5px;
 	border: 1px solid #01cafe;
 }
-.bug-list .ui-effects-wrapper div{
+.bug-list .ui-effects-wrapper .bug-name-input{
 	border-color: #d9534f;
 }
+.bug-list .ui-effects-wrapper .bug-description-input{
+	border-color: #d9534f;
+}
+.bug-list input[type="text"]{
+	display: block;
+}
+
 /* Bug List End */
 /* Bug Detail Start */
 .bug-detail .update-bug-form-wrapper{

@@ -48,12 +48,17 @@ BugList = React.createClass({
                 /*jshint ignore:start */
                 <div className={addBugClasses}>
                     <span>Add New Bug: </span>
-                    <input 
+                    <input
+                        className="bug-name-input"
                         type="text" 
                         ref="newBugName"
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Must not be empty or contain the following characters: '. # $ [ ] / \'"/>
+                    <div className="form-group">
+                        <label htmlFor="comment">Description:</label>
+                        <textarea className="form-control bug-description-input" ref="newBugDescription" rows="5" id="comment"></textarea>
+                    </div>
                     <select ref="priority">
                         <option>{constants.PRIORITY.LOW}</option>
                         <option>{constants.PRIORITY.MEDIUM}</option>
@@ -103,18 +108,27 @@ BugList = React.createClass({
     _addBug: function(e){
         var newBugObj = {},
             newBugName = this.refs.newBugName.getDOMNode().value,
+            newDescription = this.refs.newBugDescription.getDOMNode().value,
             priority = this.refs.priority.getDOMNode().value;
         e.preventDefault();
         this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
-        if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){
-            $('.add-bug-form-wrapper').effect('shake', {distance: 10});
+        if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){            
+            this.refs.newBugName.getDOMNode().value = '';
+            $('.bug-name-input').effect('shake', {distance: 10});
             return;
         }
+        if(!newDescription){
+            $('.bug-description-input').effect('shake', {distance: 10});
+            this.refs.newBugDescription.getDOMNode().value = '';
+            return;
+        }        
+        this.refs.newBugName.getDOMNode().value = '';
+        this.refs.newBugDescription.getDOMNode().value = '';
         newBugObj = {
             name     : newBugName,
-            priority : priority
-        };        
-        this.refs.newBugName.getDOMNode().value = '';
+            priority : priority,
+            description: newDescription
+        };
         AppActions.addBug(newBugObj);
         AppActions.selectBugByName(newBugName);
     },
