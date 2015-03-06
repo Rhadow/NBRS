@@ -8,6 +8,7 @@ var React        = require('react'),
     passwordHash = require('password-hash'),
     // Components
     AddProjectForm   = require('../components/add-project-form'),
+    ToggleInputBtn = require('../components/toggle-input-btn'),
     ProjectList;
 
 ProjectList = React.createClass({
@@ -76,6 +77,7 @@ ProjectList = React.createClass({
             /*jshint ignore:start */
             <div className="project-list">
                 <h2>Project List</h2>
+                <ToggleInputBtn target=".add-project-form-wrapper" />
                 <AddProjectForm />
                 <ul className='projects'>
                     {this._renderProjects()}

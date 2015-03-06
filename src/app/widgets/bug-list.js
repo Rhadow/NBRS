@@ -11,6 +11,7 @@ var React        = require('react'),
     // Components
     AddBugForm   = require('../components/add-bug-form'),
     CloseProjectBtn  = require('../components/close-project-btn'),
+    ToggleInputBtn = require('../components/toggle-input-btn'),
     BugList;
 
 BugList = React.createClass({
@@ -115,6 +116,7 @@ BugList = React.createClass({
             resultHTML = (
                 /* jshint ignore:start */
                 <div>
+                    <ToggleInputBtn target=".add-bug-form-wrapper" />
                     <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
                     <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
                 </div>                
@@ -134,7 +136,7 @@ BugList = React.createClass({
         return (
             /* jshint ignore:start */
             <div className="bug-list">
-                <h2>{this.props.selectedProjectName} Bug List</h2>
+                <h2>{this.props.selectedProjectName} Bug List</h2>                
                 {this._renderInputs()}
                 <ul className="bugs">
                     {this._renderBugs()}

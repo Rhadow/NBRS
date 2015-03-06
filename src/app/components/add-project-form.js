@@ -18,7 +18,7 @@ AddProjectForm = React.createClass({
         var newProjectObj = {},
             newProjectName = this.refs.newProjectName.getDOMNode().value;
         e.preventDefault();
-        this.refs.newProjectName.getDOMNode().value = '';
+        this._clearInput();
         if(!newProjectName || /[\.\#\$\[\]\/\\]/gi.test(newProjectName)){
             $('.project-name-input').effect('shake', {distance: 10});
             return;
@@ -35,25 +35,11 @@ AddProjectForm = React.createClass({
     },
     _clearInput: function(e){
         this.refs.newProjectName.getDOMNode().value = '';                
-    },
-    _foldInput: function(e){        
-        this._clearInput();
-        $('.add-project-form-wrapper').slideUp(function(){
-            $('.project-list .toggle-btn').slideDown();
-        });
-    },
-    _showInputs: function(e){        
-        $('.project-list .toggle-btn').slideUp(function(){
-            $('.add-project-form-wrapper').slideDown();
-        });
-    },
+    },    
 	render: function() {
 		return (
 			/*jshint ignore:start */
 			<div>
-			    <div className="toggle-btn">
-	                <input type="button" value="New Project" onClick={this._showInputs} />
-	            </div>
 	            <div className="add-project-form-wrapper">
 	                <span>Add New Project: </span>
 	                <input
@@ -65,7 +51,6 @@ AddProjectForm = React.createClass({
 	                    title="Must not be empty or contain the following characters: '. # $ [ ] / \'"/>
 	                <input type="button" value="Confirm" onClick={this._addProject} />
 	                <input type="button" value="Clear" onClick={this._clearInput} />
-	                <input type="button" value="Fold" onClick={this._foldInput} />
 	            </div>
 			</div>			
             /*jshint ignore:end */

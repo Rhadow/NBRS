@@ -18,6 +18,9 @@ AddBugForm = React.createClass({
     		selectedProjectName: '',
     	};
     },
+    componentDidMount: function() {
+        $('.add-bug-form-wrapper').hide();
+    },
     _addBug: function(e){
         var newBugObj = {},
             newBugName = this.refs.newBugName.getDOMNode().value,

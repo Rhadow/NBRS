@@ -26506,7 +26506,7 @@ var appActions = {
 };
 
 module.exports = appActions;
-},{"../constants/constants.js":214,"../dispatcher/appDispatcher.js":215}],211:[function(require,module,exports){
+},{"../constants/constants.js":215,"../dispatcher/appDispatcher.js":216}],211:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26526,6 +26526,9 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
     	return {
     		selectedProjectName: '',
     	};
+    },
+    componentDidMount: function() {
+        $('.add-bug-form-wrapper').hide();
     },
     _addBug: function(e){
         var newBugObj = {},
@@ -26636,7 +26639,7 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
 });
 
 module.exports = AddBugForm;
-},{"../actions/appActions":210,"../constants/constants":214,"react":"b6Dds6","react/lib/cx":164}],212:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":215,"react":"b6Dds6","react/lib/cx":164}],212:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26657,7 +26660,7 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
         var newProjectObj = {},
             newProjectName = this.refs.newProjectName.getDOMNode().value;
         e.preventDefault();
-        this.refs.newProjectName.getDOMNode().value = '';
+        this._clearInput();
         if(!newProjectName || /[\.\#\$\[\]\/\\]/gi.test(newProjectName)){
             $('.project-name-input').effect('shake', {distance: 10});
             return;
@@ -26674,25 +26677,11 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
     },
     _clearInput: function(e){
         this.refs.newProjectName.getDOMNode().value = '';                
-    },
-    _foldInput: function(e){        
-        this._clearInput();
-        $('.add-project-form-wrapper').slideUp(function(){
-            $('.project-list .toggle-btn').slideDown();
-        });
-    },
-    _showInputs: function(e){        
-        $('.project-list .toggle-btn').slideUp(function(){
-            $('.add-project-form-wrapper').slideDown();
-        });
-    },
+    },    
 	render: function() {
 		return (
 			/*jshint ignore:start */
 			React.createElement("div", null, 
-			    React.createElement("div", {className: "toggle-btn"}, 
-	                React.createElement("input", {type: "button", value: "New Project", onClick: this._showInputs})
-	            ), 
 	            React.createElement("div", {className: "add-project-form-wrapper"}, 
 	                React.createElement("span", null, "Add New Project: "), 
 	                React.createElement("input", {
@@ -26703,8 +26692,7 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 	                    "data-placement": "top", 
 	                    title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'"}), 
 	                React.createElement("input", {type: "button", value: "Confirm", onClick: this._addProject}), 
-	                React.createElement("input", {type: "button", value: "Clear", onClick: this._clearInput}), 
-	                React.createElement("input", {type: "button", value: "Fold", onClick: this._foldInput})
+	                React.createElement("input", {type: "button", value: "Clear", onClick: this._clearInput})
 	            )
 			)			
             /*jshint ignore:end */
@@ -26713,7 +26701,7 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 });
 
 module.exports = AddProjectForm;
-},{"../actions/appActions":210,"../constants/constants":214,"react":"b6Dds6","react/lib/cx":164}],213:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":215,"react":"b6Dds6","react/lib/cx":164}],213:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26721,8 +26709,7 @@ var React = require('react'),
     // Constants
     constants    = require('../constants/constants'),
     // Actions
-    AppActions   = require('../actions/appActions'),
-    
+    AppActions   = require('../actions/appActions'),    
     CloseProjectBtn;
 
 CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
@@ -26758,11 +26745,39 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
 			/*jshint ignore:end */			
 		);
 	}
+});
+module.exports = CloseProjectBtn;
+},{"../actions/appActions":210,"../constants/constants":215,"react":"b6Dds6","react/lib/cx":164}],214:[function(require,module,exports){
+'use strict';
 
+var React = require('react'),
+ToggleInputBtn;
+
+ToggleInputBtn = React.createClass({displayName: "ToggleInputBtn",
+    propTypes: {
+    	target: React.PropTypes.string
+    },
+    getDefaultProps: function() {
+    	return {
+    		target: ''
+    	};
+    },
+    _toggleInputs: function(e){        
+        $(this.props.target).slideToggle();
+    },
+	render: function() {
+		return (
+			/*jshint ignore:start */
+			React.createElement("div", {className: "toggle-btn"}, 
+                React.createElement("input", {type: "button", value: "Open/Close Form", onClick: this._toggleInputs})
+            )
+            /*jshint ignore:end */
+		);
+	}
 });
 
-module.exports = CloseProjectBtn;
-},{"../actions/appActions":210,"../constants/constants":214,"react":"b6Dds6","react/lib/cx":164}],214:[function(require,module,exports){
+module.exports = ToggleInputBtn;
+},{"react":"b6Dds6"}],215:[function(require,module,exports){
 'use strict';
 
 var constants = {
@@ -26782,7 +26797,7 @@ var constants = {
 };
 
 module.exports = constants;
-},{}],215:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 'use strict';
 
 var Dispatcher    = require('flux').Dispatcher,
@@ -26796,7 +26811,7 @@ AppDispatcher.handleViewAction = function(action) {
 };
 
 module.exports = AppDispatcher;
-},{"flux":2}],216:[function(require,module,exports){
+},{"flux":2}],217:[function(require,module,exports){
 'use strict';
 
 var React         = require('react'),
@@ -26827,7 +26842,7 @@ Router.run(Routes, function(Handler) {
 });
 /* jshint ignore:end */
 
-},{"../app/pages/main":218,"../app/pages/main-content":217,"../app/pages/not-found":219,"react":"b6Dds6","react-router":26}],217:[function(require,module,exports){
+},{"../app/pages/main":219,"../app/pages/main-content":218,"../app/pages/not-found":220,"react":"b6Dds6","react-router":26}],218:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26931,7 +26946,7 @@ MainContent = React.createClass({displayName: "MainContent",
 });
 
 module.exports = MainContent;
-},{"../stores/appStore":220,"../widgets/bug-detail":221,"../widgets/bug-list":222,"../widgets/project-list":223,"firebase":1,"react":"b6Dds6","reactfire":208}],218:[function(require,module,exports){
+},{"../stores/appStore":221,"../widgets/bug-detail":222,"../widgets/bug-list":223,"../widgets/project-list":224,"firebase":1,"react":"b6Dds6","reactfire":208}],219:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -26960,7 +26975,7 @@ Main = React.createClass({displayName: "Main",
 });
 
 module.exports = Main;
-},{"react":"b6Dds6","react-router":26}],219:[function(require,module,exports){
+},{"react":"b6Dds6","react-router":26}],220:[function(require,module,exports){
 var React = require('react');
 
 var Help = React.createClass({displayName: "Help",
@@ -26985,7 +27000,7 @@ var Help = React.createClass({displayName: "Help",
 });
 
 module.exports = Help;
-},{"react":"b6Dds6"}],220:[function(require,module,exports){
+},{"react":"b6Dds6"}],221:[function(require,module,exports){
 'use strict';
 
 var appDispatcher = require('../dispatcher/appDispatcher.js'),
@@ -27109,7 +27124,7 @@ appDispatcher.register(function(payload) {
 });
 
 module.exports = appStore;
-},{"../constants/constants":214,"../dispatcher/appDispatcher.js":215,"events":14,"firebase":1,"underscore":209}],221:[function(require,module,exports){
+},{"../constants/constants":215,"../dispatcher/appDispatcher.js":216,"events":14,"firebase":1,"underscore":209}],222:[function(require,module,exports){
 'use strict';
 
 var React     = require('react'),
@@ -27214,7 +27229,7 @@ BugDetail = React.createClass({displayName: "BugDetail",
 });
 
 module.exports = BugDetail;
-},{"../constants/constants":214,"../stores/appStore.js":220,"react":"b6Dds6","react/lib/cx":164}],222:[function(require,module,exports){
+},{"../constants/constants":215,"../stores/appStore.js":221,"react":"b6Dds6","react/lib/cx":164}],223:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -27228,6 +27243,7 @@ var React        = require('react'),
     // Components
     AddBugForm   = require('../components/add-bug-form'),
     CloseProjectBtn  = require('../components/close-project-btn'),
+    ToggleInputBtn = require('../components/toggle-input-btn'),
     BugList;
 
 BugList = React.createClass({displayName: "BugList",
@@ -27332,6 +27348,7 @@ BugList = React.createClass({displayName: "BugList",
             resultHTML = (
                 /* jshint ignore:start */
                 React.createElement("div", null, 
+                    React.createElement(ToggleInputBtn, {target: ".add-bug-form-wrapper"}), 
                     React.createElement(AddBugForm, {selectedProjectName: this.props.selectedProjectName}), 
                     React.createElement(CloseProjectBtn, {selectedProjectName: this.props.selectedProjectName})
                 )                
@@ -27363,7 +27380,7 @@ BugList = React.createClass({displayName: "BugList",
 });
 
 module.exports = BugList;
-},{"../actions/appActions":210,"../components/add-bug-form":211,"../components/close-project-btn":213,"../constants/constants":214,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}],223:[function(require,module,exports){
+},{"../actions/appActions":210,"../components/add-bug-form":211,"../components/close-project-btn":213,"../components/toggle-input-btn":214,"../constants/constants":215,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}],224:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -27374,6 +27391,7 @@ var React        = require('react'),
     passwordHash = require('password-hash'),
     // Components
     AddProjectForm   = require('../components/add-project-form'),
+    ToggleInputBtn = require('../components/toggle-input-btn'),
     ProjectList;
 
 ProjectList = React.createClass({displayName: "ProjectList",
@@ -27442,6 +27460,7 @@ ProjectList = React.createClass({displayName: "ProjectList",
             /*jshint ignore:start */
             React.createElement("div", {className: "project-list"}, 
                 React.createElement("h2", null, "Project List"), 
+                React.createElement(ToggleInputBtn, {target: ".add-project-form-wrapper"}), 
                 React.createElement(AddProjectForm, null), 
                 React.createElement("ul", {className: "projects"}, 
                     this._renderProjects()
@@ -27454,4 +27473,4 @@ ProjectList = React.createClass({displayName: "ProjectList",
 });
 
 module.exports = ProjectList;
-},{"../actions/appActions":210,"../components/add-project-form":212,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}]},{},[216])
+},{"../actions/appActions":210,"../components/add-project-form":212,"../components/toggle-input-btn":214,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}]},{},[217])

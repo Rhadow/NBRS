@@ -5,8 +5,7 @@ var React = require('react'),
     // Constants
     constants    = require('../constants/constants'),
     // Actions
-    AppActions   = require('../actions/appActions'),
-    
+    AppActions   = require('../actions/appActions'),    
     CloseProjectBtn;
 
 CloseProjectBtn = React.createClass({
@@ -42,7 +41,5 @@ CloseProjectBtn = React.createClass({
 			/*jshint ignore:end */			
 		);
 	}
-
 });
-
 module.exports = CloseProjectBtn;
