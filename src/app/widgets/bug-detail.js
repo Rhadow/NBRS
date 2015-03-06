@@ -13,13 +13,15 @@ BugDetail = React.createClass({
         selectedBugName: React.PropTypes.string,
         selectedProjectBugComments: React.PropTypes.array,
         selectedBugPriority: React.PropTypes.string,
-        isSelectedProjectClosed: React.PropTypes.bool
+        isSelectedProjectClosed: React.PropTypes.bool,
+        selectedBugDescription: React.PropTypes.string,
     },
     getDefaultProps: function() {
         return {
             selectedBugName: '',
             selectedProjectBugComments: [],
             selectedBugPriority: '',
+            selectedBugDescription: '',
             isSelectedProjectClosed: false
         };
     },
@@ -78,7 +80,10 @@ BugDetail = React.createClass({
                 <h2>{this.props.selectedBugName} Details</h2>
                 {this._renderCommentInputs()}
                 <div>
-                    Some Bug Details
+                    <div className="form-group">
+                        <label htmlFor="comment">Bug Description:</label>
+                        <textarea className="form-control allow-cursor" disabled rows="5" id="comment" value={this.props.selectedBugDescription}></textarea>
+                    </div>
                 </div>
             </div>
         );

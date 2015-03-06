@@ -8,6 +8,8 @@ var React        = require('react'),
     passwordHash = require('password-hash'),
     // Constants
     constants    = require('../constants/constants'),
+    // Components
+    AddBugForm   = require('../components/add-bug-form'),
     BugList;
 
 BugList = React.createClass({
@@ -31,41 +33,18 @@ BugList = React.createClass({
         var thisModule = this;
         $(function () {
             $(thisModule.getDOMNode()).find('[data-toggle="tooltip"]').tooltip();
+            $('#bug-start-time-picker, #bug-end-time-picker').datetimepicker({
+                viewMode: 'days',
+                format: 'YYYY/MM/DD'
+            });
+            $('#bug-start-time-picker').on('dp.change', function (e) {
+                $('#bug-end-time-picker').data('DateTimePicker').minDate(e.date);
+            });
         });
         if((prevProps.selectedProjectName !== this.props.selectedProjectName) && this.refs.newBugName){
             this.refs.newBugName.getDOMNode().value = '';
             this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
         }        
-    },
-    _renderBugInputs:function(){
-        var resultHTML, addBugClasses;       
-        addBugClasses = CX({
-            'add-bug-form-wrapper': true,
-            'hide': !this.props.selectedProjectName
-        });
-        if(!this.props.isSelectedProjectClosed){
-            resultHTML = (
-                /*jshint ignore:start */
-                <div className={addBugClasses}>
-                    <span>Add New Bug: </span>
-                    <input 
-                        type="text" 
-                        ref="newBugName"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Must not be empty or contain the following characters: '. # $ [ ] / \'"/>
-                    <select ref="priority">
-                        <option>{constants.PRIORITY.LOW}</option>
-                        <option>{constants.PRIORITY.MEDIUM}</option>
-                        <option>{constants.PRIORITY.HIGH}</option>
-                    </select>
-                    <input type="button" value="Add" onClick={this._addBug} />
-                    <input className="btn btn-danger" type="button" value="Close Project" onClick={this._closeProject} />
-                </div>
-                /*jshint ignore:end */
-            );
-        }        
-        return resultHTML;
     },
     _renderBugs: function(){
         var bugsHTML = this.props.selectedProjectBugs.map(function(bug, i){
@@ -100,24 +79,7 @@ BugList = React.createClass({
         }
         return bugsHTML;
     },
-    _addBug: function(e){
-        var newBugObj = {},
-            newBugName = this.refs.newBugName.getDOMNode().value,
-            priority = this.refs.priority.getDOMNode().value;
-        e.preventDefault();
-        this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
-        if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){
-            $('.add-bug-form-wrapper').effect('shake', {distance: 10});
-            return;
-        }
-        newBugObj = {
-            name     : newBugName,
-            priority : priority
-        };        
-        this.refs.newBugName.getDOMNode().value = '';
-        AppActions.addBug(newBugObj);
-        AppActions.selectBugByName(newBugName);
-    },
+    
     _deleteBugByName: function(e){
         var bugName        = e.target.getAttribute('data-name'),
             projectName    = this.props.selectedProjectName,
@@ -137,29 +99,25 @@ BugList = React.createClass({
             }
         }else{
             swal('Oops...', 'wrong password!', 'error');
-        }        
-    },
-    _closeProject: function(e){
-        var thisModule = this;
-        swal({
-                title: 'Close this project?',   
-                text: 'You will not be able to edit this project anymore!',   
-                type: 'warning',   
-                showCancelButton: true,   
-                confirmButtonColor: '#DD6B55',   
-                confirmButtonText: 'Yes, close it!',   
-                closeOnConfirm: false
-            }, function(){
-                AppActions.closeProject(thisModule.props.selectedProjectName);
-                swal('Closed!', thisModule.props.selectedProjectName + ' has been closed.', 'success'); 
-        });
+        }
     },
     _onBugSelect: function(e){
         var selectedBugName = $(e.target).closest('li')[0].id;
         e.preventDefault();
         if(!$(e.target).hasClass('cancel-icon')){
             AppActions.selectBugByName(selectedBugName);
-        } 
+        }
+    },
+    _renderForm: function(){
+        var resultHTML;
+        if(!this.props.isSelectedProjectClosed){
+            resultHTML = (
+                /* jshint ignore:start */
+                <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
+                /* jshint ignore:end */
+            );
+        }
+        return resultHTML;
     },
     render: function() {
         if(!this.props.selectedProjectName){
@@ -173,7 +131,7 @@ BugList = React.createClass({
             /* jshint ignore:start */
             <div className="bug-list">
                 <h2>{this.props.selectedProjectName} Bug List</h2>
-                {this._renderBugInputs()}
+                {this._renderForm()}
                 <ul className="bugs">
                     {this._renderBugs()}
                 </ul>

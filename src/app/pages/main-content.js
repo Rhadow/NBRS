@@ -25,6 +25,7 @@ MainContent = React.createClass({
             selectedProjectBugComments: [],
             selectedBug: {},
             selectedBugName: '',
+            selectedBugDescription: '',
             isSelectedProjectClosed: false
         };
     },
@@ -54,7 +55,8 @@ MainContent = React.createClass({
             isSelectedProjectClosed: appStore.selectedProject.isClosed,
             selectedBug: appStore.selectedBug,
             selectedBugName: appStore.selectedBug.name,
-            selectedBugPriority: appStore.selectedBug.priority
+            selectedBugPriority: appStore.selectedBug.priority,
+            selectedBugDescription: appStore.selectedBug.description
         });
     },
     render: function() {
@@ -80,6 +82,7 @@ MainContent = React.createClass({
                         selectedBugName={this.state.selectedBugName}
                         selectedProjectBugComments={this.state.selectedProjectBugComments}
                         selectedBugPriority={this.state.selectedBugPriority}
+                        selectedBugDescription={this.state.selectedBugDescription}
                         isSelectedProjectClosed={this.state.isSelectedProjectClosed}/>
                 </div>
             </div>

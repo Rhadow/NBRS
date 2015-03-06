@@ -6,6 +6,8 @@ var React        = require('react'),
     AppActions   = require('../actions/appActions'),
     // Hash
     passwordHash = require('password-hash'),
+    // Components
+    AddProjectForm   = require('../components/add-project-form'),
     ProjectList;
 
 ProjectList = React.createClass({
@@ -25,23 +27,6 @@ ProjectList = React.createClass({
         $(function () {
             $(thisModule.getDOMNode()).find('[data-toggle="tooltip"]').tooltip();
         });        
-    },
-    _renderProjectInputs: function(){
-        var resultHTML = (
-            /*jshint ignore:start */
-            <div className="add-project-form-wrapper">
-                <span>Add New Project: </span>
-                <input
-                    type="text" 
-                    ref="newProjectName" 
-                    data-toggle="tooltip" 
-                    data-placement="top" 
-                    title="Must not be empty or contain the following characters: '. # $ [ ] / \'"/>
-                <input type="button" value="Add" onClick={this._addProject} />
-            </div>
-            /*jshint ignore:end */
-        );
-        return resultHTML;
     },
     _renderProjects: function(){
         var resultHTML = this.props.projects.map(function(project, i){
@@ -78,23 +63,7 @@ ProjectList = React.createClass({
         }else{
             window.alert('wrong password');
         }
-    },
-    _addProject: function(e){
-        var newProjectObj = {},
-            newProjectName = this.refs.newProjectName.getDOMNode().value;
-        e.preventDefault();
-        if(!newProjectName || /[\.\#\$\[\]\/\\]/gi.test(newProjectName)){
-            $('.add-project-form-wrapper').effect('shake', {distance: 10});
-            return;
-        }        
-        this.refs.newProjectName.getDOMNode().value = '';
-        newProjectObj = {
-            name     : newProjectName,
-            isClosed : false
-        };
-        AppActions.addProject(newProjectObj);
-        AppActions.selectProjectByName(newProjectName);
-    },
+    },    
     _onProjectSelect: function(e){
         var selectedProjectName = $(e.target).closest('li')[0].id;
         e.preventDefault();
@@ -107,7 +76,7 @@ ProjectList = React.createClass({
             /*jshint ignore:start */
             <div className="project-list">
                 <h2>Project List</h2>
-                {this._renderProjectInputs()}
+                <AddProjectForm />
                 <ul className='projects'>
                     {this._renderProjects()}
                 </ul>

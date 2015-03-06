@@ -25,7 +25,7 @@ appStore = _.extend({}, eventEmitter.prototype, {
         if(!isProjectIdentical){
             this._firebaseRef.child(newProject.name).set(newProject);
         }else{
-            window.alert('Same project name already exists!');
+            swal('Oops...', 'Same project name already exists!', 'error');
         }
     },
     deleteProject: function(name) { 
@@ -60,7 +60,7 @@ appStore = _.extend({}, eventEmitter.prototype, {
         if(!isBugIdentical){
             this._firebaseRef.child(this.selectedProject.name).child('bugs').child(newBug.name).set(newBug);
         }else{
-            window.alert('Same project name already exists!');
+            swal('Oops...', 'Same project name already exists!', 'error');
         }
     },
     deleteBug: function(bugName){
@@ -89,9 +89,6 @@ appStore = _.extend({}, eventEmitter.prototype, {
         this.removeListener('change', callback);
     },
 });
-
-
-
 appDispatcher.register(function(payload) {
     var action = payload.action;
     switch (action.actionType) {
