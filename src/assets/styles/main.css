@@ -15,6 +15,10 @@ textarea{
 html body .allow-cursor{
 	cursor: default;
 }
+.highlight{
+	background-color: #bf4d28;
+	color: #fff;
+}
 /* Navigation CSS Start */
 .navbar-brand{
 	display: inline-block;
@@ -68,11 +72,9 @@ html body .allow-cursor{
 .project-list .ui-effects-wrapper input{
 	border-color: #d9534f;
 }
-
 .project-list input[type="text"]{
 	display: block;
 }
-
 /* Project List End */
 /* Bug List Start */
 .bug-list .bugs{

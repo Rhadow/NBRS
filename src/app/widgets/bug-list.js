@@ -50,7 +50,7 @@ BugList = React.createClass({
     },
     _renderBugs: function(){
         var bugsHTML = this.props.selectedProjectBugs.map(function(bug, i){
-            var bugStatusTagClass, cancelClass;
+            var bugStatusTagClass, cancelClass, listClass;
             bugStatusTagClass = CX({
                 'label': true,
                 'label-success': bug.priority === constants.PRIORITY.SOLVED,
@@ -62,9 +62,12 @@ BugList = React.createClass({
                 'cancel-icon': true,
                 'hide': this.props.isSelectedProjectClosed
             });
+            listClass = CX({
+                'highlight': bug.name === this.props.selectedBugName
+            });
             return (
                 /* jshint ignore:start */
-                <li key={i} id={bug.name} onClick={this._onBugSelect}>
+                <li className={listClass} key={i} id={bug.name} onClick={this._onBugSelect}>
                     {bug.name}
                     <i className={bugStatusTagClass}>{bug.priority}</i>
                     <i className={cancelClass} data-name={bug.name} onClick={this._deleteBugByName}></i>

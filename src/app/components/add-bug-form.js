@@ -18,8 +18,15 @@ AddBugForm = React.createClass({
     		selectedProjectName: '',
     	};
     },
-    componentDidMount: function() {
+    componentDidMount: function(prevProps, prevState) {
         $('.add-bug-form-wrapper').hide();
+    },
+    componentWillUpdate: function(nextProps, nextState) {
+        if(nextProps.selectedProjectName !== this.props.selectedProjectName){
+            $('.add-bug-form-wrapper').slideUp();
+            this._clearInput();
+        }
+        
     },
     _addBug: function(e){
         var newBugObj = {},
@@ -30,7 +37,6 @@ AddBugForm = React.createClass({
             endDate = this.refs.endDate.getDOMNode().value,
             priority = this.refs.priority.getDOMNode().value;
         e.preventDefault();
-        this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
         if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){            
             this.refs.newBugName.getDOMNode().value = '';
             $('.bug-name-input').effect('shake', {distance: 10});
@@ -46,6 +52,7 @@ AddBugForm = React.createClass({
             this.refs.newBugDescription.getDOMNode().value = '';
             return;
         }
+        $('.add-bug-form-wrapper').slideUp();
         this._clearInput();
         newBugObj = {
             name     : newBugName,
@@ -64,6 +71,7 @@ AddBugForm = React.createClass({
         this.refs.newBugAuthor.getDOMNode().value = '';
         this.refs.startDate.getDOMNode().value = '';
         this.refs.endDate.getDOMNode().value = '';
+        this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
     },
 	render: function() {
 		var addBugClasses = CX({

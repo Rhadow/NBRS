@@ -26527,8 +26527,15 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
     		selectedProjectName: '',
     	};
     },
-    componentDidMount: function() {
+    componentDidMount: function(prevProps, prevState) {
         $('.add-bug-form-wrapper').hide();
+    },
+    componentWillUpdate: function(nextProps, nextState) {
+        if(nextProps.selectedProjectName !== this.props.selectedProjectName){
+            $('.add-bug-form-wrapper').slideUp();
+            this._clearInput();
+        }
+        
     },
     _addBug: function(e){
         var newBugObj = {},
@@ -26539,7 +26546,6 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
             endDate = this.refs.endDate.getDOMNode().value,
             priority = this.refs.priority.getDOMNode().value;
         e.preventDefault();
-        this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
         if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){            
             this.refs.newBugName.getDOMNode().value = '';
             $('.bug-name-input').effect('shake', {distance: 10});
@@ -26555,6 +26561,7 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
             this.refs.newBugDescription.getDOMNode().value = '';
             return;
         }
+        $('.add-bug-form-wrapper').slideUp();
         this._clearInput();
         newBugObj = {
             name     : newBugName,
@@ -26573,6 +26580,7 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
         this.refs.newBugAuthor.getDOMNode().value = '';
         this.refs.startDate.getDOMNode().value = '';
         this.refs.endDate.getDOMNode().value = '';
+        this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
     },
 	render: function() {
 		var addBugClasses = CX({
@@ -27282,7 +27290,7 @@ BugList = React.createClass({displayName: "BugList",
     },
     _renderBugs: function(){
         var bugsHTML = this.props.selectedProjectBugs.map(function(bug, i){
-            var bugStatusTagClass, cancelClass;
+            var bugStatusTagClass, cancelClass, listClass;
             bugStatusTagClass = CX({
                 'label': true,
                 'label-success': bug.priority === constants.PRIORITY.SOLVED,
@@ -27294,9 +27302,12 @@ BugList = React.createClass({displayName: "BugList",
                 'cancel-icon': true,
                 'hide': this.props.isSelectedProjectClosed
             });
+            listClass = CX({
+                'highlight': bug.name === this.props.selectedBugName
+            });
             return (
                 /* jshint ignore:start */
-                React.createElement("li", {key: i, id: bug.name, onClick: this._onBugSelect}, 
+                React.createElement("li", {className: listClass, key: i, id: bug.name, onClick: this._onBugSelect}, 
                     bug.name, 
                     React.createElement("i", {className: bugStatusTagClass}, bug.priority), 
                     React.createElement("i", {className: cancelClass, "data-name": bug.name, onClick: this._deleteBugByName})
@@ -27418,10 +27429,13 @@ ProjectList = React.createClass({displayName: "ProjectList",
                 'label': true,
                 'label-danger': true,
                 'hide': !project.isClosed
-            });
+                }),
+                listClass = CX({
+                    'highlight': project.name === this.props.selectedProjectName
+                });
             return (
                 /*jshint ignore:start */
-                React.createElement("li", {key: i, id: project.name, onClick: this._onProjectSelect}, 
+                React.createElement("li", {className: listClass, key: i, id: project.name, onClick: this._onProjectSelect}, 
                     project.name, 
                     React.createElement("i", {className: projectClosedClass}, "Project Closed"), 
                     React.createElement("i", {className: "cancel-icon", "data-name": project.name, onClick: this._deleteProjectByName})

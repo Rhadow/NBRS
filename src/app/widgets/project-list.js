@@ -35,10 +35,13 @@ ProjectList = React.createClass({
                 'label': true,
                 'label-danger': true,
                 'hide': !project.isClosed
-            });
+                }),
+                listClass = CX({
+                    'highlight': project.name === this.props.selectedProjectName
+                });
             return (
                 /*jshint ignore:start */
-                <li key={i} id={project.name} onClick={this._onProjectSelect}>
+                <li className={listClass} key={i} id={project.name} onClick={this._onProjectSelect}>
                     {project.name}
                     <i className={projectClosedClass}>Project Closed</i>
                     <i className='cancel-icon' data-name={project.name} onClick={this._deleteProjectByName}></i>
