@@ -66,6 +66,9 @@ appStore = _.extend({}, eventEmitter.prototype, {
     deleteBug: function(bugName){
         this._firebaseRef.child(this.selectedProject.name).child('bugs').child(bugName).remove();
     },
+    closeBug: function(bugName){
+        this._firebaseRef.child(this.selectedProject.name).child('bugs').child(bugName).child('priority').set(constants.PRIORITY.SOLVED);
+    },
     selectBug: function(bugName){
         var thisModule = this;
         thisModule.selectedBug = {};
@@ -78,6 +81,9 @@ appStore = _.extend({}, eventEmitter.prototype, {
                 });
             });
         }        
+    },
+    addComment: function(comment){
+        this._firebaseRef.child(this.selectedProject.name).child('bugs').child(this.selectedBug.name).child('comments').push(comment);
     },
     emitChange: function() {
         this.emit('change');
@@ -110,8 +116,14 @@ appDispatcher.register(function(payload) {
         case constants.DELETE_BUG:
             appStore.deleteBug(action.data);
             break;
+        case constants.CLOSE_BUG:
+            appStore.closeBug(action.data);
+            break;
         case constants.SELECT_BUG:
             appStore.selectBug(action.data);
+            break;
+        case constants.ADD_COMMENT:
+            appStore.addComment(action.data);
             break;
         default:
             return true;

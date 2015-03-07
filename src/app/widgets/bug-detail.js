@@ -9,6 +9,8 @@ var React     = require('react'),
     // Components
     AddCommentForm   = require('../components/add-comment-form'),
     ToggleInputBtn = require('../components/toggle-input-btn'),
+    Comment = require('../components/comment'),
+    CloseBugBtn = require('../components/close-bug-btn'),
     BugDetail;
 
 BugDetail = React.createClass({
@@ -53,7 +55,11 @@ BugDetail = React.createClass({
                     <ToggleInputBtn 
                         target=".add-comment-form-wrapper"
                         displayText="New Comment" />
-                    <AddCommentForm />
+                    <AddCommentForm 
+                        selectedBugName={this.props.selectedBugName}/>
+                    <CloseBugBtn 
+                        selectedProjectName={this.props.selectedProjectName}
+                        selectedBugName={this.props.selectedBugName}/>
                 </div>
                 /*jshint ignore:end */
             );
@@ -64,6 +70,21 @@ BugDetail = React.createClass({
         this.setState({
             selectedBugPriority: e.target.value
         });
+    },
+    _renderComments: function(){
+        var resultHTML = this.props.selectedProjectBugComments.reverse().map(function(comment){
+            /* jshint ignore:start */
+            return <Comment detail={comment}/>
+            /* jshint ignore:end */
+        });
+        if(this.props.selectedProjectBugComments.length === 0){
+            resultHTML = (
+                /* jshint ignore:start */
+                <div>There are no comment in {this.props.selectedBugName}</div>
+                /* jshint ignore:end */
+            );
+        }
+        return resultHTML;
     },
     render: function() {
         if(!this.props.selectedBugName){
@@ -84,6 +105,10 @@ BugDetail = React.createClass({
                     <div>Start Date: {this.props.selectedBugStartDate}</div>
                     <div>End Date: {this.props.selectedBugEndDate}</div>
                     <div>Author: {this.props.selectedBugAuthor}</div>
+                </div>
+                <div className="comments">
+                    <h2>{this.props.selectedProjectName} Comments</h2>
+                    {this._renderComments()}
                 </div>
             </div>
         );

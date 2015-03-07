@@ -20,6 +20,15 @@ AddBugForm = React.createClass({
     },
     componentDidMount: function(prevProps, prevState) {
         $('.add-bug-form-wrapper').hide();
+        $(function () {
+            $('#bug-start-time-picker, #bug-end-time-picker').datetimepicker({
+                viewMode: 'days',
+                format: 'YYYY/MM/DD'
+            });
+            $('#bug-start-time-picker').on('dp.change', function (e) {
+                $('#bug-end-time-picker').data('DateTimePicker').minDate(e.date);
+            });
+        });
     },
     componentWillUpdate: function(nextProps, nextState) {
         if(nextProps.selectedProjectName !== this.props.selectedProjectName){

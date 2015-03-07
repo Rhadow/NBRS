@@ -108,6 +108,12 @@ html body .allow-cursor{
 	margin-bottom: 5px;
 	border: 1px solid #01cafe;
 }
+.bug-detail .ui-effects-wrapper .comment-description-input{
+	border-color: #d9534f;
+}
+.bug-detail .ui-effects-wrapper .comment-author-input{
+	border-color: #d9534f;
+}
 /* Bug Detail End */
 
 

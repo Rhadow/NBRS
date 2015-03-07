@@ -40,12 +40,24 @@ var appActions = {
 			data: bugName
 		});
 	},
+	closeBug: function(bugName){
+		appDispatcher.handleViewAction({
+			actionType: constants.CLOSE_BUG,
+			data: bugName
+		});
+	},
 	selectBugByName: function(bugName){
 		appDispatcher.handleViewAction({
 			actionType: constants.SELECT_BUG,
 			data: bugName
 		});
 	},
+	addComment: function(comment){
+		appDispatcher.handleViewAction({
+			actionType: constants.ADD_COMMENT,
+			data: comment
+		});
+	}
 };
 
 module.exports = appActions;

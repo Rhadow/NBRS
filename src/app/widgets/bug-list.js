@@ -35,13 +35,6 @@ BugList = React.createClass({
         var thisModule = this;
         $(function () {
             $(thisModule.getDOMNode()).find('[data-toggle="tooltip"]').tooltip();
-            $('#bug-start-time-picker, #bug-end-time-picker').datetimepicker({
-                viewMode: 'days',
-                format: 'YYYY/MM/DD'
-            });
-            $('#bug-start-time-picker').on('dp.change', function (e) {
-                $('#bug-end-time-picker').data('DateTimePicker').minDate(e.date);
-            });
         });
         if((prevProps.selectedProjectName !== this.props.selectedProjectName) && this.refs.newBugName){
             this.refs.newBugName.getDOMNode().value = '';
