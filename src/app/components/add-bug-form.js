@@ -1,21 +1,20 @@
 'use strict';
 
-var React = require('react'),
-    CX           = require('react/lib/cx'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
     // Constants
-    constants    = require('../constants/constants'),
+    constants  = require('../constants/constants'),
     // Actions
-    AppActions   = require('../actions/appActions'),
+    AppActions = require('../actions/appActions'),
     AddBugForm;
 
 AddBugForm = React.createClass({
-	mixins: [],
     propTypes: {
-    	selectedProjectName: React.PropTypes.string,
+    	selectedProjectName: React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
-    		selectedProjectName: '',
+    		selectedProjectName: ''
     	};
     },
     componentDidMount: function(prevProps, prevState) {
@@ -36,14 +35,14 @@ AddBugForm = React.createClass({
             this._clearInput();
         }        
     },
-    _addBug: function(e){
-        var newBugObj = {},
-            newBugName = this.refs.newBugName.getDOMNode().value,
-            newAuthorName = this.refs.newBugAuthor.getDOMNode().value,
+    _addBug: function(e) {
+        var newBugObj      = {},
+            newBugName     = this.refs.newBugName.getDOMNode().value,
+            newAuthorName  = this.refs.newBugAuthor.getDOMNode().value,
             newDescription = this.refs.newBugDescription.getDOMNode().value,
-            startDate = this.refs.startDate.getDOMNode().value,
-            endDate = this.refs.endDate.getDOMNode().value,
-            priority = this.refs.priority.getDOMNode().value;
+            startDate      = this.refs.startDate.getDOMNode().value,
+            endDate        = this.refs.endDate.getDOMNode().value,
+            priority       = this.refs.priority.getDOMNode().value;            
         e.preventDefault();
         if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){            
             this.refs.newBugName.getDOMNode().value = '';
@@ -63,12 +62,12 @@ AddBugForm = React.createClass({
         $('.add-bug-form-wrapper').slideUp();
         this._clearInput();
         newBugObj = {
-            name     : newBugName,
-            author   : newAuthorName,
-            priority : priority,
-            description: newDescription,
-            startDate: startDate,
-            endDate: endDate
+            name        : newBugName,
+            author      : newAuthorName,
+            priority    : priority,
+            description : newDescription,
+            startDate   : startDate,
+            endDate     : endDate
         };
         AppActions.addBug(newBugObj);
         AppActions.selectBugByName(newBugName);
@@ -83,8 +82,8 @@ AddBugForm = React.createClass({
     },
 	render: function() {
 		var addBugClasses = CX({
-            'add-bug-form-wrapper': true,
-            'hide': !this.props.selectedProjectName
+            'add-bug-form-wrapper' : true,
+            'hide'                 : !this.props.selectedProjectName
         });
 		return (
 			/*jshint ignore:start */
@@ -126,7 +125,8 @@ AddBugForm = React.createClass({
                     <label>Start Date:</label>
                     <div className='input-group date' id='bug-start-time-picker'>
                         <input type='text' className="form-control" ref="startDate"/>
-                        <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span>
+                        <span className="input-group-addon">
+                            <span className="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
                 </div>
@@ -134,7 +134,8 @@ AddBugForm = React.createClass({
                     <label>End Date:</label>
                     <div className='input-group date' id='bug-end-time-picker'>
                         <input type='text' className="form-control" ref="endDate"/>
-                        <span className="input-group-addon"><span className="glyphicon glyphicon-calendar"></span>
+                        <span className="input-group-addon">
+                            <span className="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
                 </div>

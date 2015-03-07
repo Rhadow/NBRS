@@ -1,8 +1,9 @@
 'use strict';
 
-var React = require('react');
+var React = require('react'),
+    Comment;
 
-var Comment = React.createClass({
+Comment = React.createClass({
 
 	propTypes: {
 		detail: React.PropTypes.object

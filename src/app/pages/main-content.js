@@ -1,14 +1,16 @@
 'use strict';
 
-var React = require('react'),
+var React          = require('react'),
+    // Constants
+    constants      = require('../constants/constants'),
     // Store
-    appStore = require('../stores/appStore'),
+    appStore       = require('../stores/appStore'),
     // Widgets
-    ProjectList = require('../widgets/project-list'),
-    BugList = require('../widgets/bug-list'),
-    BugDetail = require('../widgets/bug-detail'),
+    ProjectList    = require('../widgets/project-list'),
+    BugList        = require('../widgets/bug-list'),
+    BugDetail      = require('../widgets/bug-detail'),
     // Firebase
-    Firebase = require('firebase'),
+    Firebase       = require('firebase'),
     ReactFireMixin = require('reactfire'),
     MainContent;
 
@@ -17,24 +19,24 @@ MainContent = React.createClass({
     _hashedPassword: appStore.hashedPassword,
     getInitialState: function() {
         return {
-            combo: '',
-            projects: [],
-            selectedProject: {},
-            selectedProjectName: '',
-            selectedProjectBugs: [],
-            selectedProjectBugComments: [],
-            selectedBug: {},
-            selectedBugName: '',
-            selectedBugDescription: '',
-            selectedBugStartDate: '',
-            selectedBugEndDate: '',
-            selectedBugAuthor: '',
-            isSelectedProjectClosed: false
+            combo                      : '',
+            projects                   : [],
+            selectedProject            : {},
+            selectedProjectName        : '',
+            selectedProjectBugs        : [],
+            selectedProjectBugComments : [],
+            selectedBug                : {},
+            selectedBugName            : '',
+            selectedBugDescription     : '',
+            selectedBugStartDate       : '',
+            selectedBugEndDate         : '',
+            selectedBugAuthor          : '',
+            isSelectedProjectClosed    : false
         };
     },
     componentWillMount: function(){
-        this.bindAsArray(new Firebase('https://nbrs.firebaseio.com/projects'), 'projects');
-        this.bindAsObject(new Firebase('https://nbrs.firebaseio.com/password'), 'combo');
+        this.bindAsArray(new Firebase(constants.FIREBASE.PROJECT_URL), 'projects');
+        this.bindAsObject(new Firebase(constants.FIREBASE.PASSWORD_URL), 'combo');
         appStore.addChangeListener(this._onDataUpdate);
     },
     componentWillUnmount: function(){
@@ -45,24 +47,25 @@ MainContent = React.createClass({
     _onDataUpdate: function(){
         var bugsURL, commentsURL;
         if(appStore.selectedProject.name){
-            bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs';
+            bugsURL = constants.FIREBASE.PROJECT_URL + '/' + appStore.selectedProject.name + '/bugs';
             this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');
         }
         if(appStore.selectedBug.name){
-            commentsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs/' + appStore.selectedBug.name + '/comments';
+            commentsURL = constants.FIREBASE.PROJECT_URL + 
+                '/' + appStore.selectedProject.name + '/bugs/' + appStore.selectedBug.name + '/comments';
             this.bindAsArray(new Firebase(commentsURL), 'selectedProjectBugComments');
         }
         this.setState({
-            selectedProject: appStore.selectedProject,
-            selectedProjectName: appStore.selectedProject.name,
-            isSelectedProjectClosed: appStore.selectedProject.isClosed,
-            selectedBug: appStore.selectedBug,
-            selectedBugName: appStore.selectedBug.name,
-            selectedBugPriority: appStore.selectedBug.priority,
-            selectedBugDescription: appStore.selectedBug.description,
-            selectedBugStartDate: appStore.selectedBug.startDate,
-            selectedBugEndDate: appStore.selectedBug.endDate,
-            selectedBugAuthor: appStore.selectedBug.author,
+            selectedProject         : appStore.selectedProject,
+            selectedProjectName     : appStore.selectedProject.name,
+            isSelectedProjectClosed : appStore.selectedProject.isClosed,
+            selectedBug             : appStore.selectedBug,
+            selectedBugName         : appStore.selectedBug.name,
+            selectedBugPriority     : appStore.selectedBug.priority,
+            selectedBugDescription  : appStore.selectedBug.description,
+            selectedBugStartDate    : appStore.selectedBug.startDate,
+            selectedBugEndDate      : appStore.selectedBug.endDate,
+            selectedBugAuthor       : appStore.selectedBug.author,
         });
     },
     render: function() {

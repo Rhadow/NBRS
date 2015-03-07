@@ -1,11 +1,9 @@
 'use strict';
 
-var React = require('react'),
-    CX           = require('react/lib/cx'),
-    // Constants
-    constants    = require('../constants/constants'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
     // Actions
-    AppActions   = require('../actions/appActions'),
+    AppActions = require('../actions/appActions'),
     AddCommentForm;
 
 AddCommentForm = React.createClass({
@@ -26,10 +24,10 @@ AddCommentForm = React.createClass({
             this._clearInput();
         }        
     },
-    _addComment: function(e){
+    _addComment: function(e) {
         var newCommentObj = {},
-            author = this.refs.newCommentAuthor.getDOMNode().value,
-            description = this.refs.newCommentDescription.getDOMNode().value;
+            author        = this.refs.newCommentAuthor.getDOMNode().value,
+            description   = this.refs.newCommentDescription.getDOMNode().value;
         e.preventDefault();
         if(!author){
             $('.comment-author-input').effect('shake', {distance: 10});
@@ -44,14 +42,14 @@ AddCommentForm = React.createClass({
         $('.add-comment-form-wrapper').slideUp();
         this._clearInput();
         newCommentObj = {
-            author: author,
-            description: description,
-            postYear: new Date().getFullYear(),
-            postMonth: new Date().getMonth(),
-            postDay: new Date().getDate(),
-            postHour: new Date().getHours(),
-            postMinute: new Date().getMinutes(),
-            postSecond: new Date().getSeconds()
+            author      : author,
+            description : description,
+            postYear    : new Date().getFullYear(),
+            postMonth   : new Date().getMonth(),
+            postDay     : new Date().getDate(),
+            postHour    : new Date().getHours(),
+            postMinute  : new Date().getMinutes(),
+            postSecond  : new Date().getSeconds()
         };
         AppActions.addComment(newCommentObj);
     },

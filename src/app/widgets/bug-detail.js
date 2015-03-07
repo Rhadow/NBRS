@@ -1,39 +1,40 @@
 'use strict';
 
-var React     = require('react'),
-    CX        = require('react/lib/cx'),
+var React          = require('react'),
+    CX             = require('react/lib/cx'),
     // constants
-    constants = require('../constants/constants'),
+    constants      = require('../constants/constants'),
     // Store
-    appStore  = require('../stores/appStore.js'),
+    appStore       = require('../stores/appStore.js'),
     // Components
-    AddCommentForm   = require('../components/add-comment-form'),
+    AddCommentForm = require('../components/add-comment-form'),
     ToggleInputBtn = require('../components/toggle-input-btn'),
-    Comment = require('../components/comment'),
-    CloseBugBtn = require('../components/close-bug-btn'),
+    Comment        = require('../components/comment'),
+    CloseBugBtn    = require('../components/close-bug-btn'),
+    BugIntro       = require('../components/bug-intro'),
     BugDetail;
 
 BugDetail = React.createClass({
     propTypes: {
-        selectedBugName: React.PropTypes.string,
-        selectedProjectBugComments: React.PropTypes.array,
-        selectedBugPriority: React.PropTypes.string,
-        isSelectedProjectClosed: React.PropTypes.bool,
-        selectedBugDescription: React.PropTypes.string,
-        selectedBugStartDate: React.PropTypes.string,
-        selectedBugEndDate: React.PropTypes.string,
-        selectedBugAuthor: React.PropTypes.string,
+        selectedBugName            : React.PropTypes.string,
+        selectedProjectBugComments : React.PropTypes.array,
+        selectedBugPriority        : React.PropTypes.string,
+        isSelectedProjectClosed    : React.PropTypes.bool,
+        selectedBugDescription     : React.PropTypes.string,
+        selectedBugStartDate       : React.PropTypes.string,
+        selectedBugEndDate         : React.PropTypes.string,
+        selectedBugAuthor          : React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
-            selectedBugName: '',
-            selectedProjectBugComments: [],
-            selectedBugPriority: '',
-            selectedBugDescription: '',
-            selectedBugStartDate: '',
-            selectedBugEndDate: '',
-            selectedBugAuthor: '',
-            isSelectedProjectClosed: false
+            selectedBugName            : '',
+            selectedProjectBugComments : [],
+            selectedBugPriority        : '',
+            selectedBugDescription     : '',
+            selectedBugStartDate       : '',
+            selectedBugEndDate         : '',
+            selectedBugAuthor          : '',
+            isSelectedProjectClosed    : false
         };
     },
     getInitialState: function() {
@@ -72,9 +73,13 @@ BugDetail = React.createClass({
         });
     },
     _renderComments: function(){
-        var resultHTML = this.props.selectedProjectBugComments.reverse().map(function(comment){
+        var resultHTML = this.props.selectedProjectBugComments.map(function(comment, i){
             /* jshint ignore:start */
-            return <Comment detail={comment}/>
+            return (
+                <Comment 
+                    key={i}
+                    detail={comment}/>
+            );
             /* jshint ignore:end */
         });
         if(this.props.selectedProjectBugComments.length === 0){
@@ -99,13 +104,11 @@ BugDetail = React.createClass({
             <div className="bug-detail">
                 <h2>{this.props.selectedBugName} Details</h2>
                 {this._renderCommentInputs()}
-                <div className="form-group">
-                    <label htmlFor="comment">Bug Description:</label>
-                    <textarea className="form-control allow-cursor" disabled rows="5" id="comment" value={this.props.selectedBugDescription}></textarea>
-                    <div>Start Date: {this.props.selectedBugStartDate}</div>
-                    <div>End Date: {this.props.selectedBugEndDate}</div>
-                    <div>Author: {this.props.selectedBugAuthor}</div>
-                </div>
+                <BugIntro 
+                    selectedBugDescription={this.props.selectedBugDescription}
+                    selectedBugStartDate={this.props.selectedBugStartDate}
+                    selectedBugEndDate={this.props.selectedBugEndDate}
+                    selectedBugAuthor={this.props.selectedBugAuthor}/>
                 <div className="comments">
                     <h2>{this.props.selectedProjectName} Comments</h2>
                     {this._renderComments()}
@@ -114,7 +117,6 @@ BugDetail = React.createClass({
         );
         /* jshint ignore:end */
     }
-
 });
 
 module.exports = BugDetail;

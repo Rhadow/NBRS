@@ -26457,10 +26457,11 @@ var ReactFireMixin = {
 },{}],210:[function(require,module,exports){
 'use strict';
 
-var appDispatcher = require('../dispatcher/appDispatcher.js');
-var constants = require('../constants/constants.js');
+var appDispatcher = require('../dispatcher/appDispatcher.js'),
+    constants     = require('../constants/constants.js'),
+    appActions;
 
-var appActions = {
+appActions = {
 	addProject: function(project){
 		appDispatcher.handleViewAction({
 			actionType: constants.ADD_PROJECT,
@@ -26518,25 +26519,24 @@ var appActions = {
 };
 
 module.exports = appActions;
-},{"../constants/constants.js":218,"../dispatcher/appDispatcher.js":219}],211:[function(require,module,exports){
+},{"../constants/constants.js":220,"../dispatcher/appDispatcher.js":221}],211:[function(require,module,exports){
 'use strict';
 
-var React = require('react'),
-    CX           = require('react/lib/cx'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
     // Constants
-    constants    = require('../constants/constants'),
+    constants  = require('../constants/constants'),
     // Actions
-    AppActions   = require('../actions/appActions'),
+    AppActions = require('../actions/appActions'),
     AddBugForm;
 
 AddBugForm = React.createClass({displayName: "AddBugForm",
-	mixins: [],
     propTypes: {
-    	selectedProjectName: React.PropTypes.string,
+    	selectedProjectName: React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
-    		selectedProjectName: '',
+    		selectedProjectName: ''
     	};
     },
     componentDidMount: function(prevProps, prevState) {
@@ -26557,14 +26557,14 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
             this._clearInput();
         }        
     },
-    _addBug: function(e){
-        var newBugObj = {},
-            newBugName = this.refs.newBugName.getDOMNode().value,
-            newAuthorName = this.refs.newBugAuthor.getDOMNode().value,
+    _addBug: function(e) {
+        var newBugObj      = {},
+            newBugName     = this.refs.newBugName.getDOMNode().value,
+            newAuthorName  = this.refs.newBugAuthor.getDOMNode().value,
             newDescription = this.refs.newBugDescription.getDOMNode().value,
-            startDate = this.refs.startDate.getDOMNode().value,
-            endDate = this.refs.endDate.getDOMNode().value,
-            priority = this.refs.priority.getDOMNode().value;
+            startDate      = this.refs.startDate.getDOMNode().value,
+            endDate        = this.refs.endDate.getDOMNode().value,
+            priority       = this.refs.priority.getDOMNode().value;            
         e.preventDefault();
         if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){            
             this.refs.newBugName.getDOMNode().value = '';
@@ -26584,12 +26584,12 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
         $('.add-bug-form-wrapper').slideUp();
         this._clearInput();
         newBugObj = {
-            name     : newBugName,
-            author   : newAuthorName,
-            priority : priority,
-            description: newDescription,
-            startDate: startDate,
-            endDate: endDate
+            name        : newBugName,
+            author      : newAuthorName,
+            priority    : priority,
+            description : newDescription,
+            startDate   : startDate,
+            endDate     : endDate
         };
         AppActions.addBug(newBugObj);
         AppActions.selectBugByName(newBugName);
@@ -26604,8 +26604,8 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
     },
 	render: function() {
 		var addBugClasses = CX({
-            'add-bug-form-wrapper': true,
-            'hide': !this.props.selectedProjectName
+            'add-bug-form-wrapper' : true,
+            'hide'                 : !this.props.selectedProjectName
         });
 		return (
 			/*jshint ignore:start */
@@ -26647,7 +26647,8 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
                     React.createElement("label", null, "Start Date:"), 
                     React.createElement("div", {className: "input-group date", id: "bug-start-time-picker"}, 
                         React.createElement("input", {type: "text", className: "form-control", ref: "startDate"}), 
-                        React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"})
+                        React.createElement("span", {className: "input-group-addon"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-calendar"})
                         )
                     )
                 ), 
@@ -26655,7 +26656,8 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
                     React.createElement("label", null, "End Date:"), 
                     React.createElement("div", {className: "input-group date", id: "bug-end-time-picker"}, 
                         React.createElement("input", {type: "text", className: "form-control", ref: "endDate"}), 
-                        React.createElement("span", {className: "input-group-addon"}, React.createElement("span", {className: "glyphicon glyphicon-calendar"})
+                        React.createElement("span", {className: "input-group-addon"}, 
+                            React.createElement("span", {className: "glyphicon glyphicon-calendar"})
                         )
                     )
                 ), 
@@ -26673,15 +26675,13 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
 });
 
 module.exports = AddBugForm;
-},{"../actions/appActions":210,"../constants/constants":218,"react":"nakDgH","react/lib/cx":164}],212:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":220,"react":"nakDgH","react/lib/cx":164}],212:[function(require,module,exports){
 'use strict';
 
-var React = require('react'),
-    CX           = require('react/lib/cx'),
-    // Constants
-    constants    = require('../constants/constants'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
     // Actions
-    AppActions   = require('../actions/appActions'),
+    AppActions = require('../actions/appActions'),
     AddCommentForm;
 
 AddCommentForm = React.createClass({displayName: "AddCommentForm",
@@ -26702,10 +26702,10 @@ AddCommentForm = React.createClass({displayName: "AddCommentForm",
             this._clearInput();
         }        
     },
-    _addComment: function(e){
+    _addComment: function(e) {
         var newCommentObj = {},
-            author = this.refs.newCommentAuthor.getDOMNode().value,
-            description = this.refs.newCommentDescription.getDOMNode().value;
+            author        = this.refs.newCommentAuthor.getDOMNode().value,
+            description   = this.refs.newCommentDescription.getDOMNode().value;
         e.preventDefault();
         if(!author){
             $('.comment-author-input').effect('shake', {distance: 10});
@@ -26720,14 +26720,14 @@ AddCommentForm = React.createClass({displayName: "AddCommentForm",
         $('.add-comment-form-wrapper').slideUp();
         this._clearInput();
         newCommentObj = {
-            author: author,
-            description: description,
-            postYear: new Date().getFullYear(),
-            postMonth: new Date().getMonth(),
-            postDay: new Date().getDate(),
-            postHour: new Date().getHours(),
-            postMinute: new Date().getMinutes(),
-            postSecond: new Date().getSeconds()
+            author      : author,
+            description : description,
+            postYear    : new Date().getFullYear(),
+            postMonth   : new Date().getMonth(),
+            postDay     : new Date().getDate(),
+            postHour    : new Date().getHours(),
+            postMinute  : new Date().getMinutes(),
+            postSecond  : new Date().getSeconds()
         };
         AppActions.addComment(newCommentObj);
     },
@@ -26775,25 +26775,21 @@ AddCommentForm = React.createClass({displayName: "AddCommentForm",
 });
 
 module.exports = AddCommentForm;
-},{"../actions/appActions":210,"../constants/constants":218,"react":"nakDgH","react/lib/cx":164}],213:[function(require,module,exports){
+},{"../actions/appActions":210,"react":"nakDgH","react/lib/cx":164}],213:[function(require,module,exports){
 'use strict';
 
-var React = require('react'),
-    CX           = require('react/lib/cx'),
-    // Constants
-    constants    = require('../constants/constants'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
     // Actions
-    AppActions   = require('../actions/appActions'),
+    AppActions = require('../actions/appActions'),
     AddProjectForm;
 
 AddProjectForm = React.createClass({displayName: "AddProjectForm",
-    propTypes: {},
-    getDefaultProps: function() {},
     componentDidMount: function() {
         $('.add-project-form-wrapper').hide();
     },
     _addProject: function(e){
-        var newProjectObj = {},
+        var newProjectObj  = {},
             newProjectName = this.refs.newProjectName.getDOMNode().value;
         e.preventDefault();
         this._clearInput();
@@ -26840,26 +26836,186 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 });
 
 module.exports = AddProjectForm;
-},{"../actions/appActions":210,"../constants/constants":218,"react":"nakDgH","react/lib/cx":164}],214:[function(require,module,exports){
+},{"../actions/appActions":210,"react":"nakDgH","react/lib/cx":164}],214:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
+    BugIntro;
+
+BugIntro = React.createClass({displayName: "BugIntro",
+	propTypes: {
+        selectedBugDescription : React.PropTypes.string,
+        selectedBugStartDate   : React.PropTypes.string,
+        selectedBugEndDate     : React.PropTypes.string,
+        selectedBugAuthor      : React.PropTypes.string
+    },
+    getDefaultProps: function() {
+    	return {
+    		selectedBugDescription : '',
+	        selectedBugStartDate   : '',
+	        selectedBugEndDate     : '',
+	        selectedBugAuthor      : ''
+    	};
+    },
+    _renderStartDate: function(){
+    	var resultHTML;
+    	if(this.props.selectedBugStartDate){
+    		resultHTML = (
+    			/* jshint ignore:start */
+    			React.createElement("div", null, "Start Date: ", this.props.selectedBugStartDate)
+    			/* jshint ignore:end */
+    		); 
+    	}
+    	return resultHTML;
+    },
+    _renderEndDate: function(){
+    	var resultHTML;
+    	if(this.props.selectedBugEndDate){
+    		resultHTML = (
+    			/* jshint ignore:start */
+    			React.createElement("div", null, "End Date: ", this.props.selectedBugEndDate)
+    			/* jshint ignore:end */
+    		); 
+    	}
+    	return resultHTML;
+    },
+	render: function() {
+		return (
+			/* jshint ignore:start */
+			React.createElement("div", {className: "form-group"}, 
+                React.createElement("label", {htmlFor: "comment"}, "Bug Description:"), 
+                React.createElement("textarea", {
+                    className: "form-control allow-cursor", 
+                    disabled: true, 
+                    rows: "5", 
+                    id: "comment", 
+                    value: this.props.selectedBugDescription}
+                ), 
+                this._renderStartDate(), 
+                this._renderEndDate(), 
+                React.createElement("div", null, "Author: ", this.props.selectedBugAuthor)
+            )
+			/* jshint ignore:end */
+		);
+	}
+
+});
+
+module.exports = BugIntro;
+},{"react":"nakDgH"}],215:[function(require,module,exports){
+'use strict';
+
+var React        = require('react'),
     CX           = require('react/lib/cx'),
+    // Actions
+    AppActions   = require('../actions/appActions'),    
+    // Hash
+    passwordHash = require('password-hash'),
     // Constants
     constants    = require('../constants/constants'),
+    Bug;
+
+Bug = React.createClass({displayName: "Bug",
+	propTypes: {
+		selectedProjectName     : React.PropTypes.string,
+		bugDetail               : React.PropTypes.object,
+		selectedBugName         : React.PropTypes.string,
+        isSelectedProjectClosed : React.PropTypes.bool,
+        combo                   : React.PropTypes.string
+	},
+	getDefaultProps: function() {
+		return {
+			selectedProjectName     : '',
+			bugDetail               : {},
+			selectedBugName         : '',
+            isSelectedProjectClosed : false,
+            combo                   : ''
+		};
+	},
+	_deleteBugByName: function(e){
+        var bugName        = e.target.getAttribute('data-name'),
+            projectName    = this.props.selectedProjectName,
+            hashedPassword = passwordHash.generate(this.props.combo),
+            passwordInput;
+        e.preventDefault();
+        e.stopPropagation();
+        passwordInput = window.prompt('Please enter password to delete:');
+        if(passwordHash.verify(passwordInput, hashedPassword)){
+            if(this.props.isSelectedProjectClosed){
+                swal('Oops...', 'project is closed!', 'error');
+                return;
+            }
+            AppActions.deleteBug(bugName);        
+            if(bugName === this.props.selectedBugName){
+                AppActions.selectBugByName('');
+            }
+        }else{
+            swal('Oops...', 'wrong password!', 'error');
+        }
+    },
+    _onBugSelect: function(e){
+        var selectedBugName = $(e.target).closest('div')[0].id;
+        e.preventDefault();
+        if(!$(e.target).hasClass('cancel-icon')){
+            AppActions.selectBugByName(selectedBugName);
+        }
+    },
+
+	render: function() {
+		var bugStatusTagClass, cancelClass, bugClass;
+
+		if(this.props.bugDetail.priority){
+			bugStatusTagClass = CX({
+                'label'         : true,
+                'label-success' : this.props.bugDetail.priority === constants.PRIORITY.SOLVED,
+                'label-primary' : this.props.bugDetail.priority === constants.PRIORITY.LOW,
+                'label-warning' : this.props.bugDetail.priority === constants.PRIORITY.MEDIUM,
+                'label-danger'  : this.props.bugDetail.priority === constants.PRIORITY.HIGH,
+            });
+            cancelClass = CX({
+                'cancel-icon' : true,
+                'hide'        : this.props.isSelectedProjectClosed
+            });
+            bugClass = CX({
+                'highlight': this.props.bugDetail.name === this.props.selectedBugName
+            });
+		}
+            
+		return (
+			/* jshint ignore:start */
+			React.createElement("div", {className: bugClass, id: this.props.bugDetail.name, onClick: this._onBugSelect}, 
+                this.props.bugDetail.name, 
+                React.createElement("i", {className: bugStatusTagClass}, this.props.bugDetail.priority), 
+                React.createElement("i", {
+                    className: cancelClass, 
+                    "data-name": this.props.bugDetail.name, 
+                    onClick: this._deleteBugByName})
+            )
+			/* jshint ignore:end */
+		);
+	}
+
+});
+
+module.exports = Bug;
+},{"../actions/appActions":210,"../constants/constants":220,"password-hash":16,"react":"nakDgH","react/lib/cx":164}],216:[function(require,module,exports){
+'use strict';
+
+var React        = require('react'),
+    CX           = require('react/lib/cx'),
     // Actions
     AppActions   = require('../actions/appActions'),    
     CloseBugBtn;
 
 CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
     propTypes: {
-    	selectedProjectName: React.PropTypes.string,
-        selectedBugName: React.PropTypes.string
+    	selectedProjectName : React.PropTypes.string,
+        selectedBugName     : React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
-    		selectedProjectName: '',
-            selectedBugName: ''
+    		selectedProjectName : '',
+            selectedBugName     : ''
     	};
     },
     _closeBug: function(e){
@@ -26874,7 +27030,8 @@ CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeBug(thisModule.props.selectedBugName);
-                swal('Closed!', thisModule.props.selectedProjectName + ' has been marked as solved.', 'success'); 
+                swal('Closed!', 
+                    thisModule.props.selectedProjectName + ' has been marked as solved.', 'success'); 
         });
     },
 	render: function() {
@@ -26888,15 +27045,13 @@ CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
 	}
 });
 module.exports = CloseBugBtn;
-},{"../actions/appActions":210,"../constants/constants":218,"react":"nakDgH","react/lib/cx":164}],215:[function(require,module,exports){
+},{"../actions/appActions":210,"react":"nakDgH","react/lib/cx":164}],217:[function(require,module,exports){
 'use strict';
 
-var React = require('react'),
-    CX           = require('react/lib/cx'),
-    // Constants
-    constants    = require('../constants/constants'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
     // Actions
-    AppActions   = require('../actions/appActions'),    
+    AppActions = require('../actions/appActions'),    
     CloseProjectBtn;
 
 CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
@@ -26905,7 +27060,7 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
     },
     getDefaultProps: function() {
     	return {
-    		selectedProjectName: '',
+    		selectedProjectName: ''
     	};
     },
     _closeProject: function(e){
@@ -26927,19 +27082,24 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
 		return (
 			/*jshint ignore:start */
 			React.createElement("div", null, 
-			    React.createElement("input", {className: "btn btn-danger", type: "button", value: "Close Project", onClick: this._closeProject})
+			    React.createElement("input", {
+                    className: "btn btn-danger", 
+                    type: "button", 
+                    value: "Close Project", 
+                    onClick: this._closeProject})
 			)
 			/*jshint ignore:end */			
 		);
 	}
 });
 module.exports = CloseProjectBtn;
-},{"../actions/appActions":210,"../constants/constants":218,"react":"nakDgH","react/lib/cx":164}],216:[function(require,module,exports){
+},{"../actions/appActions":210,"react":"nakDgH","react/lib/cx":164}],218:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
+var React = require('react'),
+    Comment;
 
-var Comment = React.createClass({displayName: "Comment",
+Comment = React.createClass({displayName: "Comment",
 
 	propTypes: {
 		detail: React.PropTypes.object
@@ -26978,21 +27138,21 @@ var Comment = React.createClass({displayName: "Comment",
 });
 
 module.exports = Comment;
-},{"react":"nakDgH"}],217:[function(require,module,exports){
+},{"react":"nakDgH"}],219:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
-ToggleInputBtn;
+    ToggleInputBtn;
 
 ToggleInputBtn = React.createClass({displayName: "ToggleInputBtn",
     propTypes: {
-    	target: React.PropTypes.string,
-        displayText: React.PropTypes.string
+    	target      : React.PropTypes.string,
+        displayText : React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
-    		target: '',
-            displayText: 'Open/Close Form'
+    		target      : '',
+            displayText : 'Open/Close Form'
     	};
     },
     _toggleInputs: function(e){        
@@ -27010,29 +27170,33 @@ ToggleInputBtn = React.createClass({displayName: "ToggleInputBtn",
 });
 
 module.exports = ToggleInputBtn;
-},{"react":"nakDgH"}],218:[function(require,module,exports){
+},{"react":"nakDgH"}],220:[function(require,module,exports){
 'use strict';
 
 var constants = {
-	ADD_PROJECT: 'ADD_PROJECT',
-	DELETE_PROJECT: 'DELETE_PROJECT',
-	SELECT_PROJECT: 'SELECT_PROJECT',
-	ADD_BUG: 'ADD_BUG',
-	DELETE_BUG: 'DELETE_BUG',
-	SELECT_BUG: 'SELECT_BUG',
-	CLOSE_PROJECT: 'CLOSE_PROJECT',
-	ADD_COMMENT: 'ADD_COMMENT',
-	CLOSE_BUG: 'CLOSE_BUG',
+	ADD_PROJECT    : 'ADD_PROJECT',
+	DELETE_PROJECT : 'DELETE_PROJECT',
+	SELECT_PROJECT : 'SELECT_PROJECT',
+	ADD_BUG        : 'ADD_BUG',
+	DELETE_BUG     : 'DELETE_BUG',
+	SELECT_BUG     : 'SELECT_BUG',
+	CLOSE_PROJECT  : 'CLOSE_PROJECT',
+	ADD_COMMENT    : 'ADD_COMMENT',
+	CLOSE_BUG      : 'CLOSE_BUG',
 	PRIORITY: {
-		LOW: 'Low',
-		MEDIUM: 'Medium',
-		HIGH: 'High',
-		SOLVED: 'Solved'
+		LOW    : 'Low',
+		MEDIUM : 'Medium',
+		HIGH   : 'High',
+		SOLVED : 'Solved'
+	},
+	FIREBASE: {
+		PROJECT_URL  : 'https://nbrs.firebaseio.com/projects',
+		PASSWORD_URL : 'https://nbrs.firebaseio.com/password'
 	}
 };
 
 module.exports = constants;
-},{}],219:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 'use strict';
 
 var Dispatcher    = require('flux').Dispatcher,
@@ -27040,13 +27204,13 @@ var Dispatcher    = require('flux').Dispatcher,
 
 AppDispatcher.handleViewAction = function(action) {
     this.dispatch({
-        source: 'VIEW_ACTION',
-        action: action
+        source : 'VIEW_ACTION',
+        action : action
     });
 };
 
 module.exports = AppDispatcher;
-},{"flux":2}],220:[function(require,module,exports){
+},{"flux":2}],222:[function(require,module,exports){
 'use strict';
 
 var React         = require('react'),
@@ -27077,18 +27241,20 @@ Router.run(Routes, function(Handler) {
 });
 /* jshint ignore:end */
 
-},{"../app/pages/main":222,"../app/pages/main-content":221,"../app/pages/not-found":223,"react":"nakDgH","react-router":26}],221:[function(require,module,exports){
+},{"../app/pages/main":224,"../app/pages/main-content":223,"../app/pages/not-found":225,"react":"nakDgH","react-router":26}],223:[function(require,module,exports){
 'use strict';
 
-var React = require('react'),
+var React          = require('react'),
+    // Constants
+    constants      = require('../constants/constants'),
     // Store
-    appStore = require('../stores/appStore'),
+    appStore       = require('../stores/appStore'),
     // Widgets
-    ProjectList = require('../widgets/project-list'),
-    BugList = require('../widgets/bug-list'),
-    BugDetail = require('../widgets/bug-detail'),
+    ProjectList    = require('../widgets/project-list'),
+    BugList        = require('../widgets/bug-list'),
+    BugDetail      = require('../widgets/bug-detail'),
     // Firebase
-    Firebase = require('firebase'),
+    Firebase       = require('firebase'),
     ReactFireMixin = require('reactfire'),
     MainContent;
 
@@ -27097,24 +27263,24 @@ MainContent = React.createClass({displayName: "MainContent",
     _hashedPassword: appStore.hashedPassword,
     getInitialState: function() {
         return {
-            combo: '',
-            projects: [],
-            selectedProject: {},
-            selectedProjectName: '',
-            selectedProjectBugs: [],
-            selectedProjectBugComments: [],
-            selectedBug: {},
-            selectedBugName: '',
-            selectedBugDescription: '',
-            selectedBugStartDate: '',
-            selectedBugEndDate: '',
-            selectedBugAuthor: '',
-            isSelectedProjectClosed: false
+            combo                      : '',
+            projects                   : [],
+            selectedProject            : {},
+            selectedProjectName        : '',
+            selectedProjectBugs        : [],
+            selectedProjectBugComments : [],
+            selectedBug                : {},
+            selectedBugName            : '',
+            selectedBugDescription     : '',
+            selectedBugStartDate       : '',
+            selectedBugEndDate         : '',
+            selectedBugAuthor          : '',
+            isSelectedProjectClosed    : false
         };
     },
     componentWillMount: function(){
-        this.bindAsArray(new Firebase('https://nbrs.firebaseio.com/projects'), 'projects');
-        this.bindAsObject(new Firebase('https://nbrs.firebaseio.com/password'), 'combo');
+        this.bindAsArray(new Firebase(constants.FIREBASE.PROJECT_URL), 'projects');
+        this.bindAsObject(new Firebase(constants.FIREBASE.PASSWORD_URL), 'combo');
         appStore.addChangeListener(this._onDataUpdate);
     },
     componentWillUnmount: function(){
@@ -27125,24 +27291,25 @@ MainContent = React.createClass({displayName: "MainContent",
     _onDataUpdate: function(){
         var bugsURL, commentsURL;
         if(appStore.selectedProject.name){
-            bugsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs';
+            bugsURL = constants.FIREBASE.PROJECT_URL + '/' + appStore.selectedProject.name + '/bugs';
             this.bindAsArray(new Firebase(bugsURL), 'selectedProjectBugs');
         }
         if(appStore.selectedBug.name){
-            commentsURL = 'https://nbrs.firebaseio.com/projects' + '/' + appStore.selectedProject.name + '/bugs/' + appStore.selectedBug.name + '/comments';
+            commentsURL = constants.FIREBASE.PROJECT_URL + 
+                '/' + appStore.selectedProject.name + '/bugs/' + appStore.selectedBug.name + '/comments';
             this.bindAsArray(new Firebase(commentsURL), 'selectedProjectBugComments');
         }
         this.setState({
-            selectedProject: appStore.selectedProject,
-            selectedProjectName: appStore.selectedProject.name,
-            isSelectedProjectClosed: appStore.selectedProject.isClosed,
-            selectedBug: appStore.selectedBug,
-            selectedBugName: appStore.selectedBug.name,
-            selectedBugPriority: appStore.selectedBug.priority,
-            selectedBugDescription: appStore.selectedBug.description,
-            selectedBugStartDate: appStore.selectedBug.startDate,
-            selectedBugEndDate: appStore.selectedBug.endDate,
-            selectedBugAuthor: appStore.selectedBug.author,
+            selectedProject         : appStore.selectedProject,
+            selectedProjectName     : appStore.selectedProject.name,
+            isSelectedProjectClosed : appStore.selectedProject.isClosed,
+            selectedBug             : appStore.selectedBug,
+            selectedBugName         : appStore.selectedBug.name,
+            selectedBugPriority     : appStore.selectedBug.priority,
+            selectedBugDescription  : appStore.selectedBug.description,
+            selectedBugStartDate    : appStore.selectedBug.startDate,
+            selectedBugEndDate      : appStore.selectedBug.endDate,
+            selectedBugAuthor       : appStore.selectedBug.author,
         });
     },
     render: function() {
@@ -27181,7 +27348,7 @@ MainContent = React.createClass({displayName: "MainContent",
 });
 
 module.exports = MainContent;
-},{"../stores/appStore":224,"../widgets/bug-detail":225,"../widgets/bug-list":226,"../widgets/project-list":227,"firebase":1,"react":"nakDgH","reactfire":208}],222:[function(require,module,exports){
+},{"../constants/constants":220,"../stores/appStore":226,"../widgets/bug-detail":227,"../widgets/bug-list":228,"../widgets/project-list":229,"firebase":1,"react":"nakDgH","reactfire":208}],224:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -27198,7 +27365,6 @@ Main = React.createClass({displayName: "Main",
             React.createElement("div", {className: "content-wrapper"}, 
                 React.createElement("nav", {className: "navbar navbar-inverse navbar-fixed-top"}, 
                     React.createElement("a", {className: "navbar-brand", href: "#/"}, 
-                        React.createElement("img", {className: "company-logo", src: "../assets/images/nexcom_icon.jpg"}), 
                         React.createElement("span", {className: "navbar-title"}, "Bug Report System")
                     )
                 ), 
@@ -27210,7 +27376,7 @@ Main = React.createClass({displayName: "Main",
 });
 
 module.exports = Main;
-},{"react":"nakDgH","react-router":26}],223:[function(require,module,exports){
+},{"react":"nakDgH","react-router":26}],225:[function(require,module,exports){
 var React = require('react');
 
 var Help = React.createClass({displayName: "Help",
@@ -27235,11 +27401,12 @@ var Help = React.createClass({displayName: "Help",
 });
 
 module.exports = Help;
-},{"react":"nakDgH"}],224:[function(require,module,exports){
+},{"react":"nakDgH"}],226:[function(require,module,exports){
 'use strict';
 
 var appDispatcher = require('../dispatcher/appDispatcher.js'),
     eventEmitter  = require('events').EventEmitter,
+    // Constants
     constants     = require('../constants/constants'),
     // Underscore
     _             = require('underscore'),
@@ -27248,9 +27415,9 @@ var appDispatcher = require('../dispatcher/appDispatcher.js'),
     appStore;
 
 appStore = _.extend({}, eventEmitter.prototype, {
-    _firebaseRef: new Firebase('https://nbrs.firebaseio.com/projects'),
-    selectedProject: {},
-    selectedBug: {},
+    _firebaseRef    : new Firebase(constants.FIREBASE.PROJECT_URL),
+    selectedProject : {},
+    selectedBug     : {},
     addProject: function(newProject) {
         var isProjectIdentical = false;
         this._firebaseRef.on('value', function(snapshot){
@@ -27296,16 +27463,29 @@ appStore = _.extend({}, eventEmitter.prototype, {
             });
         });
         if(!isBugIdentical){
-            this._firebaseRef.child(this.selectedProject.name).child('bugs').child(newBug.name).set(newBug);
+            this._firebaseRef
+                .child(this.selectedProject.name)
+                .child('bugs')
+                .child(newBug.name)
+                .set(newBug);
         }else{
             swal('Oops...', 'Same project name already exists!', 'error');
         }
     },
     deleteBug: function(bugName){
-        this._firebaseRef.child(this.selectedProject.name).child('bugs').child(bugName).remove();
+        this._firebaseRef
+            .child(this.selectedProject.name)
+            .child('bugs')
+            .child(bugName)
+            .remove();
     },
     closeBug: function(bugName){
-        this._firebaseRef.child(this.selectedProject.name).child('bugs').child(bugName).child('priority').set(constants.PRIORITY.SOLVED);
+        this._firebaseRef
+            .child(this.selectedProject.name)
+            .child('bugs')
+            .child(bugName)
+            .child('priority')
+            .set(constants.PRIORITY.SOLVED);
     },
     selectBug: function(bugName){
         var thisModule = this;
@@ -27321,7 +27501,12 @@ appStore = _.extend({}, eventEmitter.prototype, {
         }        
     },
     addComment: function(comment){
-        this._firebaseRef.child(this.selectedProject.name).child('bugs').child(this.selectedBug.name).child('comments').push(comment);
+        this._firebaseRef
+            .child(this.selectedProject.name)
+            .child('bugs')
+            .child(this.selectedBug.name)
+            .child('comments')
+            .push(comment);
     },
     emitChange: function() {
         this.emit('change');
@@ -27371,43 +27556,44 @@ appDispatcher.register(function(payload) {
 });
 
 module.exports = appStore;
-},{"../constants/constants":218,"../dispatcher/appDispatcher.js":219,"events":14,"firebase":1,"underscore":209}],225:[function(require,module,exports){
+},{"../constants/constants":220,"../dispatcher/appDispatcher.js":221,"events":14,"firebase":1,"underscore":209}],227:[function(require,module,exports){
 'use strict';
 
-var React     = require('react'),
-    CX        = require('react/lib/cx'),
+var React          = require('react'),
+    CX             = require('react/lib/cx'),
     // constants
-    constants = require('../constants/constants'),
+    constants      = require('../constants/constants'),
     // Store
-    appStore  = require('../stores/appStore.js'),
+    appStore       = require('../stores/appStore.js'),
     // Components
-    AddCommentForm   = require('../components/add-comment-form'),
+    AddCommentForm = require('../components/add-comment-form'),
     ToggleInputBtn = require('../components/toggle-input-btn'),
-    Comment = require('../components/comment'),
-    CloseBugBtn = require('../components/close-bug-btn'),
+    Comment        = require('../components/comment'),
+    CloseBugBtn    = require('../components/close-bug-btn'),
+    BugIntro       = require('../components/bug-intro'),
     BugDetail;
 
 BugDetail = React.createClass({displayName: "BugDetail",
     propTypes: {
-        selectedBugName: React.PropTypes.string,
-        selectedProjectBugComments: React.PropTypes.array,
-        selectedBugPriority: React.PropTypes.string,
-        isSelectedProjectClosed: React.PropTypes.bool,
-        selectedBugDescription: React.PropTypes.string,
-        selectedBugStartDate: React.PropTypes.string,
-        selectedBugEndDate: React.PropTypes.string,
-        selectedBugAuthor: React.PropTypes.string,
+        selectedBugName            : React.PropTypes.string,
+        selectedProjectBugComments : React.PropTypes.array,
+        selectedBugPriority        : React.PropTypes.string,
+        isSelectedProjectClosed    : React.PropTypes.bool,
+        selectedBugDescription     : React.PropTypes.string,
+        selectedBugStartDate       : React.PropTypes.string,
+        selectedBugEndDate         : React.PropTypes.string,
+        selectedBugAuthor          : React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
-            selectedBugName: '',
-            selectedProjectBugComments: [],
-            selectedBugPriority: '',
-            selectedBugDescription: '',
-            selectedBugStartDate: '',
-            selectedBugEndDate: '',
-            selectedBugAuthor: '',
-            isSelectedProjectClosed: false
+            selectedBugName            : '',
+            selectedProjectBugComments : [],
+            selectedBugPriority        : '',
+            selectedBugDescription     : '',
+            selectedBugStartDate       : '',
+            selectedBugEndDate         : '',
+            selectedBugAuthor          : '',
+            isSelectedProjectClosed    : false
         };
     },
     getInitialState: function() {
@@ -27446,9 +27632,13 @@ BugDetail = React.createClass({displayName: "BugDetail",
         });
     },
     _renderComments: function(){
-        var resultHTML = this.props.selectedProjectBugComments.reverse().map(function(comment){
+        var resultHTML = this.props.selectedProjectBugComments.map(function(comment, i){
             /* jshint ignore:start */
-            return React.createElement(Comment, {detail: comment})
+            return (
+                React.createElement(Comment, {
+                    key: i, 
+                    detail: comment})
+            );
             /* jshint ignore:end */
         });
         if(this.props.selectedProjectBugComments.length === 0){
@@ -27473,13 +27663,11 @@ BugDetail = React.createClass({displayName: "BugDetail",
             React.createElement("div", {className: "bug-detail"}, 
                 React.createElement("h2", null, this.props.selectedBugName, " Details"), 
                 this._renderCommentInputs(), 
-                React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", {htmlFor: "comment"}, "Bug Description:"), 
-                    React.createElement("textarea", {className: "form-control allow-cursor", disabled: true, rows: "5", id: "comment", value: this.props.selectedBugDescription}), 
-                    React.createElement("div", null, "Start Date: ", this.props.selectedBugStartDate), 
-                    React.createElement("div", null, "End Date: ", this.props.selectedBugEndDate), 
-                    React.createElement("div", null, "Author: ", this.props.selectedBugAuthor)
-                ), 
+                React.createElement(BugIntro, {
+                    selectedBugDescription: this.props.selectedBugDescription, 
+                    selectedBugStartDate: this.props.selectedBugStartDate, 
+                    selectedBugEndDate: this.props.selectedBugEndDate, 
+                    selectedBugAuthor: this.props.selectedBugAuthor}), 
                 React.createElement("div", {className: "comments"}, 
                     React.createElement("h2", null, this.props.selectedProjectName, " Comments"), 
                     this._renderComments()
@@ -27488,42 +27676,38 @@ BugDetail = React.createClass({displayName: "BugDetail",
         );
         /* jshint ignore:end */
     }
-
 });
 
 module.exports = BugDetail;
-},{"../components/add-comment-form":212,"../components/close-bug-btn":214,"../components/comment":216,"../components/toggle-input-btn":217,"../constants/constants":218,"../stores/appStore.js":224,"react":"nakDgH","react/lib/cx":164}],226:[function(require,module,exports){
+},{"../components/add-comment-form":212,"../components/bug-intro":214,"../components/close-bug-btn":216,"../components/comment":218,"../components/toggle-input-btn":219,"../constants/constants":220,"../stores/appStore.js":226,"react":"nakDgH","react/lib/cx":164}],228:[function(require,module,exports){
 'use strict';
 
-var React        = require('react'),
-    CX           = require('react/lib/cx'),
-    // Actions
-    AppActions   = require('../actions/appActions'),    
-    // Hash
-    passwordHash = require('password-hash'),
+var React           = require('react'),
+    CX              = require('react/lib/cx'),
     // Constants
-    constants    = require('../constants/constants'),
+    constants       = require('../constants/constants'),
     // Components
-    AddBugForm   = require('../components/add-bug-form'),
-    CloseProjectBtn  = require('../components/close-project-btn'),
-    ToggleInputBtn = require('../components/toggle-input-btn'),
+    AddBugForm      = require('../components/add-bug-form'),
+    CloseProjectBtn = require('../components/close-project-btn'),
+    ToggleInputBtn  = require('../components/toggle-input-btn'),
+    Bug             = require('../components/bug'),
     BugList;
 
 BugList = React.createClass({displayName: "BugList",
     propTypes: {
-        selectedProjectName: React.PropTypes.string,
-        selectedProjectBugs: React.PropTypes.array,
-        selectedBugName: React.PropTypes.string,
-        isSelectedProjectClosed: React.PropTypes.bool,
-        combo: React.PropTypes.string
+        selectedProjectName     : React.PropTypes.string,
+        selectedProjectBugs     : React.PropTypes.array,
+        selectedBugName         : React.PropTypes.string,
+        isSelectedProjectClosed : React.PropTypes.bool,
+        combo                   : React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
-            selectedProjectName: '',
-            selectedProjectBugs: [],
-            selectedBugName: '',
-            isSelectedProjectClosed: false,
-            combo: ''
+            selectedProjectName     : '',
+            selectedProjectBugs     : [],
+            selectedBugName         : '',
+            isSelectedProjectClosed : false,
+            combo                   : ''
         };
     },
     componentDidUpdate: function(prevProps, prevState) {
@@ -27538,28 +27722,11 @@ BugList = React.createClass({displayName: "BugList",
     },
     _renderBugs: function(){
         var bugsHTML = this.props.selectedProjectBugs.map(function(bug, i){
-            var bugStatusTagClass, cancelClass, listClass;
-            bugStatusTagClass = CX({
-                'label': true,
-                'label-success': bug.priority === constants.PRIORITY.SOLVED,
-                'label-primary': bug.priority === constants.PRIORITY.LOW,
-                'label-warning': bug.priority === constants.PRIORITY.MEDIUM,
-                'label-danger': bug.priority === constants.PRIORITY.HIGH,
-            });
-            cancelClass = CX({
-                'cancel-icon': true,
-                'hide': this.props.isSelectedProjectClosed
-            });
-            listClass = CX({
-                'highlight': bug.name === this.props.selectedBugName
-            });
             return (
                 /* jshint ignore:start */
-                React.createElement("li", {className: listClass, key: i, id: bug.name, onClick: this._onBugSelect}, 
-                    bug.name, 
-                    React.createElement("i", {className: bugStatusTagClass}, bug.priority), 
-                    React.createElement("i", {className: cancelClass, "data-name": bug.name, onClick: this._deleteBugByName})
-                )
+                React.createElement(Bug, React.__spread({key: i, 
+                    bugDetail: bug}, 
+                    this.props))
                 /* jshint ignore:end */
             );
         }, this);
@@ -27571,35 +27738,6 @@ BugList = React.createClass({displayName: "BugList",
             );
         }
         return bugsHTML;
-    },
-    
-    _deleteBugByName: function(e){
-        var bugName        = e.target.getAttribute('data-name'),
-            projectName    = this.props.selectedProjectName,
-            passwordInput,
-            hashedPassword = passwordHash.generate(this.props.combo);
-        e.preventDefault();
-        e.stopPropagation();
-        passwordInput = window.prompt('Please enter password to delete:');
-        if(passwordHash.verify(passwordInput, hashedPassword)){
-            if(this.props.isSelectedProjectClosed){
-                swal('Oops...', 'project is closed!', 'error');
-                return;
-            }
-            AppActions.deleteBug(bugName);        
-            if(bugName === this.props.selectedBugName){
-                AppActions.selectBugByName('');
-            }
-        }else{
-            swal('Oops...', 'wrong password!', 'error');
-        }
-    },
-    _onBugSelect: function(e){
-        var selectedBugName = $(e.target).closest('li')[0].id;
-        e.preventDefault();
-        if(!$(e.target).hasClass('cancel-icon')){
-            AppActions.selectBugByName(selectedBugName);
-        }
     },
     _renderInputs: function(){
         var resultHTML;
@@ -27641,30 +27779,30 @@ BugList = React.createClass({displayName: "BugList",
 });
 
 module.exports = BugList;
-},{"../actions/appActions":210,"../components/add-bug-form":211,"../components/close-project-btn":215,"../components/toggle-input-btn":217,"../constants/constants":218,"password-hash":16,"react":"nakDgH","react/lib/cx":164}],227:[function(require,module,exports){
+},{"../components/add-bug-form":211,"../components/bug":215,"../components/close-project-btn":217,"../components/toggle-input-btn":219,"../constants/constants":220,"react":"nakDgH","react/lib/cx":164}],229:[function(require,module,exports){
 'use strict';
 
-var React        = require('react'),
-    CX           = require('react/lib/cx'),
+var React          = require('react'),
+    CX             = require('react/lib/cx'),
     // Actions
-    AppActions   = require('../actions/appActions'),
+    AppActions     = require('../actions/appActions'),
     // Hash
-    passwordHash = require('password-hash'),
+    passwordHash   = require('password-hash'),
     // Components
-    AddProjectForm   = require('../components/add-project-form'),
+    AddProjectForm = require('../components/add-project-form'),
     ToggleInputBtn = require('../components/toggle-input-btn'),
     ProjectList;
 
 ProjectList = React.createClass({displayName: "ProjectList",
     propTypes: {
-        projects: React.PropTypes.array.isRequired,
-        selectedProjectName: React.PropTypes.string,
-        combo: React.PropTypes.string
+        projects            : React.PropTypes.array.isRequired,
+        selectedProjectName : React.PropTypes.string,
+        combo               : React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
             selectedProjectName: '',
-            combo: ''
+            combo              : ''
         };
     },
     componentDidUpdate: function(prevProps, prevState) {
@@ -27688,7 +27826,10 @@ ProjectList = React.createClass({displayName: "ProjectList",
                 React.createElement("li", {className: listClass, key: i, id: project.name, onClick: this._onProjectSelect}, 
                     project.name, 
                     React.createElement("i", {className: projectClosedClass}, "Project Closed"), 
-                    React.createElement("i", {className: "cancel-icon", "data-name": project.name, onClick: this._deleteProjectByName})
+                    React.createElement("i", {className: "cancel-icon", 
+                        "data-name": project.name, 
+                        onClick: this._deleteProjectByName}
+                    )
                 )
                 /*jshint ignore:end */
             );
@@ -27698,7 +27839,7 @@ ProjectList = React.createClass({displayName: "ProjectList",
     _deleteProjectByName: function(e){
         var passwordInput,
             hashedPassword = passwordHash.generate(this.props.combo),
-            name = e.target.getAttribute('data-name');
+            name           = e.target.getAttribute('data-name');
         e.preventDefault();
         e.stopPropagation();
         passwordInput = window.prompt('Please enter password to delete:');
@@ -27709,7 +27850,7 @@ ProjectList = React.createClass({displayName: "ProjectList",
                 AppActions.selectBugByName('');
             } 
         }else{
-            window.alert('wrong password');
+            swal('Oops...', 'Wrong password!', 'error');
         }
     },    
     _onProjectSelect: function(e){
@@ -27735,8 +27876,7 @@ ProjectList = React.createClass({displayName: "ProjectList",
             /*jshint ignore:end */
         );
     }
-
 });
 
 module.exports = ProjectList;
-},{"../actions/appActions":210,"../components/add-project-form":213,"../components/toggle-input-btn":217,"password-hash":16,"react":"nakDgH","react/lib/cx":164}]},{},[220])
+},{"../actions/appActions":210,"../components/add-project-form":213,"../components/toggle-input-btn":219,"password-hash":16,"react":"nakDgH","react/lib/cx":164}]},{},[222])

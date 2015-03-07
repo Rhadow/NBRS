@@ -1,26 +1,26 @@
 'use strict';
 
-var React        = require('react'),
-    CX           = require('react/lib/cx'),
+var React          = require('react'),
+    CX             = require('react/lib/cx'),
     // Actions
-    AppActions   = require('../actions/appActions'),
+    AppActions     = require('../actions/appActions'),
     // Hash
-    passwordHash = require('password-hash'),
+    passwordHash   = require('password-hash'),
     // Components
-    AddProjectForm   = require('../components/add-project-form'),
+    AddProjectForm = require('../components/add-project-form'),
     ToggleInputBtn = require('../components/toggle-input-btn'),
     ProjectList;
 
 ProjectList = React.createClass({
     propTypes: {
-        projects: React.PropTypes.array.isRequired,
-        selectedProjectName: React.PropTypes.string,
-        combo: React.PropTypes.string
+        projects            : React.PropTypes.array.isRequired,
+        selectedProjectName : React.PropTypes.string,
+        combo               : React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
             selectedProjectName: '',
-            combo: ''
+            combo              : ''
         };
     },
     componentDidUpdate: function(prevProps, prevState) {
@@ -44,7 +44,10 @@ ProjectList = React.createClass({
                 <li className={listClass} key={i} id={project.name} onClick={this._onProjectSelect}>
                     {project.name}
                     <i className={projectClosedClass}>Project Closed</i>
-                    <i className='cancel-icon' data-name={project.name} onClick={this._deleteProjectByName}></i>
+                    <i  className='cancel-icon' 
+                        data-name={project.name} 
+                        onClick={this._deleteProjectByName}>
+                    </i>
                 </li>
                 /*jshint ignore:end */
             );
@@ -54,7 +57,7 @@ ProjectList = React.createClass({
     _deleteProjectByName: function(e){
         var passwordInput,
             hashedPassword = passwordHash.generate(this.props.combo),
-            name = e.target.getAttribute('data-name');
+            name           = e.target.getAttribute('data-name');
         e.preventDefault();
         e.stopPropagation();
         passwordInput = window.prompt('Please enter password to delete:');
@@ -65,7 +68,7 @@ ProjectList = React.createClass({
                 AppActions.selectBugByName('');
             } 
         }else{
-            window.alert('wrong password');
+            swal('Oops...', 'Wrong password!', 'error');
         }
     },    
     _onProjectSelect: function(e){
@@ -91,7 +94,6 @@ ProjectList = React.createClass({
             /*jshint ignore:end */
         );
     }
-
 });
 
 module.exports = ProjectList;

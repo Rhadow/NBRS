@@ -2,6 +2,7 @@
 
 var appDispatcher = require('../dispatcher/appDispatcher.js'),
     eventEmitter  = require('events').EventEmitter,
+    // Constants
     constants     = require('../constants/constants'),
     // Underscore
     _             = require('underscore'),
@@ -10,9 +11,9 @@ var appDispatcher = require('../dispatcher/appDispatcher.js'),
     appStore;
 
 appStore = _.extend({}, eventEmitter.prototype, {
-    _firebaseRef: new Firebase('https://nbrs.firebaseio.com/projects'),
-    selectedProject: {},
-    selectedBug: {},
+    _firebaseRef    : new Firebase(constants.FIREBASE.PROJECT_URL),
+    selectedProject : {},
+    selectedBug     : {},
     addProject: function(newProject) {
         var isProjectIdentical = false;
         this._firebaseRef.on('value', function(snapshot){
@@ -58,16 +59,29 @@ appStore = _.extend({}, eventEmitter.prototype, {
             });
         });
         if(!isBugIdentical){
-            this._firebaseRef.child(this.selectedProject.name).child('bugs').child(newBug.name).set(newBug);
+            this._firebaseRef
+                .child(this.selectedProject.name)
+                .child('bugs')
+                .child(newBug.name)
+                .set(newBug);
         }else{
             swal('Oops...', 'Same project name already exists!', 'error');
         }
     },
     deleteBug: function(bugName){
-        this._firebaseRef.child(this.selectedProject.name).child('bugs').child(bugName).remove();
+        this._firebaseRef
+            .child(this.selectedProject.name)
+            .child('bugs')
+            .child(bugName)
+            .remove();
     },
     closeBug: function(bugName){
-        this._firebaseRef.child(this.selectedProject.name).child('bugs').child(bugName).child('priority').set(constants.PRIORITY.SOLVED);
+        this._firebaseRef
+            .child(this.selectedProject.name)
+            .child('bugs')
+            .child(bugName)
+            .child('priority')
+            .set(constants.PRIORITY.SOLVED);
     },
     selectBug: function(bugName){
         var thisModule = this;
@@ -83,7 +97,12 @@ appStore = _.extend({}, eventEmitter.prototype, {
         }        
     },
     addComment: function(comment){
-        this._firebaseRef.child(this.selectedProject.name).child('bugs').child(this.selectedBug.name).child('comments').push(comment);
+        this._firebaseRef
+            .child(this.selectedProject.name)
+            .child('bugs')
+            .child(this.selectedBug.name)
+            .child('comments')
+            .push(comment);
     },
     emitChange: function() {
         this.emit('change');

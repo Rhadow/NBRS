@@ -1,11 +1,9 @@
 'use strict';
 
-var React = require('react'),
-    CX           = require('react/lib/cx'),
-    // Constants
-    constants    = require('../constants/constants'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
     // Actions
-    AppActions   = require('../actions/appActions'),    
+    AppActions = require('../actions/appActions'),    
     CloseProjectBtn;
 
 CloseProjectBtn = React.createClass({
@@ -14,7 +12,7 @@ CloseProjectBtn = React.createClass({
     },
     getDefaultProps: function() {
     	return {
-    		selectedProjectName: '',
+    		selectedProjectName: ''
     	};
     },
     _closeProject: function(e){
@@ -36,7 +34,11 @@ CloseProjectBtn = React.createClass({
 		return (
 			/*jshint ignore:start */
 			<div>
-			    <input className="btn btn-danger" type="button" value="Close Project" onClick={this._closeProject} />
+			    <input 
+                    className="btn btn-danger" 
+                    type="button" 
+                    value="Close Project" 
+                    onClick={this._closeProject} />
 			</div>
 			/*jshint ignore:end */			
 		);

@@ -1,17 +1,17 @@
 'use strict';
 
 var React = require('react'),
-ToggleInputBtn;
+    ToggleInputBtn;
 
 ToggleInputBtn = React.createClass({
     propTypes: {
-    	target: React.PropTypes.string,
-        displayText: React.PropTypes.string
+    	target      : React.PropTypes.string,
+        displayText : React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
-    		target: '',
-            displayText: 'Open/Close Form'
+    		target      : '',
+            displayText : 'Open/Close Form'
     	};
     },
     _toggleInputs: function(e){        

@@ -1,22 +1,20 @@
 'use strict';
 
-var React = require('react'),
+var React        = require('react'),
     CX           = require('react/lib/cx'),
-    // Constants
-    constants    = require('../constants/constants'),
     // Actions
     AppActions   = require('../actions/appActions'),    
     CloseBugBtn;
 
 CloseBugBtn = React.createClass({
     propTypes: {
-    	selectedProjectName: React.PropTypes.string,
-        selectedBugName: React.PropTypes.string
+    	selectedProjectName : React.PropTypes.string,
+        selectedBugName     : React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
-    		selectedProjectName: '',
-            selectedBugName: ''
+    		selectedProjectName : '',
+            selectedBugName     : ''
     	};
     },
     _closeBug: function(e){
@@ -31,7 +29,8 @@ CloseBugBtn = React.createClass({
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeBug(thisModule.props.selectedBugName);
-                swal('Closed!', thisModule.props.selectedProjectName + ' has been marked as solved.', 'success'); 
+                swal('Closed!', 
+                    thisModule.props.selectedProjectName + ' has been marked as solved.', 'success'); 
         });
     },
 	render: function() {

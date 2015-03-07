@@ -1,21 +1,17 @@
 'use strict';
 
-var React = require('react'),
-    CX           = require('react/lib/cx'),
-    // Constants
-    constants    = require('../constants/constants'),
+var React      = require('react'),
+    CX         = require('react/lib/cx'),
     // Actions
-    AppActions   = require('../actions/appActions'),
+    AppActions = require('../actions/appActions'),
     AddProjectForm;
 
 AddProjectForm = React.createClass({
-    propTypes: {},
-    getDefaultProps: function() {},
     componentDidMount: function() {
         $('.add-project-form-wrapper').hide();
     },
     _addProject: function(e){
-        var newProjectObj = {},
+        var newProjectObj  = {},
             newProjectName = this.refs.newProjectName.getDOMNode().value;
         e.preventDefault();
         this._clearInput();

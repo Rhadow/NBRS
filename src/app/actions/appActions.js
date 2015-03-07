@@ -1,9 +1,10 @@
 'use strict';
 
-var appDispatcher = require('../dispatcher/appDispatcher.js');
-var constants = require('../constants/constants.js');
+var appDispatcher = require('../dispatcher/appDispatcher.js'),
+    constants     = require('../constants/constants.js'),
+    appActions;
 
-var appActions = {
+appActions = {
 	addProject: function(project){
 		appDispatcher.handleViewAction({
 			actionType: constants.ADD_PROJECT,

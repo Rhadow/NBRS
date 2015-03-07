@@ -1,34 +1,31 @@
 'use strict';
 
-var React        = require('react'),
-    CX           = require('react/lib/cx'),
-    // Actions
-    AppActions   = require('../actions/appActions'),    
-    // Hash
-    passwordHash = require('password-hash'),
+var React           = require('react'),
+    CX              = require('react/lib/cx'),
     // Constants
-    constants    = require('../constants/constants'),
+    constants       = require('../constants/constants'),
     // Components
-    AddBugForm   = require('../components/add-bug-form'),
-    CloseProjectBtn  = require('../components/close-project-btn'),
-    ToggleInputBtn = require('../components/toggle-input-btn'),
+    AddBugForm      = require('../components/add-bug-form'),
+    CloseProjectBtn = require('../components/close-project-btn'),
+    ToggleInputBtn  = require('../components/toggle-input-btn'),
+    Bug             = require('../components/bug'),
     BugList;
 
 BugList = React.createClass({
     propTypes: {
-        selectedProjectName: React.PropTypes.string,
-        selectedProjectBugs: React.PropTypes.array,
-        selectedBugName: React.PropTypes.string,
-        isSelectedProjectClosed: React.PropTypes.bool,
-        combo: React.PropTypes.string
+        selectedProjectName     : React.PropTypes.string,
+        selectedProjectBugs     : React.PropTypes.array,
+        selectedBugName         : React.PropTypes.string,
+        isSelectedProjectClosed : React.PropTypes.bool,
+        combo                   : React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
-            selectedProjectName: '',
-            selectedProjectBugs: [],
-            selectedBugName: '',
-            isSelectedProjectClosed: false,
-            combo: ''
+            selectedProjectName     : '',
+            selectedProjectBugs     : [],
+            selectedBugName         : '',
+            isSelectedProjectClosed : false,
+            combo                   : ''
         };
     },
     componentDidUpdate: function(prevProps, prevState) {
@@ -43,28 +40,11 @@ BugList = React.createClass({
     },
     _renderBugs: function(){
         var bugsHTML = this.props.selectedProjectBugs.map(function(bug, i){
-            var bugStatusTagClass, cancelClass, listClass;
-            bugStatusTagClass = CX({
-                'label': true,
-                'label-success': bug.priority === constants.PRIORITY.SOLVED,
-                'label-primary': bug.priority === constants.PRIORITY.LOW,
-                'label-warning': bug.priority === constants.PRIORITY.MEDIUM,
-                'label-danger': bug.priority === constants.PRIORITY.HIGH,
-            });
-            cancelClass = CX({
-                'cancel-icon': true,
-                'hide': this.props.isSelectedProjectClosed
-            });
-            listClass = CX({
-                'highlight': bug.name === this.props.selectedBugName
-            });
             return (
                 /* jshint ignore:start */
-                <li className={listClass} key={i} id={bug.name} onClick={this._onBugSelect}>
-                    {bug.name}
-                    <i className={bugStatusTagClass}>{bug.priority}</i>
-                    <i className={cancelClass} data-name={bug.name} onClick={this._deleteBugByName}></i>
-                </li>
+                <Bug key={i}
+                    bugDetail={bug}
+                    {...this.props} />
                 /* jshint ignore:end */
             );
         }, this);
@@ -76,35 +56,6 @@ BugList = React.createClass({
             );
         }
         return bugsHTML;
-    },
-    
-    _deleteBugByName: function(e){
-        var bugName        = e.target.getAttribute('data-name'),
-            projectName    = this.props.selectedProjectName,
-            passwordInput,
-            hashedPassword = passwordHash.generate(this.props.combo);
-        e.preventDefault();
-        e.stopPropagation();
-        passwordInput = window.prompt('Please enter password to delete:');
-        if(passwordHash.verify(passwordInput, hashedPassword)){
-            if(this.props.isSelectedProjectClosed){
-                swal('Oops...', 'project is closed!', 'error');
-                return;
-            }
-            AppActions.deleteBug(bugName);        
-            if(bugName === this.props.selectedBugName){
-                AppActions.selectBugByName('');
-            }
-        }else{
-            swal('Oops...', 'wrong password!', 'error');
-        }
-    },
-    _onBugSelect: function(e){
-        var selectedBugName = $(e.target).closest('li')[0].id;
-        e.preventDefault();
-        if(!$(e.target).hasClass('cancel-icon')){
-            AppActions.selectBugByName(selectedBugName);
-        }
     },
     _renderInputs: function(){
         var resultHTML;

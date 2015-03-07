@@ -14,7 +14,6 @@ Main = React.createClass({
             <div className="content-wrapper">
                 <nav className="navbar navbar-inverse navbar-fixed-top">
                     <a className="navbar-brand" href="#/">
-                        <img className="company-logo" src="../assets/images/nexcom_icon.jpg"/>
                         <span className="navbar-title">Bug Report System</span>
                     </a> 
                 </nav>
