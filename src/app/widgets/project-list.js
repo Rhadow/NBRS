@@ -57,19 +57,30 @@ ProjectList = React.createClass({
     _deleteProjectByName: function(e){
         var passwordInput,
             hashedPassword = passwordHash.generate(this.props.combo),
+            thisModule     = this,
             name           = e.target.getAttribute('data-name');
         e.preventDefault();
         e.stopPropagation();
-        passwordInput = window.prompt('Please enter password to delete:');
-        if(passwordHash.verify(passwordInput, hashedPassword)){
-            AppActions.deleteProject(name);
-            if(name === this.props.selectedProjectName){
-                AppActions.selectProjectByName('');
-                AppActions.selectBugByName('');
-            } 
-        }else{
-            swal('Oops...', 'Wrong password!', 'error');
-        }
+        swal(
+            {
+                type: 'prompt',   
+                title: 'Caution!',   
+                text: 'Enter password to delete',   
+                promptPlaceholder: 'Enter password...'
+            }, 
+            function(passwordInput){
+                if(passwordHash.verify(passwordInput, hashedPassword)){
+                    AppActions.deleteProject(name);
+                    if(name === thisModule.props.selectedProjectName){
+                        AppActions.selectProjectByName('');
+                        AppActions.selectBugByName('');
+                    }                  
+                    swal('Deleted!', 'The selected project has been deleted.', 'success');
+                }else{
+                    swal('Oops...', 'wrong password!', 'error');
+                } 
+            }
+        ); 
     },    
     _onProjectSelect: function(e){
         var selectedProjectName = $(e.target).closest('li')[0].id;

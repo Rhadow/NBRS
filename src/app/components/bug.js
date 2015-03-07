@@ -31,22 +31,33 @@ Bug = React.createClass({
         var bugName        = e.target.getAttribute('data-name'),
             projectName    = this.props.selectedProjectName,
             hashedPassword = passwordHash.generate(this.props.combo),
+            thisModule     = this,
             passwordInput;
         e.preventDefault();
         e.stopPropagation();
-        passwordInput = window.prompt('Please enter password to delete:');
-        if(passwordHash.verify(passwordInput, hashedPassword)){
-            if(this.props.isSelectedProjectClosed){
-                swal('Oops...', 'project is closed!', 'error');
-                return;
+        swal(
+            {
+                type: 'prompt',   
+                title: 'Caution!',   
+                text: 'Enter password to delete',   
+                promptPlaceholder: 'Enter password...'
+            }, 
+            function(passwordInput){
+                if(passwordHash.verify(passwordInput, hashedPassword)){
+                    if(thisModule.props.isSelectedProjectClosed){
+                        swal('Oops...', 'project is closed!', 'error');
+                        return;
+                    }
+                    AppActions.deleteBug(bugName);        
+                    if(bugName === thisModule.props.selectedBugName){
+                        AppActions.selectBugByName('');
+                    }                    
+                    swal('Deleted!', 'The selected bug has been deleted.', 'success');
+                }else{
+                    swal('Oops...', 'wrong password!', 'error');
+                } 
             }
-            AppActions.deleteBug(bugName);        
-            if(bugName === this.props.selectedBugName){
-                AppActions.selectBugByName('');
-            }
-        }else{
-            swal('Oops...', 'wrong password!', 'error');
-        }
+        );        
     },
     _onBugSelect: function(e){
         var selectedBugName = $(e.target).closest('div')[0].id;
