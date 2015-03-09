@@ -30,9 +30,8 @@ html body .allow-cursor{
 	margin: 0;
 }
 .navbar-title{
-	display: inline-block;
-	margin-left: 10px;
-	vertical-align: middle;
+	font-size: 1.25em;
+	line-height: 34px;
 	color: #fff;
 }
 /* Navigation CSS End */
