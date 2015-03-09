@@ -62,12 +62,12 @@ BugList = React.createClass({
         if(!this.props.isSelectedProjectClosed){
             resultHTML = (
                 /* jshint ignore:start */
-                <div>
+                <div className="bug-list-inputs">
+                    <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
                     <ToggleInputBtn 
                         target=".add-bug-form-wrapper"
                         displayText="New Bug" />
                     <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
-                    <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
                 </div>                
                 /* jshint ignore:end */
             );
@@ -84,12 +84,14 @@ BugList = React.createClass({
         }
         return (
             /* jshint ignore:start */
-            <div className="bug-list">
-                <h2>{this.props.selectedProjectName} Bug List</h2>                
-                {this._renderInputs()}
-                <ul className="bugs">
+            <div className="bug-list">                
+                <div className="title-wrapper">
+                    <span className="bug-list-title">{this.props.selectedProjectName} Bug List</span>                
+                    {this._renderInputs()}
+                </div> 
+                <div className="bugs">
                     {this._renderBugs()}
-                </ul>
+                </div>
             </div>
             /* jshint ignore:end */
         );        

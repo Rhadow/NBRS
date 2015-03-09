@@ -40,7 +40,8 @@ AddProjectForm = React.createClass({
                     <label>New Project Name: </label>
                     <input
                         className="form-control project-name-input"
-                        type="text" 
+                        type="text"
+                        maxLength={17} 
                         ref="newProjectName" 
                         data-toggle="tooltip" 
                         data-placement="top" 

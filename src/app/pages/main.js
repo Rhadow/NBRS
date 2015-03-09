@@ -12,7 +12,7 @@ Main = React.createClass({
         return (
             /* jshint ignore:start */
             <div className="content-wrapper">
-                <nav className="navbar navbar-inverse navbar-fixed-top">
+                <nav className="navbar navbar-default navbar-fixed-top">
                     <a className="navbar-brand" href="#/">
                         <span className="navbar-title">Bug Report System</span>
                     </a> 

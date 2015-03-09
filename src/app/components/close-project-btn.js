@@ -33,7 +33,7 @@ CloseProjectBtn = React.createClass({
 	render: function() {
 		return (
 			/*jshint ignore:start */
-			<div>
+			<div className="close-project-btn">
 			    <input 
                     className="btn btn-danger" 
                     type="button" 

@@ -94,6 +94,7 @@ AddBugForm = React.createClass({
                         className="bug-name-input form-control"
                         type="text" 
                         ref="newBugName"
+                        maxLength={17} 
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Must not be empty or contain the following characters: '. # $ [ ] / \'"
@@ -105,6 +106,7 @@ AddBugForm = React.createClass({
                         className="bug-author-input form-control"
                         type="text" 
                         ref="newBugAuthor"
+                        maxLength={17} 
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Must not be empty"
@@ -139,13 +141,24 @@ AddBugForm = React.createClass({
                         </span>
                     </div>
                 </div>
-                <select ref="priority">
-                    <option>{constants.PRIORITY.LOW}</option>
-                    <option>{constants.PRIORITY.MEDIUM}</option>
-                    <option>{constants.PRIORITY.HIGH}</option>
-                </select>
-                <input type="button" value="Add" onClick={this._addBug} />
-                <input type="button" value="Clear" onClick={this._clearInput} />
+                <div className="form-group">
+                    <label>Priority:</label>
+                    <select className="form-control" ref="priority">
+                        <option>{constants.PRIORITY.LOW}</option>
+                        <option>{constants.PRIORITY.MEDIUM}</option>
+                        <option>{constants.PRIORITY.HIGH}</option>
+                    </select>
+                </div>
+                <input 
+                    type="button"
+                    className="btn btn-success" 
+                    value="Add" 
+                    onClick={this._addBug} />
+                <input 
+                    type="button"
+                    className="btn btn-warning" 
+                    value="Clear" 
+                    onClick={this._clearInput} />
             </div>
             /*jshint ignore:end */
 		);

@@ -72,6 +72,7 @@ Bug = React.createClass({
 
 		if(this.props.bugDetail.priority){
 			bugStatusTagClass = CX({
+                'bug-status'    : true,
                 'label'         : true,
                 'label-success' : this.props.bugDetail.priority === constants.PRIORITY.SOLVED,
                 'label-primary' : this.props.bugDetail.priority === constants.PRIORITY.LOW,
@@ -83,6 +84,7 @@ Bug = React.createClass({
                 'hide'        : this.props.isSelectedProjectClosed
             });
             bugClass = CX({
+                'bug'      : true,
                 'highlight': this.props.bugDetail.name === this.props.selectedBugName
             });
 		}

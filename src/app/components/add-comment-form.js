@@ -70,6 +70,7 @@ AddCommentForm = React.createClass({
 			            className="form-control comment-author-input"
 	                    type="text" 
 	                    ref="newCommentAuthor"
+                        maxLength={17} 
 	                    data-toggle="tooltip"
 	                    data-placement="top"
 	                    title="Must not be empty"

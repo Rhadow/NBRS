@@ -32,23 +32,25 @@ ProjectList = React.createClass({
     _renderProjects: function(){
         var resultHTML = this.props.projects.map(function(project, i){
             var projectClosedClass = CX({
+                'closed-label': true,
                 'label': true,
                 'label-danger': true,
                 'hide': !project.isClosed
                 }),
-                listClass = CX({
+                projectClass = CX({
+                    'project'  : true,
                     'highlight': project.name === this.props.selectedProjectName
                 });
             return (
                 /*jshint ignore:start */
-                <li className={listClass} key={i} id={project.name} onClick={this._onProjectSelect}>
+                <div className={projectClass} key={i} id={project.name} onClick={this._onProjectSelect}>
                     {project.name}
                     <i className={projectClosedClass}>Project Closed</i>
                     <i  className='cancel-icon' 
                         data-name={project.name} 
                         onClick={this._deleteProjectByName}>
                     </i>
-                </li>
+                </div>
                 /*jshint ignore:end */
             );
         }, this);
@@ -83,7 +85,7 @@ ProjectList = React.createClass({
         ); 
     },    
     _onProjectSelect: function(e){
-        var selectedProjectName = $(e.target).closest('li')[0].id;
+        var selectedProjectName = $(e.target).closest('.project')[0].id;
         e.preventDefault();
         if(!$(e.target).hasClass('cancel-icon')){
             AppActions.selectProjectByName(selectedProjectName);
@@ -100,9 +102,9 @@ ProjectList = React.createClass({
                         displayText="New Project" />
                 </div>                
                 <AddProjectForm />
-                <ul className='projects'>
+                <div className='projects'>
                     {this._renderProjects()}
-                </ul>
+                </div>
             </div>
             /*jshint ignore:end */
         );

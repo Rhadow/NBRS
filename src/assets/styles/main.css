@@ -5,6 +5,7 @@ html, .content-wrapper{
 body{
 	height: 100%;
 	padding-top: 51px;
+	background-color: #dee6ec;
 }
 textarea{
 	resize: none;
@@ -16,10 +17,14 @@ html body .allow-cursor{
 	cursor: default;
 }
 .highlight{
-	background-color: #bf4d28;
+	background-color: #ed6969 !important;
 	color: #fff;
 }
 /* Navigation CSS Start */
+.navbar-default{
+	box-shadow: none;
+	border-bottom: 2px solid #dadada;
+}
 .navbar-brand{
 	display: inline-block;
 	padding: 8px;
@@ -32,7 +37,6 @@ html body .allow-cursor{
 .navbar-title{
 	font-size: 1.25em;
 	line-height: 34px;
-	color: #fff;
 }
 /* Navigation CSS End */
 /* Main Content CSS Start */
@@ -46,13 +50,36 @@ html body .allow-cursor{
 	height: 100%;
 }
 .cancel-icon{
+	position: absolute;
+	top: -12px;
+	right: -12px;
 	display: inline-block;
 	width: 24px;
 	height: 24px;
 	background: url('../images/cancel-icon.png') 0 0 no-repeat;
 	cursor: pointer;
 }
+.project, .bug, .comment{
+	position: relative;
+	margin-top: 20px;
+	height: 50px;
+	line-height: 50px;
+	list-style: none;	
+	cursor: pointer;
+	text-align: center;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px rgba(20%,20%,40%,0.3);
+}
+
+.project:hover, .bug:hover, .comment:hover{
+	background-color: #ed6969;
+	color: #fff;
+}
 /* Main Content CSS End */
+
+
+
 /* Project List Start */
 .project-list .projects{
 	padding: 0;
@@ -71,20 +98,19 @@ html body .allow-cursor{
 .project-list .project-list-title{
 	display: inline-block;
 	font-weight: bold;
-	font-size: 30px;
+	font-size: 28px;
 	vertical-align: middle;
+	color: #666;
 }
-.project-list .projects li{
-	list-style: none;
-	border: 1px solid #000;
-	cursor: pointer;
-}
+
 .project-list .add-project-form-wrapper{
 	margin-bottom: 5px;
-	border: 2px solid #5dc0de;
 	padding: 5%;
 	padding-top: 3%;
 	margin-bottom: 10px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px rgba(20%,20%,40%,0.3);
 }
 .project-list .add-project-form-wrapper input{
 	margin-right: 3%;
@@ -95,19 +121,53 @@ html body .allow-cursor{
 .project-list input[type="text"]{
 	display: block;
 }
+.project-list .closed-label{
+	display: inline-block;
+	margin-left: 10px;
+	vertical-align: middle;
+}
 /* Project List End */
 /* Bug List Start */
+.bug-list .bug-list-title{
+	display: inline-block;
+	font-weight: bold;
+	font-size: 28px;
+	vertical-align: middle;
+	color: #666;
+}
+.bug-list .bug-list-inputs{
+	position: relative;
+	margin-top: 20px;
+}
+.bug-list .close-project-btn{
+	display: inline-block;
+}
+.bug-list .toggle-btn{
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
 .bug-list .bugs{
 	padding: 0;
 }
-.bug-list .bugs div{
-	list-style: none;
-	border: 1px solid #000;
-	cursor: pointer;
+.bug-list .bug-status{
+	display: inline-block;
+	margin-left: 10px;
+	vertical-align: middle;
 }
 .bug-list .add-bug-form-wrapper{
+	margin-top: 10px;
 	margin-bottom: 5px;
-	border: 1px solid #01cafe;
+	padding: 5%;
+	padding-top: 3%;
+	margin-bottom: 10px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px rgba(20%,20%,40%,0.3);
+}
+.bug-list .add-bug-form-wrapper input[type="button"]{
+	margin-right: 3%;
 }
 .bug-list .ui-effects-wrapper .bug-name-input{
 	border-color: #d9534f;

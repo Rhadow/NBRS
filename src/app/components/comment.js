@@ -27,7 +27,7 @@ Comment = React.createClass({
 	render: function() {
 		return (
 			/* jshint ignore:start */
-			<div>
+			<div className="comment">
 			    <div>
 			        {this.props.detail.description}
 			    </div>
