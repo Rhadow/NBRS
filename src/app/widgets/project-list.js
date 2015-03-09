@@ -92,11 +92,13 @@ ProjectList = React.createClass({
     render: function() {
         return (
             /*jshint ignore:start */
-            <div className="project-list">                
-                <h2>Project List</h2>
-                <ToggleInputBtn 
-                    target=".add-project-form-wrapper"
-                    displayText="New Project" />
+            <div className="project-list">
+                <div className="title-wrapper">
+                    <span className="project-list-title">Project List</span>
+                    <ToggleInputBtn 
+                        target=".add-project-form-wrapper"
+                        displayText="New Project" />
+                </div>                
                 <AddProjectForm />
                 <ul className='projects'>
                     {this._renderProjects()}

@@ -35,23 +35,29 @@ AddProjectForm = React.createClass({
 	render: function() {
 		return (
 			/*jshint ignore:start */
-			<div>
-	            <div className="add-project-form-wrapper">
-                    <div className="form-group">
-                        <label>New Project Name: </label>
-                        <input
-                            className="form-control project-name-input"
-                            type="text" 
-                            ref="newProjectName" 
-                            data-toggle="tooltip" 
-                            data-placement="top" 
-                            title="Must not be empty or contain the following characters: '. # $ [ ] / \'"
-                            placeholder="Enter project name"/>
-                    </div>
-	                <input type="button" value="Confirm" onClick={this._addProject} />
-	                <input type="button" value="Clear" onClick={this._clearInput} />
-	            </div>
-			</div>			
+            <div className="add-project-form-wrapper">
+                <div className="form-group">
+                    <label>New Project Name: </label>
+                    <input
+                        className="form-control project-name-input"
+                        type="text" 
+                        ref="newProjectName" 
+                        data-toggle="tooltip" 
+                        data-placement="top" 
+                        title="Must not be empty or contain the following characters: '. # $ [ ] / \'"
+                        placeholder="Enter project name"/>
+                </div>
+                <input 
+                    type="button"
+                    className="btn btn-success" 
+                    value="Confirm" 
+                    onClick={this._addProject} />
+                <input 
+                    type="button"
+                    className="btn btn-warning"
+                    value="Clear" 
+                    onClick={this._clearInput} />
+            </div>			
             /*jshint ignore:end */
 		);
 	}

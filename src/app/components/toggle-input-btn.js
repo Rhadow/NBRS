@@ -21,7 +21,11 @@ ToggleInputBtn = React.createClass({
 		return (
 			/*jshint ignore:start */
 			<div className="toggle-btn">
-                <input type="button" value={this.props.displayText} onClick={this._toggleInputs} />
+                <input 
+                    className="btn btn-info" 
+                    type="button" 
+                    value={this.props.displayText} 
+                    onClick={this._toggleInputs} />
             </div>
             /*jshint ignore:end */
 		);

@@ -26813,23 +26813,29 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 	render: function() {
 		return (
 			/*jshint ignore:start */
-			React.createElement("div", null, 
-	            React.createElement("div", {className: "add-project-form-wrapper"}, 
-                    React.createElement("div", {className: "form-group"}, 
-                        React.createElement("label", null, "New Project Name: "), 
-                        React.createElement("input", {
-                            className: "form-control project-name-input", 
-                            type: "text", 
-                            ref: "newProjectName", 
-                            "data-toggle": "tooltip", 
-                            "data-placement": "top", 
-                            title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'", 
-                            placeholder: "Enter project name"})
-                    ), 
-	                React.createElement("input", {type: "button", value: "Confirm", onClick: this._addProject}), 
-	                React.createElement("input", {type: "button", value: "Clear", onClick: this._clearInput})
-	            )
-			)			
+            React.createElement("div", {className: "add-project-form-wrapper"}, 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "New Project Name: "), 
+                    React.createElement("input", {
+                        className: "form-control project-name-input", 
+                        type: "text", 
+                        ref: "newProjectName", 
+                        "data-toggle": "tooltip", 
+                        "data-placement": "top", 
+                        title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'", 
+                        placeholder: "Enter project name"})
+                ), 
+                React.createElement("input", {
+                    type: "button", 
+                    className: "btn btn-success", 
+                    value: "Confirm", 
+                    onClick: this._addProject}), 
+                React.createElement("input", {
+                    type: "button", 
+                    className: "btn btn-warning", 
+                    value: "Clear", 
+                    onClick: this._clearInput})
+            )			
             /*jshint ignore:end */
 		);
 	}
@@ -27173,7 +27179,11 @@ ToggleInputBtn = React.createClass({displayName: "ToggleInputBtn",
 		return (
 			/*jshint ignore:start */
 			React.createElement("div", {className: "toggle-btn"}, 
-                React.createElement("input", {type: "button", value: this.props.displayText, onClick: this._toggleInputs})
+                React.createElement("input", {
+                    className: "btn btn-info", 
+                    type: "button", 
+                    value: this.props.displayText, 
+                    onClick: this._toggleInputs})
             )
             /*jshint ignore:end */
 		);
@@ -27886,10 +27896,12 @@ ProjectList = React.createClass({displayName: "ProjectList",
         return (
             /*jshint ignore:start */
             React.createElement("div", {className: "project-list"}, 
-                React.createElement("h2", null, "Project List"), 
-                React.createElement(ToggleInputBtn, {
-                    target: ".add-project-form-wrapper", 
-                    displayText: "New Project"}), 
+                React.createElement("div", {className: "title-wrapper"}, 
+                    React.createElement("span", {className: "project-list-title"}, "Project List"), 
+                    React.createElement(ToggleInputBtn, {
+                        target: ".add-project-form-wrapper", 
+                        displayText: "New Project"})
+                ), 
                 React.createElement(AddProjectForm, null), 
                 React.createElement("ul", {className: "projects"}, 
                     this._renderProjects()
