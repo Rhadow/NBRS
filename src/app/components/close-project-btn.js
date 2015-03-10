@@ -2,6 +2,8 @@
 
 var React      = require('react'),
     CX         = require('react/lib/cx'),
+    // Constants
+    constants  = require('../constants/constants'),
     // Actions
     AppActions = require('../actions/appActions'),    
     CloseProjectBtn;
@@ -18,16 +20,16 @@ CloseProjectBtn = React.createClass({
     _closeProject: function(e){
         var thisModule = this;
         swal({
-                title: 'Close this project?',   
-                text: 'You will not be able to edit this project anymore!',   
+                title: constants.EN_LEXICON.PROJECT_ALERT_TITLE,   
+                text: constants.EN_LEXICON.PROJECT_ALERT_SUBTITLE,   
                 type: 'warning',   
                 showCancelButton: true,   
                 confirmButtonColor: '#DD6B55',   
-                confirmButtonText: 'Yes, close it!',   
+                confirmButtonText: constants.EN_LEXICON.ALERT_CLOSE_CONFIRM,   
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeProject(thisModule.props.selectedProjectName);
-                swal('Closed!', thisModule.props.selectedProjectName + ' has been closed.', 'success'); 
+                swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, thisModule.props.selectedProjectName + constants.EN_LEXICON.ALERT_CLOSED_RESULT_SUFFIX, 'success');
         });
     },
 	render: function() {
@@ -37,7 +39,7 @@ CloseProjectBtn = React.createClass({
 			    <input 
                     className="btn btn-danger" 
                     type="button" 
-                    value="Close Project" 
+                    value={constants.EN_LEXICON.CLOSE_PROJECT_BTN} 
                     onClick={this._closeProject} />
 			</div>
 			/*jshint ignore:end */			

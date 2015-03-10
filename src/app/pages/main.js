@@ -2,6 +2,8 @@
 
 var React        = require('react'),
     Router       = require('react-router'),
+    // Constants
+    constants    = require('../constants/constants'),
     // Router Methods
     Route        = Router.Route,
     RouteHandler = Router.RouteHandler,
@@ -14,7 +16,7 @@ Main = React.createClass({
             <div className="content-wrapper">
                 <nav className="navbar navbar-default navbar-fixed-top">
                     <a className="navbar-brand" href="#/">
-                        <span className="navbar-title">Bug Report System</span>
+                        <span className="navbar-title">{constants.EN_LEXICON.NAV_TITLE}</span>
                     </a> 
                 </nav>
                 <RouteHandler/>              

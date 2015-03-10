@@ -1,20 +1,13 @@
-var React = require('react');
+var React     = require('react'),
+    // Constants
+    constants = require('../constants/constants'),
+    Help;
 
-var Help = React.createClass({
-
-    /*
-    mixins: [],
-    propTypes: {},
-    getDefaultProps: function() {},
-    getInitialState: function() {},
-    componentWillMount: function() {},
-    componentDidMount: function() {},
-    componentWillReceiveProps: function() {},
-    */
+Help = React.createClass({
     render: function() {
         /* jshint ignore:start */
         return (
-            <div>Page Not Found</div>
+            <div>{constants.EN_LEXICON.NOT_FOUND_TITLE}</div>
         );
         /* jshint ignore:end */
     }

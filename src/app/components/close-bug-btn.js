@@ -2,6 +2,8 @@
 
 var React        = require('react'),
     CX           = require('react/lib/cx'),
+    // Constants
+    constants    = require('../constants/constants'),
     // Actions
     AppActions   = require('../actions/appActions'),    
     CloseBugBtn;

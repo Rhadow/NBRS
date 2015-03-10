@@ -26802,6 +26802,8 @@ module.exports = AddCommentForm;
 
 var React      = require('react'),
     CX         = require('react/lib/cx'),
+    // Constants
+    constants  = require('../constants/constants'),
     // Actions
     AppActions = require('../actions/appActions'),
     AddProjectForm;
@@ -26837,7 +26839,7 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 			/*jshint ignore:start */
             React.createElement("div", {className: "add-project-form-wrapper"}, 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", null, "New Project Name: "), 
+                    React.createElement("label", null, constants.EN_LEXICON.PROJECT_FORM_TITLE, ": "), 
                     React.createElement("input", {
                         className: "form-control project-name-input", 
                         type: "text", 
@@ -26846,17 +26848,17 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
                         "data-toggle": "tooltip", 
                         "data-placement": "top", 
                         title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'", 
-                        placeholder: "Enter project name"})
+                        placeholder: constants.EN_LEXICON.PROJECT_FORM_PLACEHOLDER})
                 ), 
                 React.createElement("input", {
                     type: "button", 
                     className: "btn btn-success", 
-                    value: "Confirm", 
+                    value: constants.EN_LEXICON.CONFIRM, 
                     onClick: this._addProject}), 
                 React.createElement("input", {
                     type: "button", 
                     className: "btn btn-warning", 
-                    value: "Clear", 
+                    value: constants.EN_LEXICON.CLEAR, 
                     onClick: this._clearInput})
             )			
             /*jshint ignore:end */
@@ -26865,7 +26867,7 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 });
 
 module.exports = AddProjectForm;
-},{"../actions/appActions":210,"react":"b6Dds6","react/lib/cx":164}],214:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":221,"react":"b6Dds6","react/lib/cx":164}],214:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -27054,6 +27056,8 @@ module.exports = Bug;
 
 var React        = require('react'),
     CX           = require('react/lib/cx'),
+    // Constants
+    constants    = require('../constants/constants'),
     // Actions
     AppActions   = require('../actions/appActions'),    
     CloseBugBtn;
@@ -27096,11 +27100,13 @@ CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
 	}
 });
 module.exports = CloseBugBtn;
-},{"../actions/appActions":210,"react":"b6Dds6","react/lib/cx":164}],217:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":221,"react":"b6Dds6","react/lib/cx":164}],217:[function(require,module,exports){
 'use strict';
 
 var React      = require('react'),
     CX         = require('react/lib/cx'),
+    // Constants
+    constants  = require('../constants/constants'),
     // Actions
     AppActions = require('../actions/appActions'),    
     CloseProjectBtn;
@@ -27117,16 +27123,16 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
     _closeProject: function(e){
         var thisModule = this;
         swal({
-                title: 'Close this project?',   
-                text: 'You will not be able to edit this project anymore!',   
+                title: constants.EN_LEXICON.PROJECT_ALERT_TITLE,   
+                text: constants.EN_LEXICON.PROJECT_ALERT_SUBTITLE,   
                 type: 'warning',   
                 showCancelButton: true,   
                 confirmButtonColor: '#DD6B55',   
-                confirmButtonText: 'Yes, close it!',   
+                confirmButtonText: constants.EN_LEXICON.ALERT_CLOSE_CONFIRM,   
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeProject(thisModule.props.selectedProjectName);
-                swal('Closed!', thisModule.props.selectedProjectName + ' has been closed.', 'success'); 
+                swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, thisModule.props.selectedProjectName + constants.EN_LEXICON.ALERT_CLOSED_RESULT_SUFFIX, 'success');
         });
     },
 	render: function() {
@@ -27136,7 +27142,7 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
 			    React.createElement("input", {
                     className: "btn btn-danger", 
                     type: "button", 
-                    value: "Close Project", 
+                    value: constants.EN_LEXICON.CLOSE_PROJECT_BTN, 
                     onClick: this._closeProject})
 			)
 			/*jshint ignore:end */			
@@ -27144,7 +27150,7 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
 	}
 });
 module.exports = CloseProjectBtn;
-},{"../actions/appActions":210,"react":"b6Dds6","react/lib/cx":164}],218:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":221,"react":"b6Dds6","react/lib/cx":164}],218:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -27285,6 +27291,27 @@ var constants = {
 	FIREBASE: {
 		PROJECT_URL  : 'https://nbrs.firebaseio.com/projects',
 		PASSWORD_URL : 'https://nbrs.firebaseio.com/password'
+	},
+	EN_LEXICON: {
+		NAV_TITLE: 'Bug Report System',
+		NOT_FOUND_TITLE: 'Page Not Found',
+		PROJECT_LIST_TITLE: 'Project List',
+		NEW_PROJECT_BTN: 'New Project',
+		PROJECT_CLOSED_TAG: 'Project Closed',
+		PROJECT_FORM_TITLE: 'New Project Name',
+		PROJECT_FORM_PLACEHOLDER: 'Enter project name',
+		CONFIRM: 'Confirm',
+		CLEAR: 'Clear',
+		BUG_LIST_TITLE: 'Bug List',
+		NO_PROJECT_TITLE: 'Please select a project',
+		NEW_BUG_BTN: 'New Bug',
+		NO_BUG_INFO: 'There are no bugs in ',
+		CLOSE_PROJECT_BTN: 'Close Project',
+		PROJECT_ALERT_TITLE: 'Close this project?',
+		PROJECT_ALERT_SUBTITLE: 'You will not be able to edit this project anymore!',
+		ALERT_CLOSE_CONFIRM: 'Yes, close it!',
+		ALERT_CLOSED_RESULT: 'Closed!',
+		ALERT_CLOSED_RESULT_SUFFIX: ' has been closed.'
 	}
 };
 
@@ -27446,6 +27473,8 @@ module.exports = MainContent;
 
 var React        = require('react'),
     Router       = require('react-router'),
+    // Constants
+    constants    = require('../constants/constants'),
     // Router Methods
     Route        = Router.Route,
     RouteHandler = Router.RouteHandler,
@@ -27458,7 +27487,7 @@ Main = React.createClass({displayName: "Main",
             React.createElement("div", {className: "content-wrapper"}, 
                 React.createElement("nav", {className: "navbar navbar-default navbar-fixed-top"}, 
                     React.createElement("a", {className: "navbar-brand", href: "#/"}, 
-                        React.createElement("span", {className: "navbar-title"}, "Bug Report System")
+                        React.createElement("span", {className: "navbar-title"}, constants.EN_LEXICON.NAV_TITLE)
                     )
                 ), 
                 React.createElement(RouteHandler, null)
@@ -27469,24 +27498,17 @@ Main = React.createClass({displayName: "Main",
 });
 
 module.exports = Main;
-},{"react":"b6Dds6","react-router":26}],226:[function(require,module,exports){
-var React = require('react');
+},{"../constants/constants":221,"react":"b6Dds6","react-router":26}],226:[function(require,module,exports){
+var React     = require('react'),
+    // Constants
+    constants = require('../constants/constants'),
+    Help;
 
-var Help = React.createClass({displayName: "Help",
-
-    /*
-    mixins: [],
-    propTypes: {},
-    getDefaultProps: function() {},
-    getInitialState: function() {},
-    componentWillMount: function() {},
-    componentDidMount: function() {},
-    componentWillReceiveProps: function() {},
-    */
+Help = React.createClass({displayName: "Help",
     render: function() {
         /* jshint ignore:start */
         return (
-            React.createElement("div", null, "Page Not Found")
+            React.createElement("div", null, constants.EN_LEXICON.NOT_FOUND_TITLE)
         );
         /* jshint ignore:end */
     }
@@ -27494,7 +27516,7 @@ var Help = React.createClass({displayName: "Help",
 });
 
 module.exports = Help;
-},{"react":"b6Dds6"}],227:[function(require,module,exports){
+},{"../constants/constants":221,"react":"b6Dds6"}],227:[function(require,module,exports){
 'use strict';
 
 var appDispatcher = require('../dispatcher/appDispatcher.js'),
@@ -27832,7 +27854,7 @@ BugList = React.createClass({displayName: "BugList",
         if(this.props.selectedProjectBugs.length === 0){
             bugsHTML = (
                 /* jshint ignore:start */
-                React.createElement(NoContent, {message: "There are no bugs in " + this.props.selectedProjectName})
+                React.createElement(NoContent, {message: constants.EN_LEXICON.NO_BUG_INFO + this.props.selectedProjectName})
                 /* jshint ignore:end */
             );
         }
@@ -27846,7 +27868,7 @@ BugList = React.createClass({displayName: "BugList",
                 React.createElement("div", {className: "bug-list-inputs"}, 
                     React.createElement(ToggleInputBtn, {
                         target: ".add-bug-form-wrapper", 
-                        displayText: "New Bug"}), 
+                        displayText: constants.EN_LEXICON.NEW_BUG_BTN}), 
                     React.createElement(CloseProjectBtn, {selectedProjectName: this.props.selectedProjectName}), 
                     React.createElement(AddBugForm, {selectedProjectName: this.props.selectedProjectName})
                 )                
@@ -27860,7 +27882,7 @@ BugList = React.createClass({displayName: "BugList",
             /* jshint ignore:start */
             return (
                 React.createElement("div", {className: "bug-list"}, 
-                    React.createElement(NoContent, {message: "Please select a project"})
+                    React.createElement(NoContent, {message: constants.EN_LEXICON.NO_PROJECT_TITLE})
                 )
             );
             /* jshint ignore:end */
@@ -27869,7 +27891,9 @@ BugList = React.createClass({displayName: "BugList",
             /* jshint ignore:start */
             React.createElement("div", {className: "bug-list"}, 
                 React.createElement("div", {className: "title-wrapper"}, 
-                    React.createElement("span", {className: "bug-list-title"}, this.props.selectedProjectName, " Bug List"), 
+                    React.createElement("span", {className: "bug-list-title"}, 
+                        this.props.selectedProjectName, " ", constants.EN_LEXICON.BUG_LIST_TITLE
+                    ), 
                     this._renderInputs()
                 ), 
                 React.createElement("div", {className: "bugs"}, 
@@ -27891,6 +27915,8 @@ var React          = require('react'),
     AppActions     = require('../actions/appActions'),
     // Hash
     passwordHash   = require('password-hash'),
+    // Constants
+    constants      = require('../constants/constants'),
     // Components
     AddProjectForm = require('../components/add-project-form'),
     ToggleInputBtn = require('../components/toggle-input-btn'),
@@ -27930,7 +27956,7 @@ ProjectList = React.createClass({displayName: "ProjectList",
                 /*jshint ignore:start */
                 React.createElement("div", {className: projectClass, key: i, id: project.name, onClick: this._onProjectSelect}, 
                     project.name, 
-                    React.createElement("i", {className: projectClosedClass}, "Project Closed"), 
+                    React.createElement("i", {className: projectClosedClass}, constants.EN_LEXICON.PROJECT_CLOSED_TAG), 
                     React.createElement("i", {className: "cancel-icon", 
                         "data-name": project.name, 
                         onClick: this._deleteProjectByName}
@@ -27981,11 +28007,11 @@ ProjectList = React.createClass({displayName: "ProjectList",
             /*jshint ignore:start */
             React.createElement("div", {className: "project-list"}, 
                 React.createElement("div", {className: "title-wrapper"}, 
-                    React.createElement("div", {className: "project-list-title"}, "Project List"), 
+                    React.createElement("div", {className: "project-list-title"}, constants.EN_LEXICON.PROJECT_LIST_TITLE), 
                     React.createElement("div", {className: "project-list-input"}, 
                         React.createElement(ToggleInputBtn, {
                             target: ".add-project-form-wrapper", 
-                            displayText: "New Project"})
+                            displayText: constants.EN_LEXICON.NEW_PROJECT_BTN})
                     )
                 ), 
                 React.createElement(AddProjectForm, null), 
@@ -27999,4 +28025,4 @@ ProjectList = React.createClass({displayName: "ProjectList",
 });
 
 module.exports = ProjectList;
-},{"../actions/appActions":210,"../components/add-project-form":213,"../components/toggle-input-btn":220,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}]},{},[223])
+},{"../actions/appActions":210,"../components/add-project-form":213,"../components/toggle-input-btn":220,"../constants/constants":221,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}]},{},[223])

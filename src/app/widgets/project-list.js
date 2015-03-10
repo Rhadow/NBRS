@@ -6,6 +6,8 @@ var React          = require('react'),
     AppActions     = require('../actions/appActions'),
     // Hash
     passwordHash   = require('password-hash'),
+    // Constants
+    constants      = require('../constants/constants'),
     // Components
     AddProjectForm = require('../components/add-project-form'),
     ToggleInputBtn = require('../components/toggle-input-btn'),
@@ -45,7 +47,7 @@ ProjectList = React.createClass({
                 /*jshint ignore:start */
                 <div className={projectClass} key={i} id={project.name} onClick={this._onProjectSelect}>
                     {project.name}
-                    <i className={projectClosedClass}>Project Closed</i>
+                    <i className={projectClosedClass}>{constants.EN_LEXICON.PROJECT_CLOSED_TAG}</i>
                     <i  className='cancel-icon' 
                         data-name={project.name} 
                         onClick={this._deleteProjectByName}>
@@ -96,11 +98,11 @@ ProjectList = React.createClass({
             /*jshint ignore:start */
             <div className="project-list">
                 <div className="title-wrapper">
-                    <div className="project-list-title">Project List</div>
+                    <div className="project-list-title">{constants.EN_LEXICON.PROJECT_LIST_TITLE}</div>
                     <div className="project-list-input">
                         <ToggleInputBtn 
                             target=".add-project-form-wrapper"
-                            displayText="New Project" />
+                            displayText={constants.EN_LEXICON.NEW_PROJECT_BTN} />
                     </div>                    
                 </div>
                 <AddProjectForm />

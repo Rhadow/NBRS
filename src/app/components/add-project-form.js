@@ -2,6 +2,8 @@
 
 var React      = require('react'),
     CX         = require('react/lib/cx'),
+    // Constants
+    constants  = require('../constants/constants'),
     // Actions
     AppActions = require('../actions/appActions'),
     AddProjectForm;
@@ -37,7 +39,7 @@ AddProjectForm = React.createClass({
 			/*jshint ignore:start */
             <div className="add-project-form-wrapper">
                 <div className="form-group">
-                    <label>New Project Name: </label>
+                    <label>{constants.EN_LEXICON.PROJECT_FORM_TITLE}: </label>
                     <input
                         className="form-control project-name-input"
                         type="text"
@@ -46,17 +48,17 @@ AddProjectForm = React.createClass({
                         data-toggle="tooltip" 
                         data-placement="top" 
                         title="Must not be empty or contain the following characters: '. # $ [ ] / \'"
-                        placeholder="Enter project name"/>
+                        placeholder={constants.EN_LEXICON.PROJECT_FORM_PLACEHOLDER}/>
                 </div>
                 <input 
                     type="button"
                     className="btn btn-success" 
-                    value="Confirm" 
+                    value={constants.EN_LEXICON.CONFIRM} 
                     onClick={this._addProject} />
                 <input 
                     type="button"
                     className="btn btn-warning"
-                    value="Clear" 
+                    value={constants.EN_LEXICON.CLEAR}
                     onClick={this._clearInput} />
             </div>			
             /*jshint ignore:end */

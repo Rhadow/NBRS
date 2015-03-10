@@ -52,7 +52,7 @@ BugList = React.createClass({
         if(this.props.selectedProjectBugs.length === 0){
             bugsHTML = (
                 /* jshint ignore:start */
-                <NoContent message={"There are no bugs in " + this.props.selectedProjectName} />
+                <NoContent message={constants.EN_LEXICON.NO_BUG_INFO + this.props.selectedProjectName} />
                 /* jshint ignore:end */
             );
         }
@@ -66,7 +66,7 @@ BugList = React.createClass({
                 <div className="bug-list-inputs">                    
                     <ToggleInputBtn 
                         target=".add-bug-form-wrapper"
-                        displayText="New Bug" />
+                        displayText={constants.EN_LEXICON.NEW_BUG_BTN} />
                     <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
                     <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
                 </div>                
@@ -80,7 +80,7 @@ BugList = React.createClass({
             /* jshint ignore:start */
             return (
                 <div className="bug-list">
-                    <NoContent message="Please select a project" />
+                    <NoContent message={constants.EN_LEXICON.NO_PROJECT_TITLE} />
                 </div>
             );
             /* jshint ignore:end */
@@ -89,7 +89,9 @@ BugList = React.createClass({
             /* jshint ignore:start */
             <div className="bug-list">                
                 <div className="title-wrapper">
-                    <span className="bug-list-title">{this.props.selectedProjectName} Bug List</span>                
+                    <span className="bug-list-title">
+                        {this.props.selectedProjectName} {constants.EN_LEXICON.BUG_LIST_TITLE}
+                    </span>                
                     {this._renderInputs()}
                 </div> 
                 <div className="bugs">
