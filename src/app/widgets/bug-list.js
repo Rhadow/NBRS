@@ -8,6 +8,7 @@ var React           = require('react'),
     AddBugForm      = require('../components/add-bug-form'),
     CloseProjectBtn = require('../components/close-project-btn'),
     ToggleInputBtn  = require('../components/toggle-input-btn'),
+    NoContent       = require('../components/no-content'),
     Bug             = require('../components/bug'),
     BugList;
 
@@ -51,7 +52,7 @@ BugList = React.createClass({
         if(this.props.selectedProjectBugs.length === 0){
             bugsHTML = (
                 /* jshint ignore:start */
-                <div>There are no bugs in {this.props.selectedProjectName}</div>
+                <NoContent message={"There are no bugs in " + this.props.selectedProjectName} />
                 /* jshint ignore:end */
             );
         }
@@ -62,11 +63,11 @@ BugList = React.createClass({
         if(!this.props.isSelectedProjectClosed){
             resultHTML = (
                 /* jshint ignore:start */
-                <div className="bug-list-inputs">
-                    <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
+                <div className="bug-list-inputs">                    
                     <ToggleInputBtn 
                         target=".add-bug-form-wrapper"
                         displayText="New Bug" />
+                    <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
                     <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
                 </div>                
                 /* jshint ignore:end */
@@ -78,7 +79,9 @@ BugList = React.createClass({
         if(!this.props.selectedProjectName){
             /* jshint ignore:start */
             return (
-                <div className="bug-list">Please select a Project</div>
+                <div className="bug-list">
+                    <NoContent message="Please select a project" />
+                </div>
             );
             /* jshint ignore:end */
         }

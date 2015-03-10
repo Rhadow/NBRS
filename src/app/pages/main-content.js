@@ -78,7 +78,7 @@ MainContent = React.createClass({
                         selectedProjectName={this.state.selectedProjectName}
                         combo={this.state.combo}/>
                 </div>
-                <div className="col-xs-3 bug-list-wrapper">
+                <div className="col-xs-4 bug-list-wrapper">
                     <BugList 
                         selectedProjectName={this.state.selectedProjectName}
                         selectedProjectBugs={this.state.selectedProjectBugs}
@@ -86,7 +86,7 @@ MainContent = React.createClass({
                         isSelectedProjectClosed={this.state.isSelectedProjectClosed}
                         combo={this.state.combo}/>
                 </div>
-                <div className="col-xs-6 bug-detail-wrapper">
+                <div className="col-xs-5 bug-detail-wrapper">
                     <BugDetail 
                         selectedBugName={this.state.selectedBugName}
                         selectedProjectBugComments={this.state.selectedProjectBugComments}

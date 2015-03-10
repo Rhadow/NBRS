@@ -20,6 +20,10 @@ html body .allow-cursor{
 	background-color: #ed6969 !important;
 	color: #fff;
 }
+.no-content-message{
+	display: inline-block;
+	margin-left: 5px;
+}
 /* Navigation CSS Start */
 .navbar-default{
 	box-shadow: none;
@@ -59,7 +63,7 @@ html body .allow-cursor{
 	background: url('../images/cancel-icon.png') 0 0 no-repeat;
 	cursor: pointer;
 }
-.project, .bug, .comment{
+.project, .bug{
 	position: relative;
 	margin-top: 20px;
 	height: 50px;
@@ -71,40 +75,35 @@ html body .allow-cursor{
 	border-radius: 5px;
 	box-shadow: 1px 1px 1px rgba(20%,20%,40%,0.3);
 }
-
-.project:hover, .bug:hover, .comment:hover{
+.project:hover, .bug:hover{
 	background-color: #ed6969;
 	color: #fff;
 }
 /* Main Content CSS End */
-
-
-
 /* Project List Start */
 .project-list .projects{
 	padding: 0;
 }
 .project-list .title-wrapper{
 	position: relative;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 .project-list .toggle-btn{
-	position: absolute;
-	top: 4px;
 	right: 0;
 	display: inline-block;
 	vertical-align: middle;
 }
 .project-list .project-list-title{
-	display: inline-block;
 	font-weight: bold;
 	font-size: 28px;
 	vertical-align: middle;
 	color: #666;
 }
-
+.project-list .project-list-input{
+	position: relative;
+	margin-top: 20px;
+}
 .project-list .add-project-form-wrapper{
-	margin-bottom: 5px;
 	padding: 5%;
 	padding-top: 3%;
 	margin-bottom: 10px;
@@ -139,14 +138,18 @@ html body .allow-cursor{
 	position: relative;
 	margin-top: 20px;
 }
+.bug-list .title-wrapper{
+	position: relative;
+	margin-bottom: 20px;
+}
 .bug-list .close-project-btn{
+	position: absolute;
+	right: 0;
 	display: inline-block;
+	margin-left: 10px;
 }
 .bug-list .toggle-btn{
 	display: inline-block;
-	position: absolute;
-	top: 0;
-	right: 0;
 }
 .bug-list .bugs{
 	padding: 0;
@@ -157,8 +160,7 @@ html body .allow-cursor{
 	vertical-align: middle;
 }
 .bug-list .add-bug-form-wrapper{
-	margin-top: 10px;
-	margin-bottom: 5px;
+	margin-top: 20px;
 	padding: 5%;
 	padding-top: 3%;
 	margin-bottom: 10px;
@@ -181,32 +183,97 @@ html body .allow-cursor{
 .bug-list input[type="text"]{
 	display: block;
 }
-
 /* Bug List End */
 /* Bug Detail Start */
-.bug-detail .add-comment-form-wrapper{
-	margin-bottom: 5px;
-	border: 1px solid #01cafe;
-}
 .bug-detail .ui-effects-wrapper .comment-description-input{
 	border-color: #d9534f;
 }
 .bug-detail .ui-effects-wrapper .comment-author-input{
 	border-color: #d9534f;
 }
-/* Bug Detail End */
-
-
-/* Float-Input Start */
-.float-input{
-	position: absolute;
-	border: 1px solid green;
-	border-radius: 5px;
-	z-index: 500;
+.bug-detail .title-wrapper{
+	position: relative;
+	margin-bottom: 20px;
 }
-/* Float-Input End */
-
-
-
+.bug-detail .comment-list-title{
+	display: inline-block;
+	font-weight: bold;
+	font-size: 28px;
+	vertical-align: middle;
+	color: #666;
+}
+.bug-detail .comment-list-inputs{
+	position: relative;
+	margin-top: 20px;
+}
+.bug-detail .toggle-btn{
+	display: inline-block;
+}
+.bug-detail .close-bug-btn{	
+	position: absolute;
+	right: 0;
+	display: inline-block;
+	margin-left: 10px;
+}
+.bug-detail .add-comment-form-wrapper{
+	padding: 5%;
+	padding-top: 3%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px rgba(20%,20%,40%,0.3);
+}
+.bug-detail .add-comment-form-wrapper input[type="button"]{
+	margin-right: 3%;
+}
+/* Bug Detail End */
+/* Bug Info Start */
+.bug-info{
+	padding: 5%;
+	padding-top: 3%;
+	margin-bottom: 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px rgba(20%,20%,40%,0.3);
+}
+.bug-info textarea{
+	margin-bottom: 10px;
+	cursor: default !important;
+}
+.bug-info .info-value{
+	display: inline-block;
+	margin-left: 5px;
+}
+/* Bug Info End */
+/* Comment Start */
+.comment{
+	margin: 20px 0;
+	background-color: #fff;
+	border: 1px solid #bbb;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px rgba(20%,20%,40%,0.3);
+}
+.comment .comment-header{
+	background-color: #eee;
+	border-bottom: 1px solid #bbb;
+	padding: 2% 5%;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.comment .comment-author{
+	display: inline-block;
+	font-weight: bold;
+	font-size: 16px;
+}
+.comment .comment-time{
+	display: inline-block;
+	margin-left: 10px;
+	color: #666;
+}
+.comment .comment-body{
+	padding: 2% 5%;
+}
+/* Comment End */
 /* Animation Start */
 /* Animation End */

@@ -23,7 +23,10 @@ BugIntro = React.createClass({
     	if(this.props.selectedBugStartDate){
     		resultHTML = (
     			/* jshint ignore:start */
-    			<div>Start Date: {this.props.selectedBugStartDate}</div>
+    			<div>
+                    <label>Start Date: </label>
+                    <span className="info-value">{this.props.selectedBugStartDate}</span>
+                </div>
     			/* jshint ignore:end */
     		); 
     	}
@@ -34,7 +37,10 @@ BugIntro = React.createClass({
     	if(this.props.selectedBugEndDate){
     		resultHTML = (
     			/* jshint ignore:start */
-    			<div>End Date: {this.props.selectedBugEndDate}</div>
+    			<div>
+                    <label>End Date: </label>
+                    <span className="info-value">{this.props.selectedBugEndDate}</span>
+                </div>
     			/* jshint ignore:end */
     		); 
     	}
@@ -43,18 +49,21 @@ BugIntro = React.createClass({
 	render: function() {
 		return (
 			/* jshint ignore:start */
-			<div className="form-group">
+			<div className="form-group bug-info">
                 <label htmlFor="comment">Bug Description:</label>
                 <textarea 
-                    className="form-control allow-cursor" 
-                    disabled 
-                    rows="5" 
-                    id="comment" 
+                    className="form-control allow-cursor"
+                    disabled
+                    rows="10"
+                    id="comment"
                     value={this.props.selectedBugDescription}>
                 </textarea>
+                <div>
+                    <label>Author: </label>
+                    <span className="info-value">{this.props.selectedBugAuthor}</span>
+                </div>
                 {this._renderStartDate()}
                 {this._renderEndDate()}
-                <div>Author: {this.props.selectedBugAuthor}</div>
             </div>
 			/* jshint ignore:end */
 		);
