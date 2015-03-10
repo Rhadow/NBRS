@@ -10,6 +10,7 @@ var React          = require('react'),
     AddCommentForm = require('../components/add-comment-form'),
     ToggleInputBtn = require('../components/toggle-input-btn'),
     Comment        = require('../components/comment'),
+    NoContent      = require('../components/no-content'),
     CloseBugBtn    = require('../components/close-bug-btn'),
     BugIntro       = require('../components/bug-intro'),
     BugDetail;
@@ -52,14 +53,14 @@ BugDetail = React.createClass({
         if(this.props.selectedBugPriority !== constants.PRIORITY.SOLVED && !this.props.isSelectedProjectClosed){
             resultHTML = (
                 /*jshint ignore:start */
-                <div>
+                <div className="comment-list-inputs">
                     <ToggleInputBtn 
                         target=".add-comment-form-wrapper"
                         displayText="New Comment" />
-                    <AddCommentForm 
-                        selectedBugName={this.props.selectedBugName}/>
-                    <CloseBugBtn 
+                    <CloseBugBtn
                         selectedProjectName={this.props.selectedProjectName}
+                        selectedBugName={this.props.selectedBugName}/>
+                    <AddCommentForm
                         selectedBugName={this.props.selectedBugName}/>
                 </div>
                 /*jshint ignore:end */
@@ -85,7 +86,7 @@ BugDetail = React.createClass({
         if(this.props.selectedProjectBugComments.length === 0){
             resultHTML = (
                 /* jshint ignore:start */
-                <div>There are no comment in {this.props.selectedBugName}</div>
+                <NoContent message={"There are no comments in " + this.props.selectedBugName} />
                 /* jshint ignore:end */
             );
         }
@@ -95,22 +96,26 @@ BugDetail = React.createClass({
         if(!this.props.selectedBugName){
             /* jshint ignore:start */
             return (
-                <div className="bug-detail">Please select a Bug</div>
+                <div className="bug-detail">
+                    <NoContent message="Please select a bug" />
+                </div>
             );
             /* jshint ignore:end */
         }
         /* jshint ignore:start */
         return (
             <div className="bug-detail">
-                <h2>{this.props.selectedBugName} Details</h2>
-                {this._renderCommentInputs()}
+                <div className="title-wrapper">
+                    <span className="comment-list-title">{this.props.selectedBugName} Details</span>                
+                    {this._renderCommentInputs()}
+                </div> 
                 <BugIntro 
                     selectedBugDescription={this.props.selectedBugDescription}
                     selectedBugStartDate={this.props.selectedBugStartDate}
                     selectedBugEndDate={this.props.selectedBugEndDate}
                     selectedBugAuthor={this.props.selectedBugAuthor}/>
                 <div className="comments">
-                    <h2>{this.props.selectedProjectName} Comments</h2>
+                    <div className="comment-list-title">{this.props.selectedProjectName} Comments</div>
                     {this._renderComments()}
                 </div>
             </div>

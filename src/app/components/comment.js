@@ -4,15 +4,23 @@ var React = require('react'),
     Comment;
 
 Comment = React.createClass({
-
+	_intervalStamp: '',
 	propTypes: {
 		detail: React.PropTypes.object
 	},
-
 	getDefaultProps: function() {
 		return {
 			detail: {}
 		};
+	},
+	componentDidMount: function() {
+		var thisModule = this;
+		this._intervalStamp = window.setInterval(function(){
+			thisModule.forceUpdate();
+		}, 60000);
+	},
+	componentWillUnmount: function() {
+		window.clearInterval(this._intervalStamp);
 	},
 	_fromNow: function(){
 		return moment([
@@ -28,11 +36,12 @@ Comment = React.createClass({
 		return (
 			/* jshint ignore:start */
 			<div className="comment">
-			    <div>
-			        {this.props.detail.description}
+			    <div className="comment-header">
+			        <div className="comment-author">{this.props.detail.author}</div>
+			        <div className="comment-time">{this._fromNow()}</div>
 			    </div>
-			    <div>
-			        Message leave by: {this.props.detail.author} on {this._fromNow()}
+			    <div className="comment-body">
+			        {this.props.detail.description}
 			    </div>
 			</div>
 			/* jshint ignore:end */

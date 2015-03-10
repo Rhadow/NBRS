@@ -88,8 +88,16 @@ AddCommentForm = React.createClass({
                         placeholder="Enter description">
                     </textarea>
                 </div>
-                <input type="button" value="Add" onClick={this._addComment} />
-                <input type="button" value="Clear" onClick={this._clearInput} />
+                <input 
+                    type="button" 
+                    className="btn btn-success" 
+                    value="Add" 
+                    onClick={this._addComment} />
+                <input 
+                    type="button"
+                    className="btn btn-warning"
+                    value="Clear" 
+                    onClick={this._clearInput} />
 			</div>
 		);
 		/* jshint ignore:end */

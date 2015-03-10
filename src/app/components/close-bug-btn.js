@@ -36,7 +36,7 @@ CloseBugBtn = React.createClass({
 	render: function() {
 		return (
 			/*jshint ignore:start */
-			<div>
+			<div className="close-bug-btn">
 			    <input className="btn btn-success" type="button" value="Solved" onClick={this._closeBug} />
 			</div>
 			/*jshint ignore:end */			
