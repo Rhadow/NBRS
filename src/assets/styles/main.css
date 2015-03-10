@@ -49,9 +49,11 @@ html body .allow-cursor{
 	margin: 0;
 }
 .project-list-wrapper, .bug-list-wrapper, .bug-detail-wrapper{
-	border-right: 1px solid black;
+	border-right: 1px solid #bbb;
 	padding: 20px;
 	height: 100%;
+	overflow: auto;
+	box-shadow: 1px 0 1px #fff
 }
 .cancel-icon{
 	position: absolute;
