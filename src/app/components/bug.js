@@ -73,6 +73,9 @@ Bug = React.createClass({
     },
     _renderPriority: function(){
         var result = '';
+        if(!this.props.bugDetail.priority){
+            return;
+        }
         switch(this.props.bugDetail.priority){
             case 'Low':
                 result = constants.CH_LEXICON.PRIORITY_LOW;

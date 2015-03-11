@@ -31,7 +31,7 @@ CloseBugBtn = React.createClass({
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeBug(thisModule.props.selectedBugName);
-                swal(constants.CH_LEXICON.ALERT_CLOSED_RESULT, 
+                swal(constants.CH_LEXICON.PRIORITY_SOLVED, 
                     thisModule.props.selectedProjectName + constants.CH_LEXICON.BUG_CLOSE_RESULT_SUFFIX, 
                     'success'); 
         });

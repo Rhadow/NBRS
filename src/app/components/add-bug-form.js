@@ -60,6 +60,24 @@ AddBugForm = React.createClass({
             return;
         }
         $('.add-bug-form-wrapper').slideUp();
+
+        switch(priority){
+            case constants.CH_LEXICON.PRIORITY_LOW:
+                priority = 'Low';
+                break;
+            case constants.CH_LEXICON.PRIORITY_MEDIUM:
+                priority = 'Medium';
+                break;
+            case constants.CH_LEXICON.PRIORITY_HIGH:
+                priority = 'High';
+                break;
+            case constants.CH_LEXICON.PRIORITY_SOLVED:
+                priority = 'Solved';
+                break;
+            default:
+                throw 'Error';
+        }
+
         this._clearInput();
         newBugObj = {
             name        : newBugName,
@@ -78,7 +96,7 @@ AddBugForm = React.createClass({
         this.refs.newBugAuthor.getDOMNode().value = '';
         this.refs.startDate.getDOMNode().value = '';
         this.refs.endDate.getDOMNode().value = '';
-        this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
+        this.refs.priority.getDOMNode().value = constants.CH_LEXICON.PRIORITY_LOW;
     },
 	render: function() {
 		var addBugClasses = CX({

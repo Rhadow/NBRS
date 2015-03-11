@@ -26582,6 +26582,24 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
             return;
         }
         $('.add-bug-form-wrapper').slideUp();
+
+        switch(priority){
+            case constants.CH_LEXICON.PRIORITY_LOW:
+                priority = 'Low';
+                break;
+            case constants.CH_LEXICON.PRIORITY_MEDIUM:
+                priority = 'Medium';
+                break;
+            case constants.CH_LEXICON.PRIORITY_HIGH:
+                priority = 'High';
+                break;
+            case constants.CH_LEXICON.PRIORITY_SOLVED:
+                priority = 'Solved';
+                break;
+            default:
+                throw 'Error';
+        }
+
         this._clearInput();
         newBugObj = {
             name        : newBugName,
@@ -26600,7 +26618,7 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
         this.refs.newBugAuthor.getDOMNode().value = '';
         this.refs.startDate.getDOMNode().value = '';
         this.refs.endDate.getDOMNode().value = '';
-        this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
+        this.refs.priority.getDOMNode().value = constants.CH_LEXICON.PRIORITY_LOW;
     },
 	render: function() {
 		var addBugClasses = CX({
@@ -27024,6 +27042,9 @@ Bug = React.createClass({displayName: "Bug",
     },
     _renderPriority: function(){
         var result = '';
+        if(!this.props.bugDetail.priority){
+            return;
+        }
         switch(this.props.bugDetail.priority){
             case 'Low':
                 result = constants.CH_LEXICON.PRIORITY_LOW;
@@ -27114,7 +27135,7 @@ CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeBug(thisModule.props.selectedBugName);
-                swal(constants.CH_LEXICON.ALERT_CLOSED_RESULT, 
+                swal(constants.CH_LEXICON.PRIORITY_SOLVED, 
                     thisModule.props.selectedProjectName + constants.CH_LEXICON.BUG_CLOSE_RESULT_SUFFIX, 
                     'success'); 
         });
@@ -27382,7 +27403,9 @@ var constants = {
 		PRIORITY_LOW                     : 'Low',
 		PRIORITY_MEDIUM                  : 'Medium',
 		PRIORITY_HIGH                    : 'High',
-		PRIORITY_SOLVED                  : 'Solved'
+		PRIORITY_SOLVED                  : 'Solved',
+		PROJECT_EXIST                    : 'Same project name already exists!',
+		BUG_EXIST                        : 'Same bug name already exists!'
 	},
 	CH_LEXICON: {
 		NAV_TITLE                        : 'Bug回報系統',
@@ -27401,7 +27424,7 @@ var constants = {
 		CLOSE_PROJECT_BTN                : '結案',
 		PROJECT_ALERT_TITLE              : '確定結案?',
 		PROJECT_ALERT_SUBTITLE           : '結案後將無法編輯內容',
-		ALERT_CLOSE_CONFIRM              : '是的，結案',
+		ALERT_CLOSE_CONFIRM              : '確定',
 		ALERT_CLOSED_RESULT              : '已結案！',
 		ALERT_CLOSED_RESULT_SUFFIX       : ' 已結案',
 		BUG_FORM_NEW_NAME                : 'Bug名稱: ',
@@ -27435,7 +27458,9 @@ var constants = {
 		PRIORITY_LOW                     : '一般',
 		PRIORITY_MEDIUM                  : '注意',
 		PRIORITY_HIGH                    : '緊急',
-		PRIORITY_SOLVED                  : '已解決'
+		PRIORITY_SOLVED                  : '已解決',
+		PROJECT_EXIST                    : '已有相同專案名稱',
+		BUG_EXIST                        : '已有相同Bug名稱'
 	}
 };
 
@@ -27670,7 +27695,8 @@ appStore = _.extend({}, eventEmitter.prototype, {
         if(!isProjectIdentical){
             this._firebaseRef.child(newProject.name).set(newProject);
         }else{
-            swal('Oops...', 'Same project name already exists!', 'error');
+            swal(constants.CH_LEXICON.OOPS, 
+                constants.CH_LEXICON.PROJECT_EXIST, 'error');
         }
     },
     deleteProject: function(name) { 
@@ -27709,7 +27735,8 @@ appStore = _.extend({}, eventEmitter.prototype, {
                 .child(newBug.name)
                 .set(newBug);
         }else{
-            swal('Oops...', 'Same project name already exists!', 'error');
+            swal(constants.CH_LEXICON.OOPS,
+             constants.CH_LEXICON.BUG_EXIST, 'error');
         }
     },
     deleteBug: function(bugName){
