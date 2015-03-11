@@ -47,7 +47,7 @@ ProjectList = React.createClass({
                 /*jshint ignore:start */
                 <div className={projectClass} key={i} id={project.name} onClick={this._onProjectSelect}>
                     {project.name}
-                    <i className={projectClosedClass}>{constants.EN_LEXICON.PROJECT_CLOSED_TAG}</i>
+                    <i className={projectClosedClass}>{constants.CH_LEXICON.PROJECT_CLOSED_TAG}</i>
                     <i  className='cancel-icon' 
                         data-name={project.name} 
                         onClick={this._deleteProjectByName}>
@@ -98,11 +98,11 @@ ProjectList = React.createClass({
             /*jshint ignore:start */
             <div className="project-list">
                 <div className="title-wrapper">
-                    <div className="project-list-title">{constants.EN_LEXICON.PROJECT_LIST_TITLE}</div>
+                    <div className="project-list-title">{constants.CH_LEXICON.PROJECT_LIST_TITLE}</div>
                     <div className="project-list-input">
                         <ToggleInputBtn 
                             target=".add-project-form-wrapper"
-                            displayText={constants.EN_LEXICON.NEW_PROJECT_BTN} />
+                            displayText={constants.CH_LEXICON.NEW_PROJECT_BTN} />
                     </div>                    
                 </div>
                 <AddProjectForm />

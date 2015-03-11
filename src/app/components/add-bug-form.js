@@ -89,7 +89,7 @@ AddBugForm = React.createClass({
 			/*jshint ignore:start */
             <div className={addBugClasses}>
                 <div className="form-group">
-                    <label>{constants.EN_LEXICON.BUG_FORM_NEW_NAME}</label>
+                    <label>{constants.CH_LEXICON.BUG_FORM_NEW_NAME}</label>
                     <input
                         className="bug-name-input form-control"
                         type="text" 
@@ -97,11 +97,11 @@ AddBugForm = React.createClass({
                         maxLength={17} 
                         data-toggle="tooltip"
                         data-placement="top"
-                        title={constants.EN_LEXICON.BUG_FORM_NEW_NAME_TOOLTIP}
-                        placeholder={constants.EN_LEXICON.BUG_FORM_NEW_NAME_PLACEHOLDER}/> 
+                        title={constants.CH_LEXICON.BUG_FORM_NEW_NAME_TOOLTIP}
+                        placeholder={constants.CH_LEXICON.BUG_FORM_NEW_NAME_PLACEHOLDER}/> 
                 </div>
                 <div className="form-group">
-                    <label>{constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME}</label>
+                    <label>{constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME}</label>
                     <input
                         className="bug-author-input form-control"
                         type="text" 
@@ -109,23 +109,23 @@ AddBugForm = React.createClass({
                         maxLength={17} 
                         data-toggle="tooltip"
                         data-placement="top"
-                        title={constants.EN_LEXICON.NOT_EMPTY_TOOLTIP}
-                        placeholder={constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER}/> 
+                        title={constants.CH_LEXICON.NOT_EMPTY_TOOLTIP}
+                        placeholder={constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER}/> 
                 </div>
                 <div className="form-group">
-                    <label>{constants.EN_LEXICON.BUG_FORM_DESCRIPTION}</label>
+                    <label>{constants.CH_LEXICON.BUG_FORM_DESCRIPTION}</label>
                     <textarea 
                         className="form-control bug-description-input" 
                         ref="newBugDescription" 
                         rows="5"
                         data-toggle="tooltip"
                         data-placement="top"
-                        title={constants.EN_LEXICON.NOT_EMPTY_TOOLTIP}
-                        placeholder={constants.EN_LEXICON.FORM_DESCRIPTION_PLACEHOLDER}>
+                        title={constants.CH_LEXICON.NOT_EMPTY_TOOLTIP}
+                        placeholder={constants.CH_LEXICON.FORM_DESCRIPTION_PLACEHOLDER}>
                     </textarea>
                 </div>
                 <div className="form-group">
-                    <label>{constants.EN_LEXICON.START_DATE}</label>
+                    <label>{constants.CH_LEXICON.START_DATE}</label>
                     <div className='input-group date' id='bug-start-time-picker'>
                         <input type='text' className="form-control" ref="startDate"/>
                         <span className="input-group-addon">
@@ -134,7 +134,7 @@ AddBugForm = React.createClass({
                     </div>
                 </div>
                 <div className="form-group">
-                    <label>{constants.EN_LEXICON.END_DATE}</label>
+                    <label>{constants.CH_LEXICON.END_DATE}</label>
                     <div className='input-group date' id='bug-end-time-picker'>
                         <input type='text' className="form-control" ref="endDate"/>
                         <span className="input-group-addon">
@@ -143,22 +143,22 @@ AddBugForm = React.createClass({
                     </div>
                 </div>
                 <div className="form-group">
-                    <label>{constants.EN_LEXICON.PRIORITY_TITLE}</label>
+                    <label>{constants.CH_LEXICON.PRIORITY_TITLE}</label>
                     <select className="form-control" ref="priority">
-                        <option>{constants.EN_LEXICON.PRIORITY_LOW}</option>
-                        <option>{constants.EN_LEXICON.PRIORITY_MEDIUM}</option>
-                        <option>{constants.EN_LEXICON.PRIORITY_HIGH}</option>
+                        <option>{constants.CH_LEXICON.PRIORITY_LOW}</option>
+                        <option>{constants.CH_LEXICON.PRIORITY_MEDIUM}</option>
+                        <option>{constants.CH_LEXICON.PRIORITY_HIGH}</option>
                     </select>
                 </div>
                 <input 
                     type="button"
                     className="btn btn-success" 
-                    value={constants.EN_LEXICON.CONFIRM}
+                    value={constants.CH_LEXICON.CONFIRM}
                     onClick={this._addBug} />
                 <input 
                     type="button"
                     className="btn btn-warning" 
-                    value={constants.EN_LEXICON.CLEAR}
+                    value={constants.CH_LEXICON.CLEAR}
                     onClick={this._clearInput} />
             </div>
             /*jshint ignore:end */

@@ -20,17 +20,17 @@ CloseProjectBtn = React.createClass({
     _closeProject: function(e){
         var thisModule = this;
         swal({
-                title: constants.EN_LEXICON.PROJECT_ALERT_TITLE,   
-                text: constants.EN_LEXICON.PROJECT_ALERT_SUBTITLE,   
+                title: constants.CH_LEXICON.PROJECT_ALERT_TITLE,   
+                text: constants.CH_LEXICON.PROJECT_ALERT_SUBTITLE,   
                 type: 'warning',   
                 showCancelButton: true,   
                 confirmButtonColor: '#DD6B55',   
-                confirmButtonText: constants.EN_LEXICON.ALERT_CLOSE_CONFIRM,   
+                confirmButtonText: constants.CH_LEXICON.ALERT_CLOSE_CONFIRM,   
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeProject(thisModule.props.selectedProjectName);
-                swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, 
-                    thisModule.props.selectedProjectName + constants.EN_LEXICON.ALERT_CLOSED_RESULT_SUFFIX, 
+                swal(constants.CH_LEXICON.ALERT_CLOSED_RESULT, 
+                    thisModule.props.selectedProjectName + constants.CH_LEXICON.ALERT_CLOSED_RESULT_SUFFIX, 
                     'success');
         });
     },
@@ -41,7 +41,7 @@ CloseProjectBtn = React.createClass({
 			    <input 
                     className="btn btn-danger" 
                     type="button" 
-                    value={constants.EN_LEXICON.CLOSE_PROJECT_BTN} 
+                    value={constants.CH_LEXICON.CLOSE_PROJECT_BTN} 
                     onClick={this._closeProject} />
 			</div>
 			/*jshint ignore:end */			

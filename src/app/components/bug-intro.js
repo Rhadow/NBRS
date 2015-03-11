@@ -1,6 +1,8 @@
 'use strict';
 
-var React = require('react'),
+var React     = require('react'),
+    // Constants
+    constants = require('../constants/constants'),
     BugIntro;
 
 BugIntro = React.createClass({
@@ -24,7 +26,7 @@ BugIntro = React.createClass({
     		resultHTML = (
     			/* jshint ignore:start */
     			<div>
-                    <label>Start Date: </label>
+                    <label>{constants.CH_LEXICON.START_DATE}</label>
                     <span className="info-value">{this.props.selectedBugStartDate}</span>
                 </div>
     			/* jshint ignore:end */
@@ -38,7 +40,7 @@ BugIntro = React.createClass({
     		resultHTML = (
     			/* jshint ignore:start */
     			<div>
-                    <label>End Date: </label>
+                    <label>{constants.CH_LEXICON.END_DATE}</label>
                     <span className="info-value">{this.props.selectedBugEndDate}</span>
                 </div>
     			/* jshint ignore:end */
@@ -50,7 +52,7 @@ BugIntro = React.createClass({
 		return (
 			/* jshint ignore:start */
 			<div className="form-group bug-info">
-                <label htmlFor="comment">Bug Description:</label>
+                <label htmlFor="comment">{constants.CH_LEXICON.BUG_FORM_DESCRIPTION}</label>
                 <textarea 
                     className="form-control allow-cursor"
                     disabled
@@ -59,7 +61,7 @@ BugIntro = React.createClass({
                     value={this.props.selectedBugDescription}>
                 </textarea>
                 <div>
-                    <label>Author: </label>
+                    <label>{constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME}</label>
                     <span className="info-value">{this.props.selectedBugAuthor}</span>
                 </div>
                 {this._renderStartDate()}

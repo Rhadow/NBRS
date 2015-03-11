@@ -67,7 +67,7 @@ AddCommentForm = React.createClass({
 		return (
 			<div className={addCommentClasses}>
                 <div className="form-group">
-			        <label>{constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME}</label>
+			        <label>{constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME}</label>
 			        <input
 			            className="form-control comment-author-input"
 	                    type="text" 
@@ -75,30 +75,30 @@ AddCommentForm = React.createClass({
                         maxLength={17} 
 	                    data-toggle="tooltip"
 	                    data-placement="top"
-	                    title={constants.EN_LEXICON.NOT_EMPTY_TOOLTIP}
-			            placeholder={constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER}/>
+	                    title={constants.CH_LEXICON.NOT_EMPTY_TOOLTIP}
+			            placeholder={constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER}/>
 			    </div>
                 <div className="form-group">
-                    <label>{constants.EN_LEXICON.BUG_FORM_DESCRIPTION}</label>
+                    <label>{constants.CH_LEXICON.BUG_FORM_DESCRIPTION}</label>
                     <textarea 
                         className="form-control comment-description-input" 
                         ref="newCommentDescription" 
                         rows="5"
                         data-toggle="tooltip"
                         data-placement="top"
-                        title={constants.EN_LEXICON.NOT_EMPTY_TOOLTIP}
-                        placeholder={constants.EN_LEXICON.FORM_DESCRIPTION_PLACEHOLDER}>
+                        title={constants.CH_LEXICON.NOT_EMPTY_TOOLTIP}
+                        placeholder={constants.CH_LEXICON.FORM_DESCRIPTION_PLACEHOLDER}>
                     </textarea>
                 </div>
                 <input 
                     type="button" 
                     className="btn btn-success" 
-                    value={constants.EN_LEXICON.CONFIRM} 
+                    value={constants.CH_LEXICON.CONFIRM} 
                     onClick={this._addComment} />
                 <input 
                     type="button"
                     className="btn btn-warning"
-                    value={constants.EN_LEXICON.CLEAR} 
+                    value={constants.CH_LEXICON.CLEAR} 
                     onClick={this._clearInput} />
 			</div>
 		);

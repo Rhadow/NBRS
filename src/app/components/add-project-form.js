@@ -39,7 +39,7 @@ AddProjectForm = React.createClass({
 			/*jshint ignore:start */
             <div className="add-project-form-wrapper">
                 <div className="form-group">
-                    <label>{constants.EN_LEXICON.PROJECT_FORM_TITLE}: </label>
+                    <label>{constants.CH_LEXICON.PROJECT_FORM_TITLE}: </label>
                     <input
                         className="form-control project-name-input"
                         type="text"
@@ -48,17 +48,17 @@ AddProjectForm = React.createClass({
                         data-toggle="tooltip" 
                         data-placement="top" 
                         title="Must not be empty or contain the following characters: '. # $ [ ] / \'"
-                        placeholder={constants.EN_LEXICON.PROJECT_FORM_PLACEHOLDER}/>
+                        placeholder={constants.CH_LEXICON.PROJECT_FORM_PLACEHOLDER}/>
                 </div>
                 <input 
                     type="button"
                     className="btn btn-success" 
-                    value={constants.EN_LEXICON.CONFIRM} 
+                    value={constants.CH_LEXICON.CONFIRM} 
                     onClick={this._addProject} />
                 <input 
                     type="button"
                     className="btn btn-warning"
-                    value={constants.EN_LEXICON.CLEAR}
+                    value={constants.CH_LEXICON.CLEAR}
                     onClick={this._clearInput} />
             </div>			
             /*jshint ignore:end */

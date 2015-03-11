@@ -22,17 +22,17 @@ CloseBugBtn = React.createClass({
     _closeBug: function(e){
         var thisModule = this;
         swal({
-                title: constants.EN_LEXICON.BUG_ALERT_TITLE,   
-                text: constants.EN_LEXICON.BUG_ALERT_SUBTITLE,   
+                title: constants.CH_LEXICON.BUG_ALERT_TITLE,   
+                text: constants.CH_LEXICON.BUG_ALERT_SUBTITLE,   
                 type: 'warning',   
                 showCancelButton: true,   
                 confirmButtonColor: '#DD6B55',   
-                confirmButtonText: constants.EN_LEXICON.ALERT_CLOSE_CONFIRM,   
+                confirmButtonText: constants.CH_LEXICON.ALERT_CLOSE_CONFIRM,   
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeBug(thisModule.props.selectedBugName);
-                swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, 
-                    thisModule.props.selectedProjectName + constants.EN_LEXICON.BUG_CLOSE_RESULT_SUFFIX, 
+                swal(constants.CH_LEXICON.ALERT_CLOSED_RESULT, 
+                    thisModule.props.selectedProjectName + constants.CH_LEXICON.BUG_CLOSE_RESULT_SUFFIX, 
                     'success'); 
         });
     },
@@ -43,7 +43,7 @@ CloseBugBtn = React.createClass({
 			    <input 
                     className="btn btn-success" 
                     type="button" 
-                    value={constants.EN_LEXICON.PRIORITY_SOLVED}
+                    value={constants.CH_LEXICON.PRIORITY_SOLVED}
                     onClick={this._closeBug} />
 			</div>
 			/*jshint ignore:end */			

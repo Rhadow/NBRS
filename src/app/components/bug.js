@@ -40,26 +40,26 @@ Bug = React.createClass({
         swal(
             {
                 type: 'prompt',   
-                title: constants.EN_LEXICON.CAUTION,   
-                text: constants.EN_LEXICON.PASSWORD_PROMPT,   
-                promptPlaceholder: constants.EN_LEXICON.PASSWORD_PLACEHOLDER
+                title: constants.CH_LEXICON.CAUTION,   
+                text: constants.CH_LEXICON.PASSWORD_PROMPT,   
+                promptPlaceholder: constants.CH_LEXICON.PASSWORD_PLACEHOLDER
             }, 
             function(passwordInput){
                 if(passwordHash.verify(passwordInput, hashedPassword)){
                     if(thisModule.props.isSelectedProjectClosed){
-                        swal(constants.EN_LEXICON.OOPS, 
-                            constants.EN_LEXICON.ALERT_CLOSE_SUBTITLE, 'error');
+                        swal(constants.CH_LEXICON.OOPS, 
+                            constants.CH_LEXICON.ALERT_CLOSE_SUBTITLE, 'error');
                         return;
                     }
                     AppActions.deleteBug(bugName);        
                     if(bugName === thisModule.props.selectedBugName){
                         AppActions.selectBugByName('');
                     }                    
-                    swal(constants.EN_LEXICON.ALERT_DELETE_RESULT,
-                     constants.EN_LEXICON.ALERT_DELETE_SUBTITLE, 'success');
+                    swal(constants.CH_LEXICON.ALERT_DELETE_RESULT,
+                     constants.CH_LEXICON.ALERT_DELETE_SUBTITLE, 'success');
                 }else{
-                    swal(constants.EN_LEXICON.OOPS, 
-                        constants.EN_LEXICON.ALERT_FAIL_SUBTITLE, 'error');
+                    swal(constants.CH_LEXICON.OOPS, 
+                        constants.CH_LEXICON.ALERT_FAIL_SUBTITLE, 'error');
                 } 
             }
         );        
@@ -75,16 +75,16 @@ Bug = React.createClass({
         var result = '';
         switch(this.props.bugDetail.priority){
             case 'Low':
-                result = constants.EN_LEXICON.PRIORITY_LOW;
+                result = constants.CH_LEXICON.PRIORITY_LOW;
                 break;
             case 'Medium':
-                result = constants.EN_LEXICON.PRIORITY_MEDIUM;
+                result = constants.CH_LEXICON.PRIORITY_MEDIUM;
                 break;
             case 'High':
-                result = constants.EN_LEXICON.PRIORITY_HIGH;
+                result = constants.CH_LEXICON.PRIORITY_HIGH;
                 break;
             case 'Solved':
-                result = constants.EN_LEXICON.PRIORITY_SOLVED;
+                result = constants.CH_LEXICON.PRIORITY_SOLVED;
                 break;
             default:
                 throw 'Error!';

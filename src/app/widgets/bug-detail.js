@@ -56,7 +56,7 @@ BugDetail = React.createClass({
                 <div className="comment-list-inputs">
                     <ToggleInputBtn 
                         target=".add-comment-form-wrapper"
-                        displayText={constants.EN_LEXICON.NEW_COMMENT_TITLE} />
+                        displayText={constants.CH_LEXICON.NEW_COMMENT_TITLE} />
                     <CloseBugBtn
                         selectedProjectName={this.props.selectedProjectName}
                         selectedBugName={this.props.selectedBugName}/>
@@ -86,7 +86,7 @@ BugDetail = React.createClass({
         if(this.props.selectedProjectBugComments.length === 0){
             resultHTML = (
                 /* jshint ignore:start */
-                <NoContent message={constants.EN_LEXICON.NO_COMMENT_INFO + this.props.selectedBugName} />
+                <NoContent message={constants.CH_LEXICON.NO_COMMENT_INFO + this.props.selectedBugName} />
                 /* jshint ignore:end */
             );
         }
@@ -97,7 +97,7 @@ BugDetail = React.createClass({
             /* jshint ignore:start */
             return (
                 <div className="bug-detail">
-                    <NoContent message={constants.EN_LEXICON.NO_BUG_TITLE} />
+                    <NoContent message={constants.CH_LEXICON.NO_BUG_TITLE} />
                 </div>
             );
             /* jshint ignore:end */
@@ -107,7 +107,7 @@ BugDetail = React.createClass({
             <div className="bug-detail">
                 <div className="title-wrapper">
                     <span className="comment-list-title">
-                        {this.props.selectedBugName} {constants.EN_LEXICON.BUG_DETAIL_TITLE}
+                        {this.props.selectedBugName} {constants.CH_LEXICON.BUG_DETAIL_TITLE}
                     </span>                
                     {this._renderCommentInputs()}
                 </div> 
@@ -118,7 +118,7 @@ BugDetail = React.createClass({
                     selectedBugAuthor={this.props.selectedBugAuthor}/>
                 <div className="comments">
                     <div className="comment-list-title">
-                        {this.props.selectedProjectName} {constants.EN_LEXICON.BUG_COMMENT_TITLE}
+                        {this.props.selectedProjectName} {constants.CH_LEXICON.BUG_COMMENT_TITLE}
                     </div>
                     {this._renderComments()}
                 </div>

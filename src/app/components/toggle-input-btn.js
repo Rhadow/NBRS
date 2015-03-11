@@ -13,7 +13,7 @@ ToggleInputBtn = React.createClass({
     getDefaultProps: function() {
     	return {
     		target      : '',
-            displayText : constants.EN_LEXICON.TOGGLE_FORM
+            displayText : constants.CH_LEXICON.TOGGLE_FORM
     	};
     },
     _toggleInputs: function(e){        

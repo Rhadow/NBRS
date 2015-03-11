@@ -17,7 +17,7 @@ Main = React.createClass({
                 <nav className="navbar navbar-default navbar-fixed-top">
                     <div className='hide maker'>All rights reserved to Howard Chang</div>
                     <a className="navbar-brand" href="#/">
-                        <span className="navbar-title">{constants.EN_LEXICON.NAV_TITLE}</span>
+                        <span className="navbar-title">{constants.CH_LEXICON.NAV_TITLE}</span>
                     </a> 
                 </nav>
                 <RouteHandler/>              

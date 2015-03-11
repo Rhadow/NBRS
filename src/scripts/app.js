@@ -26611,7 +26611,7 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
 			/*jshint ignore:start */
             React.createElement("div", {className: addBugClasses}, 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_NEW_NAME), 
+                    React.createElement("label", null, constants.CH_LEXICON.BUG_FORM_NEW_NAME), 
                     React.createElement("input", {
                         className: "bug-name-input form-control", 
                         type: "text", 
@@ -26619,11 +26619,11 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
                         maxLength: 17, 
                         "data-toggle": "tooltip", 
                         "data-placement": "top", 
-                        title: constants.EN_LEXICON.BUG_FORM_NEW_NAME_TOOLTIP, 
-                        placeholder: constants.EN_LEXICON.BUG_FORM_NEW_NAME_PLACEHOLDER})
+                        title: constants.CH_LEXICON.BUG_FORM_NEW_NAME_TOOLTIP, 
+                        placeholder: constants.CH_LEXICON.BUG_FORM_NEW_NAME_PLACEHOLDER})
                 ), 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME), 
+                    React.createElement("label", null, constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME), 
                     React.createElement("input", {
                         className: "bug-author-input form-control", 
                         type: "text", 
@@ -26631,23 +26631,23 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
                         maxLength: 17, 
                         "data-toggle": "tooltip", 
                         "data-placement": "top", 
-                        title: constants.EN_LEXICON.NOT_EMPTY_TOOLTIP, 
-                        placeholder: constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER})
+                        title: constants.CH_LEXICON.NOT_EMPTY_TOOLTIP, 
+                        placeholder: constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER})
                 ), 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_DESCRIPTION), 
+                    React.createElement("label", null, constants.CH_LEXICON.BUG_FORM_DESCRIPTION), 
                     React.createElement("textarea", {
                         className: "form-control bug-description-input", 
                         ref: "newBugDescription", 
                         rows: "5", 
                         "data-toggle": "tooltip", 
                         "data-placement": "top", 
-                        title: constants.EN_LEXICON.NOT_EMPTY_TOOLTIP, 
-                        placeholder: constants.EN_LEXICON.FORM_DESCRIPTION_PLACEHOLDER}
+                        title: constants.CH_LEXICON.NOT_EMPTY_TOOLTIP, 
+                        placeholder: constants.CH_LEXICON.FORM_DESCRIPTION_PLACEHOLDER}
                     )
                 ), 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", null, constants.EN_LEXICON.START_DATE), 
+                    React.createElement("label", null, constants.CH_LEXICON.START_DATE), 
                     React.createElement("div", {className: "input-group date", id: "bug-start-time-picker"}, 
                         React.createElement("input", {type: "text", className: "form-control", ref: "startDate"}), 
                         React.createElement("span", {className: "input-group-addon"}, 
@@ -26656,7 +26656,7 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
                     )
                 ), 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", null, constants.EN_LEXICON.END_DATE), 
+                    React.createElement("label", null, constants.CH_LEXICON.END_DATE), 
                     React.createElement("div", {className: "input-group date", id: "bug-end-time-picker"}, 
                         React.createElement("input", {type: "text", className: "form-control", ref: "endDate"}), 
                         React.createElement("span", {className: "input-group-addon"}, 
@@ -26665,22 +26665,22 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
                     )
                 ), 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", null, constants.EN_LEXICON.PRIORITY_TITLE), 
+                    React.createElement("label", null, constants.CH_LEXICON.PRIORITY_TITLE), 
                     React.createElement("select", {className: "form-control", ref: "priority"}, 
-                        React.createElement("option", null, constants.EN_LEXICON.PRIORITY_LOW), 
-                        React.createElement("option", null, constants.EN_LEXICON.PRIORITY_MEDIUM), 
-                        React.createElement("option", null, constants.EN_LEXICON.PRIORITY_HIGH)
+                        React.createElement("option", null, constants.CH_LEXICON.PRIORITY_LOW), 
+                        React.createElement("option", null, constants.CH_LEXICON.PRIORITY_MEDIUM), 
+                        React.createElement("option", null, constants.CH_LEXICON.PRIORITY_HIGH)
                     )
                 ), 
                 React.createElement("input", {
                     type: "button", 
                     className: "btn btn-success", 
-                    value: constants.EN_LEXICON.CONFIRM, 
+                    value: constants.CH_LEXICON.CONFIRM, 
                     onClick: this._addBug}), 
                 React.createElement("input", {
                     type: "button", 
                     className: "btn btn-warning", 
-                    value: constants.EN_LEXICON.CLEAR, 
+                    value: constants.CH_LEXICON.CLEAR, 
                     onClick: this._clearInput})
             )
             /*jshint ignore:end */
@@ -26759,7 +26759,7 @@ AddCommentForm = React.createClass({displayName: "AddCommentForm",
 		return (
 			React.createElement("div", {className: addCommentClasses}, 
                 React.createElement("div", {className: "form-group"}, 
-			        React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME), 
+			        React.createElement("label", null, constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME), 
 			        React.createElement("input", {
 			            className: "form-control comment-author-input", 
 	                    type: "text", 
@@ -26767,30 +26767,30 @@ AddCommentForm = React.createClass({displayName: "AddCommentForm",
                         maxLength: 17, 
 	                    "data-toggle": "tooltip", 
 	                    "data-placement": "top", 
-	                    title: constants.EN_LEXICON.NOT_EMPTY_TOOLTIP, 
-			            placeholder: constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER})
+	                    title: constants.CH_LEXICON.NOT_EMPTY_TOOLTIP, 
+			            placeholder: constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER})
 			    ), 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_DESCRIPTION), 
+                    React.createElement("label", null, constants.CH_LEXICON.BUG_FORM_DESCRIPTION), 
                     React.createElement("textarea", {
                         className: "form-control comment-description-input", 
                         ref: "newCommentDescription", 
                         rows: "5", 
                         "data-toggle": "tooltip", 
                         "data-placement": "top", 
-                        title: constants.EN_LEXICON.NOT_EMPTY_TOOLTIP, 
-                        placeholder: constants.EN_LEXICON.FORM_DESCRIPTION_PLACEHOLDER}
+                        title: constants.CH_LEXICON.NOT_EMPTY_TOOLTIP, 
+                        placeholder: constants.CH_LEXICON.FORM_DESCRIPTION_PLACEHOLDER}
                     )
                 ), 
                 React.createElement("input", {
                     type: "button", 
                     className: "btn btn-success", 
-                    value: constants.EN_LEXICON.CONFIRM, 
+                    value: constants.CH_LEXICON.CONFIRM, 
                     onClick: this._addComment}), 
                 React.createElement("input", {
                     type: "button", 
                     className: "btn btn-warning", 
-                    value: constants.EN_LEXICON.CLEAR, 
+                    value: constants.CH_LEXICON.CLEAR, 
                     onClick: this._clearInput})
 			)
 		);
@@ -26842,7 +26842,7 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 			/*jshint ignore:start */
             React.createElement("div", {className: "add-project-form-wrapper"}, 
                 React.createElement("div", {className: "form-group"}, 
-                    React.createElement("label", null, constants.EN_LEXICON.PROJECT_FORM_TITLE, ": "), 
+                    React.createElement("label", null, constants.CH_LEXICON.PROJECT_FORM_TITLE, ": "), 
                     React.createElement("input", {
                         className: "form-control project-name-input", 
                         type: "text", 
@@ -26851,17 +26851,17 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
                         "data-toggle": "tooltip", 
                         "data-placement": "top", 
                         title: "Must not be empty or contain the following characters: '. # $ [ ] / \\'", 
-                        placeholder: constants.EN_LEXICON.PROJECT_FORM_PLACEHOLDER})
+                        placeholder: constants.CH_LEXICON.PROJECT_FORM_PLACEHOLDER})
                 ), 
                 React.createElement("input", {
                     type: "button", 
                     className: "btn btn-success", 
-                    value: constants.EN_LEXICON.CONFIRM, 
+                    value: constants.CH_LEXICON.CONFIRM, 
                     onClick: this._addProject}), 
                 React.createElement("input", {
                     type: "button", 
                     className: "btn btn-warning", 
-                    value: constants.EN_LEXICON.CLEAR, 
+                    value: constants.CH_LEXICON.CLEAR, 
                     onClick: this._clearInput})
             )			
             /*jshint ignore:end */
@@ -26873,7 +26873,9 @@ module.exports = AddProjectForm;
 },{"../actions/appActions":210,"../constants/constants":221,"react":"nakDgH","react/lib/cx":164}],214:[function(require,module,exports){
 'use strict';
 
-var React = require('react'),
+var React     = require('react'),
+    // Constants
+    constants = require('../constants/constants'),
     BugIntro;
 
 BugIntro = React.createClass({displayName: "BugIntro",
@@ -26897,7 +26899,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
     		resultHTML = (
     			/* jshint ignore:start */
     			React.createElement("div", null, 
-                    React.createElement("label", null, "Start Date: "), 
+                    React.createElement("label", null, constants.CH_LEXICON.START_DATE), 
                     React.createElement("span", {className: "info-value"}, this.props.selectedBugStartDate)
                 )
     			/* jshint ignore:end */
@@ -26911,7 +26913,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
     		resultHTML = (
     			/* jshint ignore:start */
     			React.createElement("div", null, 
-                    React.createElement("label", null, "End Date: "), 
+                    React.createElement("label", null, constants.CH_LEXICON.END_DATE), 
                     React.createElement("span", {className: "info-value"}, this.props.selectedBugEndDate)
                 )
     			/* jshint ignore:end */
@@ -26923,7 +26925,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
 		return (
 			/* jshint ignore:start */
 			React.createElement("div", {className: "form-group bug-info"}, 
-                React.createElement("label", {htmlFor: "comment"}, "Bug Description:"), 
+                React.createElement("label", {htmlFor: "comment"}, constants.CH_LEXICON.BUG_FORM_DESCRIPTION), 
                 React.createElement("textarea", {
                     className: "form-control allow-cursor", 
                     disabled: true, 
@@ -26932,7 +26934,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
                     value: this.props.selectedBugDescription}
                 ), 
                 React.createElement("div", null, 
-                    React.createElement("label", null, "Author: "), 
+                    React.createElement("label", null, constants.CH_LEXICON.BUG_FORM_AUTHOR_NAME), 
                     React.createElement("span", {className: "info-value"}, this.props.selectedBugAuthor)
                 ), 
                 this._renderStartDate(), 
@@ -26946,7 +26948,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
 
 module.exports = BugIntro;
 /* Made By Rhadow.github.io */
-},{"react":"nakDgH"}],215:[function(require,module,exports){
+},{"../constants/constants":221,"react":"nakDgH"}],215:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -26989,26 +26991,26 @@ Bug = React.createClass({displayName: "Bug",
         swal(
             {
                 type: 'prompt',   
-                title: constants.EN_LEXICON.CAUTION,   
-                text: constants.EN_LEXICON.PASSWORD_PROMPT,   
-                promptPlaceholder: constants.EN_LEXICON.PASSWORD_PLACEHOLDER
+                title: constants.CH_LEXICON.CAUTION,   
+                text: constants.CH_LEXICON.PASSWORD_PROMPT,   
+                promptPlaceholder: constants.CH_LEXICON.PASSWORD_PLACEHOLDER
             }, 
             function(passwordInput){
                 if(passwordHash.verify(passwordInput, hashedPassword)){
                     if(thisModule.props.isSelectedProjectClosed){
-                        swal(constants.EN_LEXICON.OOPS, 
-                            constants.EN_LEXICON.ALERT_CLOSE_SUBTITLE, 'error');
+                        swal(constants.CH_LEXICON.OOPS, 
+                            constants.CH_LEXICON.ALERT_CLOSE_SUBTITLE, 'error');
                         return;
                     }
                     AppActions.deleteBug(bugName);        
                     if(bugName === thisModule.props.selectedBugName){
                         AppActions.selectBugByName('');
                     }                    
-                    swal(constants.EN_LEXICON.ALERT_DELETE_RESULT,
-                     constants.EN_LEXICON.ALERT_DELETE_SUBTITLE, 'success');
+                    swal(constants.CH_LEXICON.ALERT_DELETE_RESULT,
+                     constants.CH_LEXICON.ALERT_DELETE_SUBTITLE, 'success');
                 }else{
-                    swal(constants.EN_LEXICON.OOPS, 
-                        constants.EN_LEXICON.ALERT_FAIL_SUBTITLE, 'error');
+                    swal(constants.CH_LEXICON.OOPS, 
+                        constants.CH_LEXICON.ALERT_FAIL_SUBTITLE, 'error');
                 } 
             }
         );        
@@ -27024,16 +27026,16 @@ Bug = React.createClass({displayName: "Bug",
         var result = '';
         switch(this.props.bugDetail.priority){
             case 'Low':
-                result = constants.EN_LEXICON.PRIORITY_LOW;
+                result = constants.CH_LEXICON.PRIORITY_LOW;
                 break;
             case 'Medium':
-                result = constants.EN_LEXICON.PRIORITY_MEDIUM;
+                result = constants.CH_LEXICON.PRIORITY_MEDIUM;
                 break;
             case 'High':
-                result = constants.EN_LEXICON.PRIORITY_HIGH;
+                result = constants.CH_LEXICON.PRIORITY_HIGH;
                 break;
             case 'Solved':
-                result = constants.EN_LEXICON.PRIORITY_SOLVED;
+                result = constants.CH_LEXICON.PRIORITY_SOLVED;
                 break;
             default:
                 throw 'Error!';
@@ -27103,17 +27105,17 @@ CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
     _closeBug: function(e){
         var thisModule = this;
         swal({
-                title: constants.EN_LEXICON.BUG_ALERT_TITLE,   
-                text: constants.EN_LEXICON.BUG_ALERT_SUBTITLE,   
+                title: constants.CH_LEXICON.BUG_ALERT_TITLE,   
+                text: constants.CH_LEXICON.BUG_ALERT_SUBTITLE,   
                 type: 'warning',   
                 showCancelButton: true,   
                 confirmButtonColor: '#DD6B55',   
-                confirmButtonText: constants.EN_LEXICON.ALERT_CLOSE_CONFIRM,   
+                confirmButtonText: constants.CH_LEXICON.ALERT_CLOSE_CONFIRM,   
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeBug(thisModule.props.selectedBugName);
-                swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, 
-                    thisModule.props.selectedProjectName + constants.EN_LEXICON.BUG_CLOSE_RESULT_SUFFIX, 
+                swal(constants.CH_LEXICON.ALERT_CLOSED_RESULT, 
+                    thisModule.props.selectedProjectName + constants.CH_LEXICON.BUG_CLOSE_RESULT_SUFFIX, 
                     'success'); 
         });
     },
@@ -27124,7 +27126,7 @@ CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
 			    React.createElement("input", {
                     className: "btn btn-success", 
                     type: "button", 
-                    value: constants.EN_LEXICON.PRIORITY_SOLVED, 
+                    value: constants.CH_LEXICON.PRIORITY_SOLVED, 
                     onClick: this._closeBug})
 			)
 			/*jshint ignore:end */			
@@ -27155,17 +27157,17 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
     _closeProject: function(e){
         var thisModule = this;
         swal({
-                title: constants.EN_LEXICON.PROJECT_ALERT_TITLE,   
-                text: constants.EN_LEXICON.PROJECT_ALERT_SUBTITLE,   
+                title: constants.CH_LEXICON.PROJECT_ALERT_TITLE,   
+                text: constants.CH_LEXICON.PROJECT_ALERT_SUBTITLE,   
                 type: 'warning',   
                 showCancelButton: true,   
                 confirmButtonColor: '#DD6B55',   
-                confirmButtonText: constants.EN_LEXICON.ALERT_CLOSE_CONFIRM,   
+                confirmButtonText: constants.CH_LEXICON.ALERT_CLOSE_CONFIRM,   
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeProject(thisModule.props.selectedProjectName);
-                swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, 
-                    thisModule.props.selectedProjectName + constants.EN_LEXICON.ALERT_CLOSED_RESULT_SUFFIX, 
+                swal(constants.CH_LEXICON.ALERT_CLOSED_RESULT, 
+                    thisModule.props.selectedProjectName + constants.CH_LEXICON.ALERT_CLOSED_RESULT_SUFFIX, 
                     'success');
         });
     },
@@ -27176,7 +27178,7 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
 			    React.createElement("input", {
                     className: "btn btn-danger", 
                     type: "button", 
-                    value: constants.EN_LEXICON.CLOSE_PROJECT_BTN, 
+                    value: constants.CH_LEXICON.CLOSE_PROJECT_BTN, 
                     onClick: this._closeProject})
 			)
 			/*jshint ignore:end */			
@@ -27284,7 +27286,7 @@ ToggleInputBtn = React.createClass({displayName: "ToggleInputBtn",
     getDefaultProps: function() {
     	return {
     		target      : '',
-            displayText : constants.EN_LEXICON.TOGGLE_FORM
+            displayText : constants.CH_LEXICON.TOGGLE_FORM
     	};
     },
     _toggleInputs: function(e){        
@@ -27610,7 +27612,7 @@ Main = React.createClass({displayName: "Main",
                 React.createElement("nav", {className: "navbar navbar-default navbar-fixed-top"}, 
                     React.createElement("div", {className: "hide maker"}, "All rights reserved to Howard Chang"), 
                     React.createElement("a", {className: "navbar-brand", href: "#/"}, 
-                        React.createElement("span", {className: "navbar-title"}, constants.EN_LEXICON.NAV_TITLE)
+                        React.createElement("span", {className: "navbar-title"}, constants.CH_LEXICON.NAV_TITLE)
                     )
                 ), 
                 React.createElement(RouteHandler, null)
@@ -27631,7 +27633,7 @@ Help = React.createClass({displayName: "Help",
     render: function() {
         /* jshint ignore:start */
         return (
-            React.createElement("div", null, constants.EN_LEXICON.NOT_FOUND_TITLE)
+            React.createElement("div", null, constants.CH_LEXICON.NOT_FOUND_TITLE)
         );
         /* jshint ignore:end */
     }
@@ -27853,7 +27855,7 @@ BugDetail = React.createClass({displayName: "BugDetail",
                 React.createElement("div", {className: "comment-list-inputs"}, 
                     React.createElement(ToggleInputBtn, {
                         target: ".add-comment-form-wrapper", 
-                        displayText: constants.EN_LEXICON.NEW_COMMENT_TITLE}), 
+                        displayText: constants.CH_LEXICON.NEW_COMMENT_TITLE}), 
                     React.createElement(CloseBugBtn, {
                         selectedProjectName: this.props.selectedProjectName, 
                         selectedBugName: this.props.selectedBugName}), 
@@ -27883,7 +27885,7 @@ BugDetail = React.createClass({displayName: "BugDetail",
         if(this.props.selectedProjectBugComments.length === 0){
             resultHTML = (
                 /* jshint ignore:start */
-                React.createElement(NoContent, {message: constants.EN_LEXICON.NO_COMMENT_INFO + this.props.selectedBugName})
+                React.createElement(NoContent, {message: constants.CH_LEXICON.NO_COMMENT_INFO + this.props.selectedBugName})
                 /* jshint ignore:end */
             );
         }
@@ -27894,7 +27896,7 @@ BugDetail = React.createClass({displayName: "BugDetail",
             /* jshint ignore:start */
             return (
                 React.createElement("div", {className: "bug-detail"}, 
-                    React.createElement(NoContent, {message: constants.EN_LEXICON.NO_BUG_TITLE})
+                    React.createElement(NoContent, {message: constants.CH_LEXICON.NO_BUG_TITLE})
                 )
             );
             /* jshint ignore:end */
@@ -27904,7 +27906,7 @@ BugDetail = React.createClass({displayName: "BugDetail",
             React.createElement("div", {className: "bug-detail"}, 
                 React.createElement("div", {className: "title-wrapper"}, 
                     React.createElement("span", {className: "comment-list-title"}, 
-                        this.props.selectedBugName, " ", constants.EN_LEXICON.BUG_DETAIL_TITLE
+                        this.props.selectedBugName, " ", constants.CH_LEXICON.BUG_DETAIL_TITLE
                     ), 
                     this._renderCommentInputs()
                 ), 
@@ -27915,7 +27917,7 @@ BugDetail = React.createClass({displayName: "BugDetail",
                     selectedBugAuthor: this.props.selectedBugAuthor}), 
                 React.createElement("div", {className: "comments"}, 
                     React.createElement("div", {className: "comment-list-title"}, 
-                        this.props.selectedProjectName, " ", constants.EN_LEXICON.BUG_COMMENT_TITLE
+                        this.props.selectedProjectName, " ", constants.CH_LEXICON.BUG_COMMENT_TITLE
                     ), 
                     this._renderComments()
                 )
@@ -27983,7 +27985,7 @@ BugList = React.createClass({displayName: "BugList",
         if(this.props.selectedProjectBugs.length === 0){
             bugsHTML = (
                 /* jshint ignore:start */
-                React.createElement(NoContent, {message: constants.EN_LEXICON.NO_BUG_INFO + this.props.selectedProjectName})
+                React.createElement(NoContent, {message: constants.CH_LEXICON.NO_BUG_INFO + this.props.selectedProjectName})
                 /* jshint ignore:end */
             );
         }
@@ -27997,7 +27999,7 @@ BugList = React.createClass({displayName: "BugList",
                 React.createElement("div", {className: "bug-list-inputs"}, 
                     React.createElement(ToggleInputBtn, {
                         target: ".add-bug-form-wrapper", 
-                        displayText: constants.EN_LEXICON.NEW_BUG_BTN}), 
+                        displayText: constants.CH_LEXICON.NEW_BUG_BTN}), 
                     React.createElement(CloseProjectBtn, {selectedProjectName: this.props.selectedProjectName}), 
                     React.createElement(AddBugForm, {selectedProjectName: this.props.selectedProjectName})
                 )                
@@ -28011,7 +28013,7 @@ BugList = React.createClass({displayName: "BugList",
             /* jshint ignore:start */
             return (
                 React.createElement("div", {className: "bug-list"}, 
-                    React.createElement(NoContent, {message: constants.EN_LEXICON.NO_PROJECT_TITLE})
+                    React.createElement(NoContent, {message: constants.CH_LEXICON.NO_PROJECT_TITLE})
                 )
             );
             /* jshint ignore:end */
@@ -28021,7 +28023,7 @@ BugList = React.createClass({displayName: "BugList",
             React.createElement("div", {className: "bug-list"}, 
                 React.createElement("div", {className: "title-wrapper"}, 
                     React.createElement("span", {className: "bug-list-title"}, 
-                        this.props.selectedProjectName, " ", constants.EN_LEXICON.BUG_LIST_TITLE
+                        this.props.selectedProjectName, " ", constants.CH_LEXICON.BUG_LIST_TITLE
                     ), 
                     this._renderInputs()
                 ), 
@@ -28086,7 +28088,7 @@ ProjectList = React.createClass({displayName: "ProjectList",
                 /*jshint ignore:start */
                 React.createElement("div", {className: projectClass, key: i, id: project.name, onClick: this._onProjectSelect}, 
                     project.name, 
-                    React.createElement("i", {className: projectClosedClass}, constants.EN_LEXICON.PROJECT_CLOSED_TAG), 
+                    React.createElement("i", {className: projectClosedClass}, constants.CH_LEXICON.PROJECT_CLOSED_TAG), 
                     React.createElement("i", {className: "cancel-icon", 
                         "data-name": project.name, 
                         onClick: this._deleteProjectByName}
@@ -28137,11 +28139,11 @@ ProjectList = React.createClass({displayName: "ProjectList",
             /*jshint ignore:start */
             React.createElement("div", {className: "project-list"}, 
                 React.createElement("div", {className: "title-wrapper"}, 
-                    React.createElement("div", {className: "project-list-title"}, constants.EN_LEXICON.PROJECT_LIST_TITLE), 
+                    React.createElement("div", {className: "project-list-title"}, constants.CH_LEXICON.PROJECT_LIST_TITLE), 
                     React.createElement("div", {className: "project-list-input"}, 
                         React.createElement(ToggleInputBtn, {
                             target: ".add-project-form-wrapper", 
-                            displayText: constants.EN_LEXICON.NEW_PROJECT_BTN})
+                            displayText: constants.CH_LEXICON.NEW_PROJECT_BTN})
                     )
                 ), 
                 React.createElement(AddProjectForm, null), 

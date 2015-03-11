@@ -7,7 +7,7 @@ Help = React.createClass({
     render: function() {
         /* jshint ignore:start */
         return (
-            <div>{constants.EN_LEXICON.NOT_FOUND_TITLE}</div>
+            <div>{constants.CH_LEXICON.NOT_FOUND_TITLE}</div>
         );
         /* jshint ignore:end */
     }
