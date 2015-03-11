@@ -26874,6 +26874,8 @@ module.exports = AddProjectForm;
 'use strict';
 
 var React = require('react'),
+    // Constants
+    constants = require('../constants/constants'),
     BugIntro;
 
 BugIntro = React.createClass({displayName: "BugIntro",
@@ -26897,7 +26899,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
     		resultHTML = (
     			/* jshint ignore:start */
     			React.createElement("div", null, 
-                    React.createElement("label", null, "Start Date: "), 
+                    React.createElement("label", null, constants.EN_LEXICON.START_DATE), 
                     React.createElement("span", {className: "info-value"}, this.props.selectedBugStartDate)
                 )
     			/* jshint ignore:end */
@@ -26911,7 +26913,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
     		resultHTML = (
     			/* jshint ignore:start */
     			React.createElement("div", null, 
-                    React.createElement("label", null, "End Date: "), 
+                    React.createElement("label", null, constants.EN_LEXICON.END_DATE), 
                     React.createElement("span", {className: "info-value"}, this.props.selectedBugEndDate)
                 )
     			/* jshint ignore:end */
@@ -26923,7 +26925,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
 		return (
 			/* jshint ignore:start */
 			React.createElement("div", {className: "form-group bug-info"}, 
-                React.createElement("label", {htmlFor: "comment"}, "Bug Description:"), 
+                React.createElement("label", {htmlFor: "comment"}, constants.EN_LEXICON.BUG_FORM_DESCRIPTION), 
                 React.createElement("textarea", {
                     className: "form-control allow-cursor", 
                     disabled: true, 
@@ -26932,7 +26934,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
                     value: this.props.selectedBugDescription}
                 ), 
                 React.createElement("div", null, 
-                    React.createElement("label", null, "Author: "), 
+                    React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME), 
                     React.createElement("span", {className: "info-value"}, this.props.selectedBugAuthor)
                 ), 
                 this._renderStartDate(), 
@@ -26946,7 +26948,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
 
 module.exports = BugIntro;
 /* Made By Rhadow.github.io */
-},{"react":"nakDgH"}],215:[function(require,module,exports){
+},{"../constants/constants":221,"react":"nakDgH"}],215:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -27022,6 +27024,9 @@ Bug = React.createClass({displayName: "Bug",
     },
     _renderPriority: function(){
         var result = '';
+        if(!this.props.bugDetail.priority){
+            return;
+        }
         switch(this.props.bugDetail.priority){
             case 'Low':
                 result = constants.EN_LEXICON.PRIORITY_LOW;
