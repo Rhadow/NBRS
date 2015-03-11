@@ -56,7 +56,7 @@ BugDetail = React.createClass({
                 <div className="comment-list-inputs">
                     <ToggleInputBtn 
                         target=".add-comment-form-wrapper"
-                        displayText="New Comment" />
+                        displayText={constants.EN_LEXICON.NEW_COMMENT_TITLE} />
                     <CloseBugBtn
                         selectedProjectName={this.props.selectedProjectName}
                         selectedBugName={this.props.selectedBugName}/>
@@ -86,7 +86,7 @@ BugDetail = React.createClass({
         if(this.props.selectedProjectBugComments.length === 0){
             resultHTML = (
                 /* jshint ignore:start */
-                <NoContent message={"There are no comments in " + this.props.selectedBugName} />
+                <NoContent message={constants.EN_LEXICON.NO_COMMENT_INFO + this.props.selectedBugName} />
                 /* jshint ignore:end */
             );
         }
@@ -97,7 +97,7 @@ BugDetail = React.createClass({
             /* jshint ignore:start */
             return (
                 <div className="bug-detail">
-                    <NoContent message="Please select a bug" />
+                    <NoContent message={constants.EN_LEXICON.NO_BUG_TITLE} />
                 </div>
             );
             /* jshint ignore:end */
@@ -106,7 +106,9 @@ BugDetail = React.createClass({
         return (
             <div className="bug-detail">
                 <div className="title-wrapper">
-                    <span className="comment-list-title">{this.props.selectedBugName} Details</span>                
+                    <span className="comment-list-title">
+                        {this.props.selectedBugName} {constants.EN_LEXICON.BUG_DETAIL_TITLE}
+                    </span>                
                     {this._renderCommentInputs()}
                 </div> 
                 <BugIntro 
@@ -115,7 +117,9 @@ BugDetail = React.createClass({
                     selectedBugEndDate={this.props.selectedBugEndDate}
                     selectedBugAuthor={this.props.selectedBugAuthor}/>
                 <div className="comments">
-                    <div className="comment-list-title">{this.props.selectedProjectName} Comments</div>
+                    <div className="comment-list-title">
+                        {this.props.selectedProjectName} {constants.EN_LEXICON.BUG_COMMENT_TITLE}
+                    </div>
                     {this._renderComments()}
                 </div>
             </div>
@@ -125,3 +129,4 @@ BugDetail = React.createClass({
 });
 
 module.exports = BugDetail;
+/* all rights reserved to Howard Chang */

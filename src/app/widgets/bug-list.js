@@ -43,7 +43,8 @@ BugList = React.createClass({
         var bugsHTML = this.props.selectedProjectBugs.map(function(bug, i){
             return (
                 /* jshint ignore:start */
-                <Bug key={i}
+                <Bug 
+                    key={i}
                     bugDetail={bug}
                     {...this.props} />
                 /* jshint ignore:end */
@@ -104,3 +105,4 @@ BugList = React.createClass({
 });
 
 module.exports = BugList;
+/* all rights reserved to Howard Chang */

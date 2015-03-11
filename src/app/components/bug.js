@@ -2,6 +2,8 @@
 
 var React        = require('react'),
     CX           = require('react/lib/cx'),
+    // Constants
+    constants    = require('../constants/constants'),
     // Actions
     AppActions   = require('../actions/appActions'),    
     // Hash
@@ -38,23 +40,26 @@ Bug = React.createClass({
         swal(
             {
                 type: 'prompt',   
-                title: 'Caution!',   
-                text: 'Enter password to delete',   
-                promptPlaceholder: 'Enter password...'
+                title: constants.EN_LEXICON.CAUTION,   
+                text: constants.EN_LEXICON.PASSWORD_PROMPT,   
+                promptPlaceholder: constants.EN_LEXICON.PASSWORD_PLACEHOLDER
             }, 
             function(passwordInput){
                 if(passwordHash.verify(passwordInput, hashedPassword)){
                     if(thisModule.props.isSelectedProjectClosed){
-                        swal('Oops...', 'project is closed!', 'error');
+                        swal(constants.EN_LEXICON.OOPS, 
+                            constants.EN_LEXICON.ALERT_CLOSE_SUBTITLE, 'error');
                         return;
                     }
                     AppActions.deleteBug(bugName);        
                     if(bugName === thisModule.props.selectedBugName){
                         AppActions.selectBugByName('');
                     }                    
-                    swal('Deleted!', 'The selected bug has been deleted.', 'success');
+                    swal(constants.EN_LEXICON.ALERT_DELETE_RESULT,
+                     constants.EN_LEXICON.ALERT_DELETE_SUBTITLE, 'success');
                 }else{
-                    swal('Oops...', 'wrong password!', 'error');
+                    swal(constants.EN_LEXICON.OOPS, 
+                        constants.EN_LEXICON.ALERT_FAIL_SUBTITLE, 'error');
                 } 
             }
         );        
@@ -66,10 +71,28 @@ Bug = React.createClass({
             AppActions.selectBugByName(selectedBugName);
         }
     },
-
+    _renderPriority: function(){
+        var result = '';
+        switch(this.props.bugDetail.priority){
+            case 'Low':
+                result = constants.EN_LEXICON.PRIORITY_LOW;
+                break;
+            case 'Medium':
+                result = constants.EN_LEXICON.PRIORITY_MEDIUM;
+                break;
+            case 'High':
+                result = constants.EN_LEXICON.PRIORITY_HIGH;
+                break;
+            case 'Solved':
+                result = constants.EN_LEXICON.PRIORITY_SOLVED;
+                break;
+            default:
+                throw 'Error!';
+        }
+        return result;        
+    },
 	render: function() {
 		var bugStatusTagClass, cancelClass, bugClass;
-
 		if(this.props.bugDetail.priority){
 			bugStatusTagClass = CX({
                 'bug-status'    : true,
@@ -87,13 +110,12 @@ Bug = React.createClass({
                 'bug'      : true,
                 'highlight': this.props.bugDetail.name === this.props.selectedBugName
             });
-		}
-            
+		}            
 		return (
 			/* jshint ignore:start */
 			<div className={bugClass} id={this.props.bugDetail.name} onClick={this._onBugSelect}>
                 {this.props.bugDetail.name}
-                <i className={bugStatusTagClass}>{this.props.bugDetail.priority}</i>
+                <i className={bugStatusTagClass}>{this._renderPriority()}</i>
                 <i 
                     className={cancelClass} 
                     data-name={this.props.bugDetail.name} 
@@ -106,3 +128,4 @@ Bug = React.createClass({
 });
 
 module.exports = Bug;
+/* all rights reserved to Howard Chang */

@@ -1,6 +1,8 @@
 'use strict';
 
-var React = require('react'),
+var React     = require('react'),
+    // Constants
+    constants = require('../constants/constants'),
     ToggleInputBtn;
 
 ToggleInputBtn = React.createClass({
@@ -11,7 +13,7 @@ ToggleInputBtn = React.createClass({
     getDefaultProps: function() {
     	return {
     		target      : '',
-            displayText : 'Open/Close Form'
+            displayText : constants.EN_LEXICON.TOGGLE_FORM
     	};
     },
     _toggleInputs: function(e){        

@@ -29,7 +29,9 @@ CloseProjectBtn = React.createClass({
                 closeOnConfirm: false
             }, function(){
                 AppActions.closeProject(thisModule.props.selectedProjectName);
-                swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, thisModule.props.selectedProjectName + constants.EN_LEXICON.ALERT_CLOSED_RESULT_SUFFIX, 'success');
+                swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, 
+                    thisModule.props.selectedProjectName + constants.EN_LEXICON.ALERT_CLOSED_RESULT_SUFFIX, 
+                    'success');
         });
     },
 	render: function() {
@@ -47,3 +49,4 @@ CloseProjectBtn = React.createClass({
 	}
 });
 module.exports = CloseProjectBtn;
+/* Made By Rhadow.github.io */
