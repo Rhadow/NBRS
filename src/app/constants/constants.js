@@ -71,7 +71,9 @@ var constants = {
 		PRIORITY_LOW                     : 'Low',
 		PRIORITY_MEDIUM                  : 'Medium',
 		PRIORITY_HIGH                    : 'High',
-		PRIORITY_SOLVED                  : 'Solved'
+		PRIORITY_SOLVED                  : 'Solved',
+		PROJECT_EXIST                    : 'Same project name already exists!',
+		BUG_EXIST                        : 'Same bug name already exists!'
 	},
 	CH_LEXICON: {
 		NAV_TITLE                        : 'Bug回報系統',
@@ -90,7 +92,7 @@ var constants = {
 		CLOSE_PROJECT_BTN                : '結案',
 		PROJECT_ALERT_TITLE              : '確定結案?',
 		PROJECT_ALERT_SUBTITLE           : '結案後將無法編輯內容',
-		ALERT_CLOSE_CONFIRM              : '是的，結案',
+		ALERT_CLOSE_CONFIRM              : '確定',
 		ALERT_CLOSED_RESULT              : '已結案！',
 		ALERT_CLOSED_RESULT_SUFFIX       : ' 已結案',
 		BUG_FORM_NEW_NAME                : 'Bug名稱: ',
@@ -124,7 +126,9 @@ var constants = {
 		PRIORITY_LOW                     : '一般',
 		PRIORITY_MEDIUM                  : '注意',
 		PRIORITY_HIGH                    : '緊急',
-		PRIORITY_SOLVED                  : '已解決'
+		PRIORITY_SOLVED                  : '已解決',
+		PROJECT_EXIST                    : '已有相同專案名稱',
+		BUG_EXIST                        : '已有相同Bug名稱'
 	}
 };
 

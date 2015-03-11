@@ -26,7 +26,8 @@ appStore = _.extend({}, eventEmitter.prototype, {
         if(!isProjectIdentical){
             this._firebaseRef.child(newProject.name).set(newProject);
         }else{
-            swal('Oops...', 'Same project name already exists!', 'error');
+            swal(constants.EN_LEXICON.OOPS, 
+                constants.EN_LEXICON.PROJECT_EXIST, 'error');
         }
     },
     deleteProject: function(name) { 
@@ -65,7 +66,8 @@ appStore = _.extend({}, eventEmitter.prototype, {
                 .child(newBug.name)
                 .set(newBug);
         }else{
-            swal('Oops...', 'Same project name already exists!', 'error');
+            swal(constants.EN_LEXICON.OOPS, 
+                constants.EN_LEXICON.PROJECT_EXIST, 'error');
         }
     },
     deleteBug: function(bugName){
