@@ -18,7 +18,8 @@ Bug = React.createClass({
 		bugDetail               : React.PropTypes.object,
 		selectedBugName         : React.PropTypes.string,
         isSelectedProjectClosed : React.PropTypes.bool,
-        combo                   : React.PropTypes.string
+        combo                   : React.PropTypes.string,
+        showBug                 : React.PropTypes.bool,
 	},
 	getDefaultProps: function() {
 		return {
@@ -26,7 +27,8 @@ Bug = React.createClass({
 			bugDetail               : {},
 			selectedBugName         : '',
             isSelectedProjectClosed : false,
-            combo                   : ''
+            combo                   : '',
+            showBug                 : true
 		};
 	},
 	_deleteBugByName: function(e){
@@ -103,7 +105,7 @@ Bug = React.createClass({
                 'label-success' : this.props.bugDetail.priority === constants.PRIORITY.SOLVED,
                 'label-primary' : this.props.bugDetail.priority === constants.PRIORITY.LOW,
                 'label-warning' : this.props.bugDetail.priority === constants.PRIORITY.MEDIUM,
-                'label-danger'  : this.props.bugDetail.priority === constants.PRIORITY.HIGH,
+                'label-danger'  : this.props.bugDetail.priority === constants.PRIORITY.HIGH
             });
             cancelClass = CX({
                 'cancel-icon' : true,
@@ -111,7 +113,8 @@ Bug = React.createClass({
             });
             bugClass = CX({
                 'bug'      : true,
-                'highlight': this.props.bugDetail.name === this.props.selectedBugName
+                'highlight': this.props.bugDetail.name === this.props.selectedBugName,
+                'hide'     : !this.props.showBug 
             });
 		}            
 		return (
@@ -127,7 +130,6 @@ Bug = React.createClass({
 			/* jshint ignore:end */
 		);
 	}
-
 });
 
 module.exports = Bug;

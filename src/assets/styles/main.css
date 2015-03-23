@@ -159,6 +159,13 @@ html body .allow-cursor{
 .bug-list .toggle-btn{
 	display: inline-block;
 }
+.bug-list .priority-filter{
+	position: absolute;
+	top: 6px;
+	right: 75px;
+	display: inline-block;
+	vertical-align: middle;
+}
 .bug-list .bugs{
 	padding: 0;
 }

@@ -4,15 +4,19 @@ var React           = require('react'),
     CX              = require('react/lib/cx'),
     // Constants
     constants       = require('../constants/constants'),
+    // Actions
+    AppActions   = require('../actions/appActions'),    
     // Components
     AddBugForm      = require('../components/add-bug-form'),
     CloseProjectBtn = require('../components/close-project-btn'),
     ToggleInputBtn  = require('../components/toggle-input-btn'),
     NoContent       = require('../components/no-content'),
     Bug             = require('../components/bug'),
+    PriorityFilter  = require('../components/priority-filter'),
     BugList;
 
 BugList = React.createClass({
+    _selectedPriority: constants.CH_LEXICON.PRIORITY_ALL,
     propTypes: {
         selectedProjectName     : React.PropTypes.string,
         selectedProjectBugs     : React.PropTypes.array,
@@ -41,11 +45,29 @@ BugList = React.createClass({
     },
     _renderBugs: function(){
         var bugsHTML = this.props.selectedProjectBugs.map(function(bug, i){
+            var transformed = '';
+            switch (bug.priority){
+                case 'Low':
+                    transformed = constants.CH_LEXICON.PRIORITY_LOW;
+                    break;
+                case 'Medium':
+                    transformed = constants.CH_LEXICON.PRIORITY_MEDIUM;
+                    break;
+                case 'High':
+                    transformed = constants.CH_LEXICON.PRIORITY_HIGH;
+                    break;
+                case 'Solved':
+                    transformed = constants.CH_LEXICON.PRIORITY_SOLVED;
+                    break;
+                default:
+                    throw 'Error!';
+            }
             return (
                 /* jshint ignore:start */
                 <Bug 
                     key={i}
                     bugDetail={bug}
+                    showBug={this._selectedPriority === transformed || this._selectedPriority === constants.CH_LEXICON.PRIORITY_ALL}
                     {...this.props} />
                 /* jshint ignore:end */
             );
@@ -69,12 +91,20 @@ BugList = React.createClass({
                         target=".add-bug-form-wrapper"
                         displayText={constants.CH_LEXICON.NEW_BUG_BTN} />
                     <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
-                    <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
+                    <AddBugForm selectedProjectName={this.props.selectedProjectName}/>                    
+                    <PriorityFilter 
+                        selectedProjectName={this.props.selectedProjectName}
+                        onSelectHandler={this._filterBugs}/>
                 </div>                
                 /* jshint ignore:end */
             );
         }
         return resultHTML;
+    },
+    _filterBugs: function(condition){
+        this._selectedPriority = condition;
+        AppActions.clearSelectedBug();
+        this.forceUpdate();
     },
     render: function() {
         if(!this.props.selectedProjectName){
