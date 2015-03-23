@@ -98,6 +98,9 @@ appStore = _.extend({}, eventEmitter.prototype, {
             });
         }        
     },
+    clearSelectedBug: function(data){
+        this.selectedBug = {};
+    },
     addComment: function(comment){
         this._firebaseRef
             .child(this.selectedProject.name)
@@ -145,6 +148,9 @@ appDispatcher.register(function(payload) {
             break;
         case constants.ADD_COMMENT:
             appStore.addComment(action.data);
+            break;
+        case constants.CLEAR_SELECTED_BUG:
+            appStore.clearSelectedBug(action.data);
             break;
         default:
             return true;

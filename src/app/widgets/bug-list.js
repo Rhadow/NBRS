@@ -4,15 +4,19 @@ var React           = require('react'),
     CX              = require('react/lib/cx'),
     // Constants
     constants       = require('../constants/constants'),
+    // Actions
+    AppActions   = require('../actions/appActions'),    
     // Components
     AddBugForm      = require('../components/add-bug-form'),
     CloseProjectBtn = require('../components/close-project-btn'),
     ToggleInputBtn  = require('../components/toggle-input-btn'),
     NoContent       = require('../components/no-content'),
     Bug             = require('../components/bug'),
+    PriorityFilter  = require('../components/priority-filter'),
     BugList;
 
 BugList = React.createClass({
+    _selectedPriority: constants.EN_LEXICON.PRIORITY_ALL,
     propTypes: {
         selectedProjectName     : React.PropTypes.string,
         selectedProjectBugs     : React.PropTypes.array,
@@ -46,6 +50,7 @@ BugList = React.createClass({
                 <Bug 
                     key={i}
                     bugDetail={bug}
+                    showBug={this._selectedPriority === bug.priority || this._selectedPriority === constants.EN_LEXICON.PRIORITY_ALL}
                     {...this.props} />
                 /* jshint ignore:end */
             );
@@ -69,12 +74,20 @@ BugList = React.createClass({
                         target=".add-bug-form-wrapper"
                         displayText={constants.EN_LEXICON.NEW_BUG_BTN} />
                     <CloseProjectBtn selectedProjectName={this.props.selectedProjectName} />
-                    <AddBugForm selectedProjectName={this.props.selectedProjectName}/>
+                    <AddBugForm selectedProjectName={this.props.selectedProjectName}/>                    
+                    <PriorityFilter 
+                        selectedProjectName={this.props.selectedProjectName}
+                        onSelectHandler={this._filterBugs}/>
                 </div>                
                 /* jshint ignore:end */
             );
         }
         return resultHTML;
+    },
+    _filterBugs: function(condition){
+        this._selectedPriority = condition;
+        AppActions.clearSelectedBug();
+        this.forceUpdate();
     },
     render: function() {
         if(!this.props.selectedProjectName){
