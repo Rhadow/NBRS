@@ -58,6 +58,12 @@ appActions = {
 			actionType: constants.ADD_COMMENT,
 			data: comment
 		});
+	},
+	clearSelectedBug: function(){
+		appDispatcher.handleViewAction({
+			actionType: constants.CLEAR_SELECTED_BUG,
+			data: ''
+		});
 	}
 };
 
