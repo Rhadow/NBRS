@@ -11,6 +11,7 @@ var constants = {
 	ADD_COMMENT        : 'ADD_COMMENT',
 	CLOSE_BUG          : 'CLOSE_BUG',
 	CLEAR_SELECTED_BUG : 'CLEAR_SELECTED_BUG',
+	SECONDS_IN_A_DAY   : 86400000,
 	PRIORITY: {
 		LOW    : 'Low',
 		MEDIUM : 'Medium',
@@ -51,6 +52,7 @@ var constants = {
 		START_DATE                       : 'Start Date: ',
 		END_DATE                         : 'End Date: ',
 		PRIORITY_TITLE                   : 'Priority: ',
+		AUTHOR_TITLE                     : 'Author: ',
 		CAUTION                          : 'Caution!',
 		PASSWORD_PROMPT                  : 'Enter password to delete',
 		PASSWORD_PLACEHOLDER             : 'Enter password...',

@@ -2,7 +2,7 @@
 
 var React = require('react'),
     // Constants
-    constants       = require('../constants/constants'),
+    constants = require('../constants/constants'),
     PriorityFilter;
 
 PriorityFilter = React.createClass({

@@ -78,12 +78,15 @@ appStore = _.extend({}, eventEmitter.prototype, {
             .remove();
     },
     closeBug: function(bugName){
+        var solvedDate = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate();
         this._firebaseRef
             .child(this.selectedProject.name)
             .child('bugs')
             .child(bugName)
-            .child('priority')
-            .set(constants.PRIORITY.SOLVED);
+            .update({
+                'priority': constants.PRIORITY.SOLVED,
+                'endDate': solvedDate
+            });
     },
     selectBug: function(bugName){
         var thisModule = this;

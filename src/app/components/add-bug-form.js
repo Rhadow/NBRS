@@ -67,7 +67,8 @@ AddBugForm = React.createClass({
             priority    : priority,
             description : newDescription,
             startDate   : startDate,
-            endDate     : endDate
+            endDate     : endDate,
+            createdOn   : new Date().getTime()
         };
         AppActions.addBug(newBugObj);
         AppActions.selectBugByName(newBugName);
@@ -94,7 +95,7 @@ AddBugForm = React.createClass({
                         className="bug-name-input form-control"
                         type="text" 
                         ref="newBugName"
-                        maxLength={17} 
+                        maxLength={25} 
                         data-toggle="tooltip"
                         data-placement="top"
                         title={constants.EN_LEXICON.BUG_FORM_NEW_NAME_TOOLTIP}
@@ -106,7 +107,7 @@ AddBugForm = React.createClass({
                         className="bug-author-input form-control"
                         type="text" 
                         ref="newBugAuthor"
-                        maxLength={17} 
+                        maxLength={25} 
                         data-toggle="tooltip"
                         data-placement="top"
                         title={constants.EN_LEXICON.NOT_EMPTY_TOOLTIP}

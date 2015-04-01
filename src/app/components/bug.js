@@ -96,6 +96,20 @@ Bug = React.createClass({
         }
         return result;        
     },
+    _renderNewBugTag: function() {
+        var resultHtml;
+
+        if(this.props.bugDetail.createdOn !== undefined && 
+            new Date().getTime() - this.props.bugDetail.createdOn < (constants.SECONDS_IN_A_DAY * 3)){
+            resultHtml = (
+                /* jshint ignore:start */
+                <i className="new-bug-tag label label-info">New</i>
+                /* jshint ignore:end */
+            );
+        }
+
+        return resultHtml;
+    },
 	render: function() {
 		var bugStatusTagClass, cancelClass, bugClass;
 		if(this.props.bugDetail.priority){
@@ -122,6 +136,7 @@ Bug = React.createClass({
 			<div className={bugClass} id={this.props.bugDetail.name} onClick={this._onBugSelect}>
                 {this.props.bugDetail.name}
                 <i className={bugStatusTagClass}>{this._renderPriority()}</i>
+                {this._renderNewBugTag()}
                 <i 
                     className={cancelClass} 
                     data-name={this.props.bugDetail.name} 

@@ -72,7 +72,7 @@ html body .allow-cursor{
 	line-height: 50px;
 	list-style: none;	
 	cursor: pointer;
-	text-align: center;
+	padding-left: 20px;
 	background-color: #fff;
 	border-radius: 5px;
 	box-shadow: 1px 1px 1px rgba(20%,20%,40%,0.3);
@@ -159,10 +159,22 @@ html body .allow-cursor{
 .bug-list .toggle-btn{
 	display: inline-block;
 }
-.bug-list .priority-filter{
-	position: absolute;
+.bug-list .bug-list-filters{
+	margin-top: 20px;
+}
+.bug-list .new-bug-tag{
+	display: inline-block;
+	margin-left: 5px;
+	vertical-align: middle;
+}
+.bug-list .bug-list-filters .priority-filter{
 	top: 6px;
-	right: 140px;
+	margin-right: 5px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.bug-list .bug-list-filters .author-filter{
+	top: 6px;
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -289,6 +301,7 @@ html body .allow-cursor{
 }
 .comment .comment-body{
 	padding: 2% 5%;
+	white-space: pre-wrap;
 }
 /* Comment End */
 /* Animation Start */

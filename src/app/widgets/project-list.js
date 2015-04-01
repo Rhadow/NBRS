@@ -31,8 +31,27 @@ ProjectList = React.createClass({
             $(thisModule.getDOMNode()).find('[data-toggle="tooltip"]').tooltip();
         });        
     },
+    _alphanumSort: function(arr) {
+        var a, b, a1, b1, rx=/(\d+)|(\D+)/g, rd=/\d+/;
+        return arr.sort(function(as, bs){
+            a= String(as.name).toLowerCase().match(rx);
+            b= String(bs.name).toLowerCase().match(rx);
+            while(a.length && b.length){
+                a1= a.shift();
+                b1= b.shift();
+                if(rd.test(a1) || rd.test(b1)){
+                    if(!rd.test(a1)) return 1;
+                    if(!rd.test(b1)) return - 1;
+                    if(a1 !== b1) return a1 - b1;
+                }
+                else if(a1 !== b1) return a1 > b1? 1: -1;
+            }
+            return a.length - b.length;
+        });
+    },
     _renderProjects: function(){
-        var resultHTML = this.props.projects.map(function(project, i){
+        var sortedProjects = this._alphanumSort(this.props.projects);
+        var resultHTML = sortedProjects.map(function(project, i){
             var projectClosedClass = CX({
                 'closed-label': true,
                 'label': true,
