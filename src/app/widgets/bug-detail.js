@@ -24,7 +24,8 @@ BugDetail = React.createClass({
         selectedBugDescription     : React.PropTypes.string,
         selectedBugStartDate       : React.PropTypes.string,
         selectedBugEndDate         : React.PropTypes.string,
-        selectedBugAuthor          : React.PropTypes.string
+        selectedBugAuthor          : React.PropTypes.string,
+        selectedBugAuthorTeam      : React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
@@ -35,6 +36,7 @@ BugDetail = React.createClass({
             selectedBugStartDate       : '',
             selectedBugEndDate         : '',
             selectedBugAuthor          : '',
+            selectedBugAuthorTeam      : '',
             isSelectedProjectClosed    : false
         };
     },
@@ -59,7 +61,8 @@ BugDetail = React.createClass({
                         displayText={constants.EN_LEXICON.NEW_COMMENT_TITLE} />
                     <CloseBugBtn
                         selectedProjectName={this.props.selectedProjectName}
-                        selectedBugName={this.props.selectedBugName}/>
+                        selectedBugName={this.props.selectedBugName}
+                        selectedBugEndDate={this.props.selectedBugEndDate}/>
                     <AddCommentForm
                         selectedBugName={this.props.selectedBugName}/>
                 </div>
@@ -115,7 +118,8 @@ BugDetail = React.createClass({
                     selectedBugDescription={this.props.selectedBugDescription}
                     selectedBugStartDate={this.props.selectedBugStartDate}
                     selectedBugEndDate={this.props.selectedBugEndDate}
-                    selectedBugAuthor={this.props.selectedBugAuthor}/>
+                    selectedBugAuthor={this.props.selectedBugAuthor}
+                    selectedBugAuthorTeam={this.props.selectedBugAuthorTeam}/>
                 <div className="comments">
                     <div className="comment-list-title">
                         {this.props.selectedProjectName} {constants.EN_LEXICON.BUG_COMMENT_TITLE}

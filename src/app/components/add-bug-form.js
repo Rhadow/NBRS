@@ -39,10 +39,13 @@ AddBugForm = React.createClass({
         var newBugObj      = {},
             newBugName     = this.refs.newBugName.getDOMNode().value,
             newAuthorName  = this.refs.newBugAuthor.getDOMNode().value,
+            newAuthorTeam  = this.refs.newBugAuthorTeam.getDOMNode().value,
             newDescription = this.refs.newBugDescription.getDOMNode().value,
             startDate      = this.refs.startDate.getDOMNode().value,
             endDate        = this.refs.endDate.getDOMNode().value,
-            priority       = this.refs.priority.getDOMNode().value;            
+            priority       = this.refs.priority.getDOMNode().value,
+            now            = new Date();
+
         e.preventDefault();
         if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){            
             this.refs.newBugName.getDOMNode().value = '';
@@ -54,16 +57,25 @@ AddBugForm = React.createClass({
             this.refs.newBugAuthor.getDOMNode().value = '';
             return;
         }
+        if(!newAuthorTeam){
+            $('.bug-author-team-input').effect('shake', {distance: 10});
+            this.refs.newBugAuthorTeam.getDOMNode().value = '';
+            return;
+        }
         if(!newDescription){
             $('.bug-description-input').effect('shake', {distance: 10});
             this.refs.newBugDescription.getDOMNode().value = '';
             return;
+        }
+        if(!startDate){
+            startDate = now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate();
         }
         $('.add-bug-form-wrapper').slideUp();
         this._clearInput();
         newBugObj = {
             name        : newBugName,
             author      : newAuthorName,
+            team        : newAuthorTeam,
             priority    : priority,
             description : newDescription,
             startDate   : startDate,
@@ -77,6 +89,7 @@ AddBugForm = React.createClass({
         this.refs.newBugName.getDOMNode().value = '';
         this.refs.newBugDescription.getDOMNode().value = '';
         this.refs.newBugAuthor.getDOMNode().value = '';
+        this.refs.newBugAuthorTeam.getDOMNode().value = '';
         this.refs.startDate.getDOMNode().value = '';
         this.refs.endDate.getDOMNode().value = '';
         this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
@@ -112,6 +125,18 @@ AddBugForm = React.createClass({
                         data-placement="top"
                         title={constants.EN_LEXICON.NOT_EMPTY_TOOLTIP}
                         placeholder={constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER}/> 
+                </div>
+                <div className="form-group">
+                    <label>{constants.EN_LEXICON.BUG_FORM_AUTHOR_TEAM}</label>
+                    <input
+                        className="bug-author-team-input form-control"
+                        type="text" 
+                        ref="newBugAuthorTeam"
+                        maxLength={25} 
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title={constants.EN_LEXICON.NOT_EMPTY_TOOLTIP}
+                        placeholder={constants.EN_LEXICON.BUG_FORM_AUTHOR_TEAM_PLACEHOLDER}/> 
                 </div>
                 <div className="form-group">
                     <label>{constants.EN_LEXICON.BUG_FORM_DESCRIPTION}</label>

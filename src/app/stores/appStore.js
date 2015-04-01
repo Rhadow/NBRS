@@ -77,12 +77,18 @@ appStore = _.extend({}, eventEmitter.prototype, {
             .child(bugName)
             .remove();
     },
-    closeBug: function(bugName){
-        var solvedDate = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate();
+    closeBug: function(data){
+        var now = new Date(),
+            solvedDate = data.endDate || now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate();
+        
+        /* Open mail when solved is pressed
+            window.location.href = 'mailto:test@example.com?subject=subject&body=body';
+        */
+        
         this._firebaseRef
             .child(this.selectedProject.name)
             .child('bugs')
-            .child(bugName)
+            .child(data.bugName)
             .update({
                 'priority': constants.PRIORITY.SOLVED,
                 'endDate': solvedDate

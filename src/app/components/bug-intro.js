@@ -10,14 +10,16 @@ BugIntro = React.createClass({
         selectedBugDescription : React.PropTypes.string,
         selectedBugStartDate   : React.PropTypes.string,
         selectedBugEndDate     : React.PropTypes.string,
-        selectedBugAuthor      : React.PropTypes.string
+        selectedBugAuthor      : React.PropTypes.string,
+        selectedBugAuthorTeam  : React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
     		selectedBugDescription : '',
 	        selectedBugStartDate   : '',
 	        selectedBugEndDate     : '',
-	        selectedBugAuthor      : ''
+	        selectedBugAuthor      : '',
+            selectedBugAuthorTeam  : ''
     	};
     },
     _renderStartDate: function(){
@@ -48,6 +50,20 @@ BugIntro = React.createClass({
     	}
     	return resultHTML;
     },
+    _renderTeam: function(){
+        var resultHTML;
+        if(this.props.selectedBugAuthorTeam){
+            resultHTML = (
+                /* jshint ignore:start */
+                <div>
+                    <label>{constants.EN_LEXICON.BUG_FORM_AUTHOR_TEAM}</label>
+                    <span className="info-value">{this.props.selectedBugAuthorTeam}</span>
+                </div>
+                /* jshint ignore:end */
+            ); 
+        }
+        return resultHTML;
+    },
 	render: function() {
 		return (
 			/* jshint ignore:start */
@@ -64,6 +80,7 @@ BugIntro = React.createClass({
                     <label>{constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME}</label>
                     <span className="info-value">{this.props.selectedBugAuthor}</span>
                 </div>
+                {this._renderTeam()}
                 {this._renderStartDate()}
                 {this._renderEndDate()}
             </div>

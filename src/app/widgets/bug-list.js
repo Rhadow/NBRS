@@ -14,11 +14,13 @@ var React           = require('react'),
     Bug             = require('../components/bug'),
     PriorityFilter  = require('../components/priority-filter'),
     AuthorFilter    = require('../components/author-filter'),
+    TeamFilter      = require('../components/team-filter'),
     BugList;
 
 BugList = React.createClass({
     _selectedPriority: constants.EN_LEXICON.PRIORITY_ALL,
     _selectedAuthor: constants.EN_LEXICON.PRIORITY_ALL,
+    _selectedTeam: constants.EN_LEXICON.PRIORITY_ALL,
     propTypes: {
         selectedProjectName     : React.PropTypes.string,
         selectedProjectBugs     : React.PropTypes.array,
@@ -46,11 +48,12 @@ BugList = React.createClass({
         }        
     },
     _evaluateBugDisplay: function(bug) {
-        var shouldBugDisplay, bugPriorityPass, bugAuthorPass;
+        var shouldBugDisplay, bugPriorityPass, bugAuthorPass, bugAuthorTeamPass;
         shouldBugDisplay = false;
         bugPriorityPass = this._selectedPriority === bug.priority || this._selectedPriority === constants.EN_LEXICON.PRIORITY_ALL;
         bugAuthorPass = this._selectedAuthor === bug.author || this._selectedAuthor === constants.EN_LEXICON.PRIORITY_ALL;
-        if(bugPriorityPass && bugAuthorPass){
+        bugAuthorTeamPass = this._selectedTeam === bug.team || this._selectedTeam === constants.EN_LEXICON.PRIORITY_ALL;
+        if(bugPriorityPass && bugAuthorPass && bugAuthorTeamPass){
             shouldBugDisplay = true;
         }
         return shouldBugDisplay;
@@ -106,6 +109,10 @@ BugList = React.createClass({
                         selectedProjectName={this.props.selectedProjectName}
                         selectedProjectBugs={this.props.selectedProjectBugs}
                         onSelectHandler={this._filterAuthors}/>
+                    <TeamFilter 
+                        selectedProjectName={this.props.selectedProjectName}
+                        selectedProjectBugs={this.props.selectedProjectBugs}
+                        onSelectHandler={this._filterTeams}/>
                 </div>                
                 /* jshint ignore:end */
             );
@@ -119,6 +126,11 @@ BugList = React.createClass({
     },
     _filterAuthors: function(condition){
         this._selectedAuthor = condition;
+        AppActions.clearSelectedBug();
+        this.forceUpdate();
+    },
+    _filterTeams: function(condition){
+        this._selectedTeam = condition;
         AppActions.clearSelectedBug();
         this.forceUpdate();
     },

@@ -175,6 +175,12 @@ html body .allow-cursor{
 }
 .bug-list .bug-list-filters .author-filter{
 	top: 6px;
+	margin-right: 5px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.bug-list .bug-list-filters .team-filter{
+	top: 6px;
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -205,6 +211,9 @@ html body .allow-cursor{
 	border-color: #d9534f;
 }
 .bug-list .ui-effects-wrapper .bug-author-input{
+	border-color: #d9534f;
+}
+.bug-list .ui-effects-wrapper .bug-author-team-input{
 	border-color: #d9534f;
 }
 .bug-list input[type="text"]{

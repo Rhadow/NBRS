@@ -11,12 +11,14 @@ var React        = require('react'),
 CloseBugBtn = React.createClass({
     propTypes: {
     	selectedProjectName : React.PropTypes.string,
-        selectedBugName     : React.PropTypes.string
+        selectedBugName     : React.PropTypes.string,
+        selectedBugEndDate  : React.PropTypes.string 
     },
     getDefaultProps: function() {
     	return {
     		selectedProjectName : '',
-            selectedBugName     : ''
+            selectedBugName     : '',
+            selectedBugEndDate  : ''
     	};
     },
     _closeBug: function(e){
@@ -30,7 +32,7 @@ CloseBugBtn = React.createClass({
                 confirmButtonText: constants.EN_LEXICON.ALERT_CLOSE_CONFIRM,   
                 closeOnConfirm: false
             }, function(){
-                AppActions.closeBug(thisModule.props.selectedBugName);
+                AppActions.closeBug(thisModule.props.selectedBugName, thisModule.props.selectedBugEndDate);
                 swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, 
                     thisModule.props.selectedProjectName + constants.EN_LEXICON.BUG_CLOSE_RESULT_SUFFIX, 
                     'success'); 

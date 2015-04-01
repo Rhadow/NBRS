@@ -47,6 +47,8 @@ var constants = {
 		BUG_FORM_NEW_NAME_TOOLTIP        : 'Must not be empty or contain the following characters: \'. # $ [ ] / \'',
 		BUG_FORM_AUTHOR_NAME             : 'Author Name: ',
 		BUG_FORM_AUTHOR_NAME_PLACEHOLDER : 'Enter your name',
+		BUG_FORM_AUTHOR_TEAM             : 'Team: ',
+		BUG_FORM_AUTHOR_TEAM_PLACEHOLDER : 'Enter your team',
 		NOT_EMPTY_TOOLTIP                : 'Must not be empty',
 		BUG_FORM_DESCRIPTION             : 'Description: ',
 		START_DATE                       : 'Start Date: ',

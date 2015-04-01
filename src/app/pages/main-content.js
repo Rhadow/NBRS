@@ -66,6 +66,7 @@ MainContent = React.createClass({
             selectedBugStartDate    : appStore.selectedBug.startDate,
             selectedBugEndDate      : appStore.selectedBug.endDate,
             selectedBugAuthor       : appStore.selectedBug.author,
+            selectedBugAuthorTeam   : appStore.selectedBug.team
         });
     },
     render: function() {
@@ -95,7 +96,8 @@ MainContent = React.createClass({
                         isSelectedProjectClosed={this.state.isSelectedProjectClosed}
                         selectedBugStartDate={this.state.selectedBugStartDate}
                         selectedBugEndDate={this.state.selectedBugEndDate}
-                        selectedBugAuthor={this.state.selectedBugAuthor}/>
+                        selectedBugAuthor={this.state.selectedBugAuthor}
+                        selectedBugAuthorTeam={this.state.selectedBugAuthorTeam}/>
                 </div>
             </div>
             /*jshint ignore:end */

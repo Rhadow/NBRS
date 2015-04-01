@@ -26507,10 +26507,13 @@ appActions = {
 			data: bugName
 		});
 	},
-	closeBug: function(bugName){
+	closeBug: function(bugName, endDate){
 		appDispatcher.handleViewAction({
 			actionType: constants.CLOSE_BUG,
-			data: bugName
+			data: {
+				bugName: bugName,
+				endDate: endDate
+			}
 		});
 	},
 	selectBugByName: function(bugName){
@@ -26534,7 +26537,7 @@ appActions = {
 };
 
 module.exports = appActions;
-},{"../constants/constants.js":223,"../dispatcher/appDispatcher.js":224}],211:[function(require,module,exports){
+},{"../constants/constants.js":224,"../dispatcher/appDispatcher.js":225}],211:[function(require,module,exports){
 'use strict';
 
 var React      = require('react'),
@@ -26576,10 +26579,13 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
         var newBugObj      = {},
             newBugName     = this.refs.newBugName.getDOMNode().value,
             newAuthorName  = this.refs.newBugAuthor.getDOMNode().value,
+            newAuthorTeam  = this.refs.newBugAuthorTeam.getDOMNode().value,
             newDescription = this.refs.newBugDescription.getDOMNode().value,
             startDate      = this.refs.startDate.getDOMNode().value,
             endDate        = this.refs.endDate.getDOMNode().value,
-            priority       = this.refs.priority.getDOMNode().value;            
+            priority       = this.refs.priority.getDOMNode().value,
+            now            = new Date();
+
         e.preventDefault();
         if(!newBugName || /[\.\#\$\[\]\/\\]/gi.test(newBugName)){            
             this.refs.newBugName.getDOMNode().value = '';
@@ -26591,16 +26597,25 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
             this.refs.newBugAuthor.getDOMNode().value = '';
             return;
         }
+        if(!newAuthorTeam){
+            $('.bug-author-team-input').effect('shake', {distance: 10});
+            this.refs.newBugAuthorTeam.getDOMNode().value = '';
+            return;
+        }
         if(!newDescription){
             $('.bug-description-input').effect('shake', {distance: 10});
             this.refs.newBugDescription.getDOMNode().value = '';
             return;
+        }
+        if(!startDate){
+            startDate = now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate();
         }
         $('.add-bug-form-wrapper').slideUp();
         this._clearInput();
         newBugObj = {
             name        : newBugName,
             author      : newAuthorName,
+            team        : newAuthorTeam,
             priority    : priority,
             description : newDescription,
             startDate   : startDate,
@@ -26614,6 +26629,7 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
         this.refs.newBugName.getDOMNode().value = '';
         this.refs.newBugDescription.getDOMNode().value = '';
         this.refs.newBugAuthor.getDOMNode().value = '';
+        this.refs.newBugAuthorTeam.getDOMNode().value = '';
         this.refs.startDate.getDOMNode().value = '';
         this.refs.endDate.getDOMNode().value = '';
         this.refs.priority.getDOMNode().value = constants.PRIORITY.LOW;
@@ -26649,6 +26665,18 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
                         "data-placement": "top", 
                         title: constants.EN_LEXICON.NOT_EMPTY_TOOLTIP, 
                         placeholder: constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME_PLACEHOLDER})
+                ), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_AUTHOR_TEAM), 
+                    React.createElement("input", {
+                        className: "bug-author-team-input form-control", 
+                        type: "text", 
+                        ref: "newBugAuthorTeam", 
+                        maxLength: 25, 
+                        "data-toggle": "tooltip", 
+                        "data-placement": "top", 
+                        title: constants.EN_LEXICON.NOT_EMPTY_TOOLTIP, 
+                        placeholder: constants.EN_LEXICON.BUG_FORM_AUTHOR_TEAM_PLACEHOLDER})
                 ), 
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_DESCRIPTION), 
@@ -26705,7 +26733,7 @@ AddBugForm = React.createClass({displayName: "AddBugForm",
 });
 
 module.exports = AddBugForm;
-},{"../actions/appActions":210,"../constants/constants":223,"react":"b6Dds6","react/lib/cx":164}],212:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":224,"react":"b6Dds6","react/lib/cx":164}],212:[function(require,module,exports){
 'use strict';
 
 var React      = require('react'),
@@ -26816,7 +26844,7 @@ AddCommentForm = React.createClass({displayName: "AddCommentForm",
 });
 
 module.exports = AddCommentForm;
-},{"../actions/appActions":210,"../constants/constants":223,"react":"b6Dds6","react/lib/cx":164}],213:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":224,"react":"b6Dds6","react/lib/cx":164}],213:[function(require,module,exports){
 'use strict';
 
 var React      = require('react'),
@@ -26886,7 +26914,7 @@ AddProjectForm = React.createClass({displayName: "AddProjectForm",
 });
 
 module.exports = AddProjectForm;
-},{"../actions/appActions":210,"../constants/constants":223,"react":"b6Dds6","react/lib/cx":164}],214:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":224,"react":"b6Dds6","react/lib/cx":164}],214:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26959,7 +26987,7 @@ AuthorFilter = React.createClass({displayName: "AuthorFilter",
 });
 
 module.exports = AuthorFilter;
-},{"../constants/constants":223,"react":"b6Dds6"}],215:[function(require,module,exports){
+},{"../constants/constants":224,"react":"b6Dds6"}],215:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -26972,14 +27000,16 @@ BugIntro = React.createClass({displayName: "BugIntro",
         selectedBugDescription : React.PropTypes.string,
         selectedBugStartDate   : React.PropTypes.string,
         selectedBugEndDate     : React.PropTypes.string,
-        selectedBugAuthor      : React.PropTypes.string
+        selectedBugAuthor      : React.PropTypes.string,
+        selectedBugAuthorTeam  : React.PropTypes.string
     },
     getDefaultProps: function() {
     	return {
     		selectedBugDescription : '',
 	        selectedBugStartDate   : '',
 	        selectedBugEndDate     : '',
-	        selectedBugAuthor      : ''
+	        selectedBugAuthor      : '',
+            selectedBugAuthorTeam  : ''
     	};
     },
     _renderStartDate: function(){
@@ -27010,6 +27040,20 @@ BugIntro = React.createClass({displayName: "BugIntro",
     	}
     	return resultHTML;
     },
+    _renderTeam: function(){
+        var resultHTML;
+        if(this.props.selectedBugAuthorTeam){
+            resultHTML = (
+                /* jshint ignore:start */
+                React.createElement("div", null, 
+                    React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_AUTHOR_TEAM), 
+                    React.createElement("span", {className: "info-value"}, this.props.selectedBugAuthorTeam)
+                )
+                /* jshint ignore:end */
+            ); 
+        }
+        return resultHTML;
+    },
 	render: function() {
 		return (
 			/* jshint ignore:start */
@@ -27026,6 +27070,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
                     React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_AUTHOR_NAME), 
                     React.createElement("span", {className: "info-value"}, this.props.selectedBugAuthor)
                 ), 
+                this._renderTeam(), 
                 this._renderStartDate(), 
                 this._renderEndDate()
             )
@@ -27037,7 +27082,7 @@ BugIntro = React.createClass({displayName: "BugIntro",
 
 module.exports = BugIntro;
 /* Made By Rhadow.github.io */
-},{"../constants/constants":223,"react":"b6Dds6"}],216:[function(require,module,exports){
+},{"../constants/constants":224,"react":"b6Dds6"}],216:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -27189,7 +27234,7 @@ Bug = React.createClass({displayName: "Bug",
 
 module.exports = Bug;
 /* all rights reserved to Howard Chang */
-},{"../actions/appActions":210,"../constants/constants":223,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}],217:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":224,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}],217:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -27203,12 +27248,14 @@ var React        = require('react'),
 CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
     propTypes: {
     	selectedProjectName : React.PropTypes.string,
-        selectedBugName     : React.PropTypes.string
+        selectedBugName     : React.PropTypes.string,
+        selectedBugEndDate  : React.PropTypes.string 
     },
     getDefaultProps: function() {
     	return {
     		selectedProjectName : '',
-            selectedBugName     : ''
+            selectedBugName     : '',
+            selectedBugEndDate  : ''
     	};
     },
     _closeBug: function(e){
@@ -27222,7 +27269,7 @@ CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
                 confirmButtonText: constants.EN_LEXICON.ALERT_CLOSE_CONFIRM,   
                 closeOnConfirm: false
             }, function(){
-                AppActions.closeBug(thisModule.props.selectedBugName);
+                AppActions.closeBug(thisModule.props.selectedBugName, thisModule.props.selectedBugEndDate);
                 swal(constants.EN_LEXICON.ALERT_CLOSED_RESULT, 
                     thisModule.props.selectedProjectName + constants.EN_LEXICON.BUG_CLOSE_RESULT_SUFFIX, 
                     'success'); 
@@ -27243,7 +27290,7 @@ CloseBugBtn = React.createClass({displayName: "CloseBugBtn",
 	}
 });
 module.exports = CloseBugBtn;
-},{"../actions/appActions":210,"../constants/constants":223,"react":"b6Dds6","react/lib/cx":164}],218:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":224,"react":"b6Dds6","react/lib/cx":164}],218:[function(require,module,exports){
 'use strict';
 
 var React      = require('react'),
@@ -27296,7 +27343,7 @@ CloseProjectBtn = React.createClass({displayName: "CloseProjectBtn",
 });
 module.exports = CloseProjectBtn;
 /* Made By Rhadow.github.io */
-},{"../actions/appActions":210,"../constants/constants":223,"react":"b6Dds6","react/lib/cx":164}],219:[function(require,module,exports){
+},{"../actions/appActions":210,"../constants/constants":224,"react":"b6Dds6","react/lib/cx":164}],219:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -27436,7 +27483,80 @@ PriorityFilter = React.createClass({displayName: "PriorityFilter",
 });
 
 module.exports = PriorityFilter;
-},{"../constants/constants":223,"react":"b6Dds6"}],222:[function(require,module,exports){
+},{"../constants/constants":224,"react":"b6Dds6"}],222:[function(require,module,exports){
+'use strict';
+
+var React = require('react'),
+    // Constants
+    constants = require('../constants/constants'),
+    TeamFilter;
+
+TeamFilter = React.createClass({displayName: "TeamFilter",
+	_selectedTeam: constants.EN_LEXICON.PRIORITY_ALL,
+	propTypes: {
+    	selectedProjectName: React.PropTypes.string,
+    	selectedProjectBugs: React.PropTypes.array
+    },
+    getDefaultProps: function() {
+    	return {
+    		selectedProjectName: '',
+    		selectedProjectBugs: [],
+    		onSelectHandler: function(){}
+    	};
+    },
+    componentDidMount: function() {
+    	this.props.onSelectHandler(this._selectedTeam);
+    },
+	componentWillUpdate: function(nextProps, nextState) {
+        if(nextProps.selectedProjectName !== this.props.selectedProjectName){
+            this._selectedTeam = constants.EN_LEXICON.PRIORITY_ALL;            
+		    this.props.onSelectHandler(this._selectedTeam);
+        }
+    },
+	_handleSelect: function(e){
+		var selectedTeam = this.refs.teamFilter.getDOMNode().value;
+		this._selectedTeam = selectedTeam;
+		this.forceUpdate();
+		this.props.onSelectHandler(this._selectedTeam);
+	},
+	_renderOptions: function() {
+		var resultHTML, teams = [];
+		for(var i = 0; i < this.props.selectedProjectBugs.length; i++){
+			if(teams.indexOf(this.props.selectedProjectBugs[i].team) < 0 && this.props.selectedProjectBugs[i].team !== undefined){
+				teams.push(this.props.selectedProjectBugs[i].team);
+			}
+		}
+		if(teams !== []){
+			resultHTML = teams.map(function(team, i){
+				return (
+					/* jshint ignore:start */
+					React.createElement("option", {key: i}, team)
+					/* jshint ignore:end */
+				);
+			});
+		}
+		return resultHTML;
+	},
+	render: function() {
+		return (
+			/* jshint ignore:start */
+			React.createElement("div", {className: "team-filter"}, 
+			    React.createElement("label", null, constants.EN_LEXICON.BUG_FORM_AUTHOR_TEAM), 
+	            React.createElement("select", {
+	                ref: "teamFilter", 
+	                onChange: this._handleSelect, 
+	                value: this._selectedTeam}, 
+	                React.createElement("option", null, constants.EN_LEXICON.PRIORITY_ALL), 
+	                this._renderOptions()
+	            )
+			)			
+            /* jshint ignore:end */
+		);
+	}
+});
+
+module.exports = TeamFilter;
+},{"../constants/constants":224,"react":"b6Dds6"}],223:[function(require,module,exports){
 'use strict';
 
 var React     = require('react'),
@@ -27474,7 +27594,7 @@ ToggleInputBtn = React.createClass({displayName: "ToggleInputBtn",
 });
 
 module.exports = ToggleInputBtn;
-},{"../constants/constants":223,"react":"b6Dds6"}],223:[function(require,module,exports){
+},{"../constants/constants":224,"react":"b6Dds6"}],224:[function(require,module,exports){
 'use strict';
 
 var constants = {
@@ -27524,6 +27644,8 @@ var constants = {
 		BUG_FORM_NEW_NAME_TOOLTIP        : 'Must not be empty or contain the following characters: \'. # $ [ ] / \'',
 		BUG_FORM_AUTHOR_NAME             : 'Author Name: ',
 		BUG_FORM_AUTHOR_NAME_PLACEHOLDER : 'Enter your name',
+		BUG_FORM_AUTHOR_TEAM             : 'Team: ',
+		BUG_FORM_AUTHOR_TEAM_PLACEHOLDER : 'Enter your team',
 		NOT_EMPTY_TOOLTIP                : 'Must not be empty',
 		BUG_FORM_DESCRIPTION             : 'Description: ',
 		START_DATE                       : 'Start Date: ',
@@ -27615,7 +27737,7 @@ var constants = {
 };
 
 module.exports = constants;
-},{}],224:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 'use strict';
 
 var Dispatcher    = require('flux').Dispatcher,
@@ -27629,7 +27751,7 @@ AppDispatcher.handleViewAction = function(action) {
 };
 
 module.exports = AppDispatcher;
-},{"flux":2}],225:[function(require,module,exports){
+},{"flux":2}],226:[function(require,module,exports){
 'use strict';
 
 var React         = require('react'),
@@ -27660,7 +27782,7 @@ Router.run(Routes, function(Handler) {
 });
 /* jshint ignore:end */
 
-},{"../app/pages/main":227,"../app/pages/main-content":226,"../app/pages/not-found":228,"react":"b6Dds6","react-router":26}],226:[function(require,module,exports){
+},{"../app/pages/main":228,"../app/pages/main-content":227,"../app/pages/not-found":229,"react":"b6Dds6","react-router":26}],227:[function(require,module,exports){
 'use strict';
 
 var React          = require('react'),
@@ -27729,6 +27851,7 @@ MainContent = React.createClass({displayName: "MainContent",
             selectedBugStartDate    : appStore.selectedBug.startDate,
             selectedBugEndDate      : appStore.selectedBug.endDate,
             selectedBugAuthor       : appStore.selectedBug.author,
+            selectedBugAuthorTeam   : appStore.selectedBug.team
         });
     },
     render: function() {
@@ -27758,7 +27881,8 @@ MainContent = React.createClass({displayName: "MainContent",
                         isSelectedProjectClosed: this.state.isSelectedProjectClosed, 
                         selectedBugStartDate: this.state.selectedBugStartDate, 
                         selectedBugEndDate: this.state.selectedBugEndDate, 
-                        selectedBugAuthor: this.state.selectedBugAuthor})
+                        selectedBugAuthor: this.state.selectedBugAuthor, 
+                        selectedBugAuthorTeam: this.state.selectedBugAuthorTeam})
                 )
             )
             /*jshint ignore:end */
@@ -27767,7 +27891,7 @@ MainContent = React.createClass({displayName: "MainContent",
 });
 
 module.exports = MainContent;
-},{"../constants/constants":223,"../stores/appStore":229,"../widgets/bug-detail":230,"../widgets/bug-list":231,"../widgets/project-list":232,"firebase":1,"react":"b6Dds6","reactfire":208}],227:[function(require,module,exports){
+},{"../constants/constants":224,"../stores/appStore":230,"../widgets/bug-detail":231,"../widgets/bug-list":232,"../widgets/project-list":233,"firebase":1,"react":"b6Dds6","reactfire":208}],228:[function(require,module,exports){
 'use strict';
 
 var React        = require('react'),
@@ -27798,7 +27922,7 @@ Main = React.createClass({displayName: "Main",
 });
 
 module.exports = Main;
-},{"../constants/constants":223,"react":"b6Dds6","react-router":26}],228:[function(require,module,exports){
+},{"../constants/constants":224,"react":"b6Dds6","react-router":26}],229:[function(require,module,exports){
 var React     = require('react'),
     // Constants
     constants = require('../constants/constants'),
@@ -27816,7 +27940,7 @@ Help = React.createClass({displayName: "Help",
 });
 
 module.exports = Help;
-},{"../constants/constants":223,"react":"b6Dds6"}],229:[function(require,module,exports){
+},{"../constants/constants":224,"react":"b6Dds6"}],230:[function(require,module,exports){
 'use strict';
 
 var appDispatcher = require('../dispatcher/appDispatcher.js'),
@@ -27896,12 +28020,18 @@ appStore = _.extend({}, eventEmitter.prototype, {
             .child(bugName)
             .remove();
     },
-    closeBug: function(bugName){
-        var solvedDate = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate();
+    closeBug: function(data){
+        var now = new Date(),
+            solvedDate = data.endDate || now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate();
+        
+        /* Open mail when solved is pressed
+            window.location.href = 'mailto:test@example.com?subject=subject&body=body';
+        */
+        
         this._firebaseRef
             .child(this.selectedProject.name)
             .child('bugs')
-            .child(bugName)
+            .child(data.bugName)
             .update({
                 'priority': constants.PRIORITY.SOLVED,
                 'endDate': solvedDate
@@ -27982,7 +28112,7 @@ appDispatcher.register(function(payload) {
 });
 
 module.exports = appStore;
-},{"../constants/constants":223,"../dispatcher/appDispatcher.js":224,"events":14,"firebase":1,"underscore":209}],230:[function(require,module,exports){
+},{"../constants/constants":224,"../dispatcher/appDispatcher.js":225,"events":14,"firebase":1,"underscore":209}],231:[function(require,module,exports){
 'use strict';
 
 var React          = require('react'),
@@ -28009,7 +28139,8 @@ BugDetail = React.createClass({displayName: "BugDetail",
         selectedBugDescription     : React.PropTypes.string,
         selectedBugStartDate       : React.PropTypes.string,
         selectedBugEndDate         : React.PropTypes.string,
-        selectedBugAuthor          : React.PropTypes.string
+        selectedBugAuthor          : React.PropTypes.string,
+        selectedBugAuthorTeam      : React.PropTypes.string
     },
     getDefaultProps: function() {
         return {
@@ -28020,6 +28151,7 @@ BugDetail = React.createClass({displayName: "BugDetail",
             selectedBugStartDate       : '',
             selectedBugEndDate         : '',
             selectedBugAuthor          : '',
+            selectedBugAuthorTeam      : '',
             isSelectedProjectClosed    : false
         };
     },
@@ -28044,7 +28176,8 @@ BugDetail = React.createClass({displayName: "BugDetail",
                         displayText: constants.EN_LEXICON.NEW_COMMENT_TITLE}), 
                     React.createElement(CloseBugBtn, {
                         selectedProjectName: this.props.selectedProjectName, 
-                        selectedBugName: this.props.selectedBugName}), 
+                        selectedBugName: this.props.selectedBugName, 
+                        selectedBugEndDate: this.props.selectedBugEndDate}), 
                     React.createElement(AddCommentForm, {
                         selectedBugName: this.props.selectedBugName})
                 )
@@ -28100,7 +28233,8 @@ BugDetail = React.createClass({displayName: "BugDetail",
                     selectedBugDescription: this.props.selectedBugDescription, 
                     selectedBugStartDate: this.props.selectedBugStartDate, 
                     selectedBugEndDate: this.props.selectedBugEndDate, 
-                    selectedBugAuthor: this.props.selectedBugAuthor}), 
+                    selectedBugAuthor: this.props.selectedBugAuthor, 
+                    selectedBugAuthorTeam: this.props.selectedBugAuthorTeam}), 
                 React.createElement("div", {className: "comments"}, 
                     React.createElement("div", {className: "comment-list-title"}, 
                         this.props.selectedProjectName, " ", constants.EN_LEXICON.BUG_COMMENT_TITLE
@@ -28115,7 +28249,7 @@ BugDetail = React.createClass({displayName: "BugDetail",
 
 module.exports = BugDetail;
 /* all rights reserved to Howard Chang */
-},{"../components/add-comment-form":212,"../components/bug-intro":215,"../components/close-bug-btn":217,"../components/comment":219,"../components/no-content":220,"../components/toggle-input-btn":222,"../constants/constants":223,"../stores/appStore.js":229,"react":"b6Dds6","react/lib/cx":164}],231:[function(require,module,exports){
+},{"../components/add-comment-form":212,"../components/bug-intro":215,"../components/close-bug-btn":217,"../components/comment":219,"../components/no-content":220,"../components/toggle-input-btn":223,"../constants/constants":224,"../stores/appStore.js":230,"react":"b6Dds6","react/lib/cx":164}],232:[function(require,module,exports){
 'use strict';
 
 var React           = require('react'),
@@ -28132,11 +28266,13 @@ var React           = require('react'),
     Bug             = require('../components/bug'),
     PriorityFilter  = require('../components/priority-filter'),
     AuthorFilter    = require('../components/author-filter'),
+    TeamFilter      = require('../components/team-filter'),
     BugList;
 
 BugList = React.createClass({displayName: "BugList",
     _selectedPriority: constants.EN_LEXICON.PRIORITY_ALL,
     _selectedAuthor: constants.EN_LEXICON.PRIORITY_ALL,
+    _selectedTeam: constants.EN_LEXICON.PRIORITY_ALL,
     propTypes: {
         selectedProjectName     : React.PropTypes.string,
         selectedProjectBugs     : React.PropTypes.array,
@@ -28164,11 +28300,12 @@ BugList = React.createClass({displayName: "BugList",
         }        
     },
     _evaluateBugDisplay: function(bug) {
-        var shouldBugDisplay, bugPriorityPass, bugAuthorPass;
+        var shouldBugDisplay, bugPriorityPass, bugAuthorPass, bugAuthorTeamPass;
         shouldBugDisplay = false;
         bugPriorityPass = this._selectedPriority === bug.priority || this._selectedPriority === constants.EN_LEXICON.PRIORITY_ALL;
         bugAuthorPass = this._selectedAuthor === bug.author || this._selectedAuthor === constants.EN_LEXICON.PRIORITY_ALL;
-        if(bugPriorityPass && bugAuthorPass){
+        bugAuthorTeamPass = this._selectedTeam === bug.team || this._selectedTeam === constants.EN_LEXICON.PRIORITY_ALL;
+        if(bugPriorityPass && bugAuthorPass && bugAuthorTeamPass){
             shouldBugDisplay = true;
         }
         return shouldBugDisplay;
@@ -28223,7 +28360,11 @@ BugList = React.createClass({displayName: "BugList",
                     React.createElement(AuthorFilter, {
                         selectedProjectName: this.props.selectedProjectName, 
                         selectedProjectBugs: this.props.selectedProjectBugs, 
-                        onSelectHandler: this._filterAuthors})
+                        onSelectHandler: this._filterAuthors}), 
+                    React.createElement(TeamFilter, {
+                        selectedProjectName: this.props.selectedProjectName, 
+                        selectedProjectBugs: this.props.selectedProjectBugs, 
+                        onSelectHandler: this._filterTeams})
                 )                
                 /* jshint ignore:end */
             );
@@ -28237,6 +28378,11 @@ BugList = React.createClass({displayName: "BugList",
     },
     _filterAuthors: function(condition){
         this._selectedAuthor = condition;
+        AppActions.clearSelectedBug();
+        this.forceUpdate();
+    },
+    _filterTeams: function(condition){
+        this._selectedTeam = condition;
         AppActions.clearSelectedBug();
         this.forceUpdate();
     },
@@ -28271,7 +28417,7 @@ BugList = React.createClass({displayName: "BugList",
 
 module.exports = BugList;
 /* all rights reserved to Howard Chang */
-},{"../actions/appActions":210,"../components/add-bug-form":211,"../components/author-filter":214,"../components/bug":216,"../components/close-project-btn":218,"../components/no-content":220,"../components/priority-filter":221,"../components/toggle-input-btn":222,"../constants/constants":223,"react":"b6Dds6","react/lib/cx":164}],232:[function(require,module,exports){
+},{"../actions/appActions":210,"../components/add-bug-form":211,"../components/author-filter":214,"../components/bug":216,"../components/close-project-btn":218,"../components/no-content":220,"../components/priority-filter":221,"../components/team-filter":222,"../components/toggle-input-btn":223,"../constants/constants":224,"react":"b6Dds6","react/lib/cx":164}],233:[function(require,module,exports){
 'use strict';
 
 var React          = require('react'),
@@ -28409,4 +28555,4 @@ ProjectList = React.createClass({displayName: "ProjectList",
 });
 
 module.exports = ProjectList;
-},{"../actions/appActions":210,"../components/add-project-form":213,"../components/toggle-input-btn":222,"../constants/constants":223,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}]},{},[225])
+},{"../actions/appActions":210,"../components/add-project-form":213,"../components/toggle-input-btn":223,"../constants/constants":224,"password-hash":16,"react":"b6Dds6","react/lib/cx":164}]},{},[226])

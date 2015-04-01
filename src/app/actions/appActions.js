@@ -41,10 +41,13 @@ appActions = {
 			data: bugName
 		});
 	},
-	closeBug: function(bugName){
+	closeBug: function(bugName, endDate){
 		appDispatcher.handleViewAction({
 			actionType: constants.CLOSE_BUG,
-			data: bugName
+			data: {
+				bugName: bugName,
+				endDate: endDate
+			}
 		});
 	},
 	selectBugByName: function(bugName){
