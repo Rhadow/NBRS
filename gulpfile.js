@@ -63,7 +63,7 @@ gulp.task('styles', function() {
 gulp.task('base', ['robots', 'static', 'config', 'fonts', 'images', 'styles']);
 
 gulp.task('scripts', ['lint'], function() {
-    return gulp.src(['src/app/app.js'])
+    return gulp.src(['src/app/app.js', 'src/app/sweet-alert.min.js'])
             .pipe($.browserify({
                 transform: ['reactify'],
                 extensions: ['.jsx']
