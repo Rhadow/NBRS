@@ -27616,8 +27616,8 @@ var constants = {
 		SOLVED : 'Solved'
 	},
 	FIREBASE: {
-		PROJECT_URL  : 'https://nbrs.firebaseio.com/projects',
-		PASSWORD_URL : 'https://nbrs.firebaseio.com/password'
+		PROJECT_URL  : 'https://bugreportsystem.firebaseio.com/projects',
+		PASSWORD_URL : 'https://bugreportsystem.firebaseio.com/password'
 	},
 	EN_LEXICON: {
 		NAV_TITLE                        : 'Bug Report System',
